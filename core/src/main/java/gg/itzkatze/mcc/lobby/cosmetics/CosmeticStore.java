@@ -85,6 +85,11 @@ public final class CosmeticStore {
         return profile == null ? 0 : profile.casesOpened();
     }
 
+    public int duplicateStreak(@NotNull UUID player) {
+        CosmeticProfile profile = cosmetics(player);
+        return profile == null ? 0 : profile.duplicateStreak();
+    }
+
     public boolean owns(@NotNull UUID player, @NotNull Cosmetic cosmetic) {
         CosmeticProfile profile = cosmetics(player);
         return profile != null && profile.owns(cosmetic.id());
@@ -143,19 +148,6 @@ public final class CosmeticStore {
         }
     }
 
-    public @NotNull PurchaseResult buy(@NotNull Player player, @NotNull Cosmetic cosmetic) {
-        CosmeticProfile profile = cosmetics(player.getUniqueId());
-        if (profile == null) return cosmetic.isAvailable(today()) ? PurchaseResult.NOT_ENOUGH_POINTS : PurchaseResult.OUT_OF_SEASON;
-
-        PurchaseResult result = profile.buy(cosmetic, catalog, today());
-        if (result == PurchaseResult.BOUGHT) {
-            data.profile(player.getUniqueId(), player.getName());
-            data.markDirty();
-            notifyBalance(player.getUniqueId());
-        }
-        return result;
-    }
-
     public boolean openCase(@NotNull Player player, int price) {
         CosmeticProfile profile = cosmetics(player.getUniqueId());
         if (profile == null) return false;
@@ -176,12 +168,12 @@ public final class CosmeticStore {
         changed(player, profile, before);
     }
 
-    public boolean grant(@NotNull Player player, @NotNull Cosmetic cosmetic) {
+    public boolean winCosmetic(@NotNull Player player, @NotNull Cosmetic cosmetic, int refund) {
         CosmeticProfile profile = profile(player);
-        if (!profile.grant(cosmetic)) return false;
-
-        changed(player, profile, profile.points());
-        return true;
+        int before = profile.points();
+        boolean won = profile.winCosmetic(cosmetic, refund);
+        changed(player, profile, before);
+        return won;
     }
 
     public int addEventPoints(@NotNull Player player, int amount) {

@@ -7,7 +7,7 @@ import gg.itzkatze.mcc.gui.MccGUI;
 import gg.itzkatze.mcc.lobby.cosmetics.Cosmetic;
 import gg.itzkatze.mcc.lobby.cosmetics.CosmeticStore;
 import gg.itzkatze.mcc.lobby.cosmetics.PointsText;
-import gg.itzkatze.mcc.lobby.cosmetics.PriceTier;
+import gg.itzkatze.mcc.lobby.cosmetics.Rarity;
 import gg.itzkatze.mcc.lobby.cosmetics.ShopSounds;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.util.ItemStackCreator;
@@ -53,6 +53,7 @@ public final class CaseRollGui extends MccGUI {
     private final Player player;
     private final CasePrize prize;
     private final CaseReel reel;
+    private final boolean pity;
     private int position;
     private int wait = CaseReel.delay(0);
     private boolean paid;
@@ -61,14 +62,19 @@ public final class CaseRollGui extends MccGUI {
     private int revealWait;
     private boolean stopped;
 
-    CaseRollGui(@NotNull Player player, @NotNull CasePrize prize, @NotNull CaseReel reel) {
+    CaseRollGui(@NotNull Player player, @NotNull CasePrize prize, @NotNull CaseReel reel, boolean pity) {
         super("Cosmetic Case", 27);
         this.player = player;
         this.prize = prize;
         this.reel = reel;
+        this.pity = pity;
     }
 
     public static void begin(@NotNull MccPlayer clicker) {
+        begin(clicker, ThreadLocalRandom.current());
+    }
+
+    static void begin(@NotNull MccPlayer clicker, @NotNull Random random) {
         Player player = clicker.getPlayer();
         if (player == null || ROLLING.containsKey(player.getUniqueId())) return;
 
@@ -80,9 +86,10 @@ public final class CaseRollGui extends MccGUI {
             return;
         }
         List<Cosmetic> available = CaseLoot.available(store.catalog(), store.today());
-        Random random = ThreadLocalRandom.current();
-        CasePrize prize = CaseLoot.drawPrize(available, random);
-        new CaseRollGui(player, prize, CaseReel.build(prize, () -> CaseLoot.drawShown(available, random))).start();
+        List<Cosmetic> missing = CaseLoot.missing(available, cosmetic -> store.owns(player.getUniqueId(), cosmetic));
+        boolean pity = CaseLoot.pityDue(store.duplicateStreak(player.getUniqueId()), missing);
+        CasePrize prize = pity ? CaseLoot.drawPity(available, missing, random) : CaseLoot.drawPrize(available, random);
+        new CaseRollGui(player, prize, CaseReel.build(prize, () -> CaseLoot.drawShown(available, random)), pity).start();
     }
 
     public static void finishAllSilently() {
@@ -112,7 +119,7 @@ public final class CaseRollGui extends MccGUI {
             CasePrize shown = window.get(column);
             set(fixed(REEL_SLOT + column, render(shown, false)));
             if (column != CENTER) {
-                ItemStack pane = pane(shown.tier());
+                ItemStack pane = pane(shown.rarity());
                 set(fixed(column, pane));
                 set(fixed(BOTTOM_ROW_SLOT + column, pane));
             }
@@ -122,7 +129,7 @@ public final class CaseRollGui extends MccGUI {
     }
 
     private void setRevealed() {
-        ItemStack frame = pane(prize.tier());
+        ItemStack frame = pane(prize.rarity());
         ItemStack filler = ItemStackCreator.fillerItem();
         for (int slot = 0; slot < size; slot++) {
             set(fixed(slot, isAroundPrize(slot) ? frame : filler));
@@ -209,30 +216,30 @@ public final class CaseRollGui extends MccGUI {
             task = null;
         }
         ROLLING.remove(player.getUniqueId(), this);
-        Component message = award(CosmeticStore.get());
+        List<Component> messages = award(CosmeticStore.get());
         if (silent) return;
 
-        player.sendMessage(message);
-        player.playSound(winSound(prize.tier()));
-        CaseFireworks.play(player, prize.tier());
+        messages.forEach(player::sendMessage);
+        player.playSound(winSound(prize.rarity()));
+        CaseFireworks.play(player, prize.rarity());
         redraw();
     }
 
-    private @NotNull Component award(@NotNull CosmeticStore store) {
-        if (prize instanceof CasePrize.Points(int amount, PriceTier tier)) {
+    private @NotNull List<Component> award(@NotNull CosmeticStore store) {
+        if (prize instanceof CasePrize.Points(int amount, Rarity tier)) {
             store.addPoints(player, amount);
-            return Component.text("You won ", NamedTextColor.GREEN)
+            return List.of(Component.text("You won ", NamedTextColor.GREEN)
                     .append(Component.text(PointsText.signed(amount), tier.color()))
-                    .append(Component.text("!", NamedTextColor.GREEN));
+                    .append(Component.text("!", NamedTextColor.GREEN)));
         }
         Cosmetic cosmetic = ((CasePrize.Item) prize).cosmetic();
-        if (store.grant(player, cosmetic)) {
-            return Component.text("You won ", NamedTextColor.GREEN).append(cosmetic.styledName()).append(Component.text("! Equip it in the Cosmetic Shop.", NamedTextColor.GREEN));
+        int refund = CaseLoot.refund(cosmetic.rarity());
+        if (store.winCosmetic(player, cosmetic, refund)) {
+            Component won = Component.text("You won ", NamedTextColor.GREEN).append(cosmetic.styledName()).append(Component.text("! Equip it in the Cosmetics menu.", NamedTextColor.GREEN));
+            return pity ? List.of(won, Component.text("Your duplicate streak guaranteed it.", NamedTextColor.LIGHT_PURPLE)) : List.of(won);
         }
-        int refund = cosmetic.price() / 4;
-        store.addPoints(player, refund);
-        return Component.text("You won ", NamedTextColor.YELLOW).append(cosmetic.styledName())
-                .append(Component.text(", but you already own it: " + PointsText.signed(refund) + " instead.", NamedTextColor.YELLOW));
+        return List.of(Component.text("You won ", NamedTextColor.YELLOW).append(cosmetic.styledName())
+                .append(Component.text(", but you already own it: " + PointsText.signed(refund) + " instead.", NamedTextColor.YELLOW)));
     }
 
     private void redraw() {
@@ -252,7 +259,8 @@ public final class CaseRollGui extends MccGUI {
             public ItemStack getItem(MccPlayer viewer) {
                 int balance = CosmeticStore.get().points(viewer.getUuid());
                 return ItemStackCreator.getStack(Component.text("Open another case", NamedTextColor.LIGHT_PURPLE), Material.ENDER_CHEST,
-                        List.of(Component.text("Price: " + PointsText.amount(CaseLoot.PRICE), NamedTextColor.GOLD), Component.text("You have " + PointsText.amount(balance), NamedTextColor.GRAY)));
+                        List.of(Component.text("Price: " + PointsText.amount(CaseLoot.PRICE), NamedTextColor.GOLD), Component.text("You have " + PointsText.amount(balance), NamedTextColor.GRAY),
+                                CaseConfirmGui.pityLine(viewer.getUuid())));
             }
         };
     }
@@ -267,7 +275,7 @@ public final class CaseRollGui extends MccGUI {
     }
 
     private static @NotNull ItemStack render(@NotNull CasePrize prize, boolean glint) {
-        PriceTier tier = prize.tier();
+        Rarity tier = prize.rarity();
         Component rarity = Component.text("Rarity: " + tier.displayName(), tier.color());
         ItemStack stack = switch (prize) {
             case CasePrize.Points points -> ItemStackCreator.getStack(Component.text(PointsText.signed(points.amount()), tier.color()), pointsIcon(points.amount()), List.of(rarity));
@@ -287,7 +295,7 @@ public final class CaseRollGui extends MccGUI {
         return amount < 500 ? Material.GOLD_INGOT : Material.GOLD_BLOCK;
     }
 
-    private static @NotNull ItemStack pane(@NotNull PriceTier tier) {
+    private static @NotNull ItemStack pane(@NotNull Rarity tier) {
         Material material = switch (tier) {
             case COMMON -> Material.WHITE_STAINED_GLASS_PANE;
             case UNCOMMON -> Material.LIME_STAINED_GLASS_PANE;
@@ -299,7 +307,7 @@ public final class CaseRollGui extends MccGUI {
         return ItemStackCreator.createNamedItemStack(material, Component.text(tier.displayName(), tier.color()));
     }
 
-    private static @NotNull Sound winSound(@NotNull PriceTier tier) {
+    private static @NotNull Sound winSound(@NotNull Rarity tier) {
         return switch (tier) {
             case COMMON, UNCOMMON -> SMALL_WIN;
             case RARE, EPIC -> GOOD_WIN;

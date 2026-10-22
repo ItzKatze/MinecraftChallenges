@@ -55,7 +55,7 @@ public enum Season {
     }
 
     public @NotNull Component returnsMessage(@NotNull Cosmetic cosmetic) {
-        return Component.text(cosmetic.displayName() + " returns for " + displayName + " on " + firstDay() + ".", NamedTextColor.RED);
+        return Component.text(cosmetic.displayName() + " returns to the Cosmetic Case for " + displayName + " on " + firstDay() + ".", NamedTextColor.RED);
     }
 
     // A window whose first day comes after its last day runs over New Year.

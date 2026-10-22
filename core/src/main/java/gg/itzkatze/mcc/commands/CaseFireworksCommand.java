@@ -3,7 +3,7 @@ package gg.itzkatze.mcc.commands;
 import gg.itzkatze.mcc.commands.framework.CallerType;
 import gg.itzkatze.mcc.commands.framework.CommandCaller;
 import gg.itzkatze.mcc.commands.framework.MccCommand;
-import gg.itzkatze.mcc.lobby.cosmetics.PriceTier;
+import gg.itzkatze.mcc.lobby.cosmetics.Rarity;
 import gg.itzkatze.mcc.lobby.cosmetics.cases.CaseFireworks;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.util.StringUtility;
@@ -35,7 +35,7 @@ public class CaseFireworksCommand extends MccCommand {
     public void executeCommand(@NotNull CommandCaller caller, String[] args) {
         if (!(caller instanceof MccPlayer mccPlayer) || mccPlayer.getPlayer() == null) return;
 
-        PriceTier tier = args.length == 0 ? PriceTier.MYTHIC : rarity(args[0]);
+        Rarity tier = args.length == 0 ? Rarity.MYTHIC : rarity(args[0]);
         if (tier == null) {
             caller.sendMessage(Component.text("Unknown rarity \"" + args[0] + "\". Rarities: " + String.join(", ", rarities()) + ".", NamedTextColor.RED));
             return;
@@ -49,11 +49,11 @@ public class CaseFireworksCommand extends MccCommand {
         return StringUtility.copyPartialMatches(args[0], rarities(), new ArrayList<>());
     }
 
-    private static @Nullable PriceTier rarity(@NotNull String name) {
-        return Arrays.stream(PriceTier.values()).filter(tier -> tier.name().equalsIgnoreCase(name)).findFirst().orElse(null);
+    private static @Nullable Rarity rarity(@NotNull String name) {
+        return Arrays.stream(Rarity.values()).filter(tier -> tier.name().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     private static @NotNull List<String> rarities() {
-        return Arrays.stream(PriceTier.values()).map(tier -> tier.name().toLowerCase(Locale.ROOT)).toList();
+        return Arrays.stream(Rarity.values()).map(tier -> tier.name().toLowerCase(Locale.ROOT)).toList();
     }
 }

@@ -3,7 +3,6 @@ package gg.itzkatze.mcc.lobby.cosmetics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -20,6 +19,7 @@ public final class CosmeticProfile {
     private int earned;
     private int best;
     private int casesOpened;
+    private int duplicateStreak;
     private List<String> owned = new ArrayList<>();
     private List<String> equipped = new ArrayList<>();
 
@@ -52,6 +52,10 @@ public final class CosmeticProfile {
         return casesOpened;
     }
 
+    int duplicateStreak() {
+        return duplicateStreak;
+    }
+
     @NotNull List<String> owned() {
         return Collections.unmodifiableList(owned);
     }
@@ -72,17 +76,6 @@ public final class CosmeticProfile {
         return owned.contains(id);
     }
 
-    @NotNull PurchaseResult buy(@NotNull Cosmetic cosmetic, @NotNull CosmeticCatalog catalog, @NotNull LocalDate today) {
-        if (owns(cosmetic.id())) return PurchaseResult.ALREADY_OWNED;
-        if (!cosmetic.isAvailable(today)) return PurchaseResult.OUT_OF_SEASON;
-        if (points < cosmetic.price()) return PurchaseResult.NOT_ENOUGH_POINTS;
-
-        points -= cosmetic.price();
-        owned.add(cosmetic.id());
-        equip(cosmetic, catalog);
-        return PurchaseResult.BOUGHT;
-    }
-
     boolean spend(int amount) {
         if (amount < 0 || points < amount) return false;
 
@@ -101,10 +94,15 @@ public final class CosmeticProfile {
         gain(amount);
     }
 
-    boolean grant(@NotNull Cosmetic cosmetic) {
-        if (owns(cosmetic.id())) return false;
-
+    // A new cosmetic ends the run of duplicates; a duplicate pays its refund and extends it.
+    boolean winCosmetic(@NotNull Cosmetic cosmetic, int refund) {
+        if (owns(cosmetic.id())) {
+            gain(refund);
+            duplicateStreak = add(duplicateStreak, 1);
+            return false;
+        }
         owned.add(cosmetic.id());
+        duplicateStreak = 0;
         return true;
     }
 
@@ -143,6 +141,7 @@ public final class CosmeticProfile {
         earned = Math.max(earned, 0);
         best = Math.max(best, 0);
         casesOpened = Math.max(casesOpened, 0);
+        duplicateStreak = Math.max(duplicateStreak, 0);
         owned = owned == null ? new ArrayList<>() : new ArrayList<>(owned.stream().filter(Objects::nonNull).collect(Collectors.toCollection(LinkedHashSet::new)));
 
         List<String> known = equipped == null ? List.of() : equipped.stream().filter(id -> id != null && catalog.find(id).isPresent()).toList();

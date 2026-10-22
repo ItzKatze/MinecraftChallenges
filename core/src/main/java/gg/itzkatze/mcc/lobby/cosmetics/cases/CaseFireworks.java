@@ -3,7 +3,7 @@ package gg.itzkatze.mcc.lobby.cosmetics.cases;
 import gg.itzkatze.mcc.MinecraftChallenges;
 import gg.itzkatze.mcc.lobby.Lobby;
 import gg.itzkatze.mcc.lobby.LobbyManager;
-import gg.itzkatze.mcc.lobby.cosmetics.PriceTier;
+import gg.itzkatze.mcc.lobby.cosmetics.Rarity;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.Bukkit;
@@ -41,7 +41,7 @@ public final class CaseFireworks {
     }
 
     // The rockets are silent and shown to the opener only: a rocket's own launch sound reaches every player nearby, so the opener gets these sounds instead.
-    public static void play(@NotNull Player player, @NotNull PriceTier tier) {
+    public static void play(@NotNull Player player, @NotNull Rarity tier) {
         player.playSound(LAUNCH);
         UUID id = player.getUniqueId();
         List<List<FireworkEffect>> rockets = rockets(tier);
@@ -104,7 +104,7 @@ public final class CaseFireworks {
                 .orElse(null);
     }
 
-    private static @NotNull List<List<FireworkEffect>> rockets(@NotNull PriceTier tier) {
+    private static @NotNull List<List<FireworkEffect>> rockets(@NotNull Rarity tier) {
         Color color = Color.fromRGB(tier.color().value());
         return switch (tier) {
             case COMMON -> List.of(List.of(effect(FireworkEffect.Type.BALL, color, false, false)));

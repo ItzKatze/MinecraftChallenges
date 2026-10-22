@@ -1,7 +1,7 @@
 package gg.itzkatze.mcc.lobby.npc.impl;
 
 import gg.itzkatze.mcc.gui.MccGUI;
-import gg.itzkatze.mcc.lobby.cosmetics.CosmeticShopGui;
+import gg.itzkatze.mcc.lobby.cosmetics.CosmeticMenuGui;
 import gg.itzkatze.mcc.lobby.npc.LobbyNpc;
 import gg.itzkatze.mcc.lobby.npc.NpcSkins;
 import gg.itzkatze.mcc.player.MccPlayer;
@@ -26,7 +26,7 @@ public class CosmeticShopNpc extends LobbyNpc {
 
     @Override
     public @Nullable MccGUI createGui(@NotNull MccPlayer player) {
-        return new CosmeticShopGui();
+        return new CosmeticMenuGui();
     }
 
     @Override

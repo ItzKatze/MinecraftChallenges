@@ -15,7 +15,7 @@ public interface Cosmetic {
 
     @NotNull String displayName();
 
-    int price();
+    @NotNull Rarity rarity();
 
     @NotNull Material icon();
 
@@ -29,6 +29,6 @@ public interface Cosmetic {
     }
 
     default @NotNull Component styledName() {
-        return Component.text(displayName(), PriceTier.of(price()).color());
+        return Component.text(displayName(), rarity().color());
     }
 }

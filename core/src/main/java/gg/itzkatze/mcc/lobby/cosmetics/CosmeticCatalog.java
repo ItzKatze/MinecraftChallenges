@@ -30,8 +30,8 @@ public final class CosmeticCatalog {
             if (!ID.matcher(id).matches()) {
                 throw new IllegalStateException("Cosmetic id \"" + id + "\" must only contain lowercase letters, digits and underscores");
             }
-            if (cosmetic.price() < 1) {
-                throw new IllegalStateException("Cosmetic \"" + id + "\" costs " + cosmetic.price() + " points, the minimum is 1");
+            if (cosmetic.rarity() == null) {
+                throw new IllegalStateException("Cosmetic \"" + id + "\" has no rarity");
             }
             if (byId.putIfAbsent(id, cosmetic) != null) {
                 throw new IllegalStateException("Duplicate cosmetic id \"" + id + "\"");
