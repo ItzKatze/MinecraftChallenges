@@ -25,6 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -65,9 +66,11 @@ public class JumpAndRun implements LobbyFeature, Listener {
     private @Nullable Arena arena;
     private final RunMultiplier runMultiplier = new RunMultiplier();
     private final MusicManager musicManager;
+    private final Plugin plugin;
 
-    public JumpAndRun(@NotNull Vector platePosition) {
+    public JumpAndRun(@NotNull Vector platePosition, @NotNull Plugin plugin) {
         this.platePosition = platePosition.clone();
+        this.plugin = plugin;
         this.musicManager = new MusicManager(MinecraftChallenges.get());
     }
 
@@ -254,8 +257,7 @@ public class JumpAndRun implements LobbyFeature, Listener {
         int applied = store.addEventPoints(run.getPlayer(), EventBlock.payout(random));
         run.recordEvent(applied);
         place(arena, run.getCurrent(), run.getLook().block());
-        run.getPlayer().sendMessage(EventBlock.message(applied));
-        run.getPlayer().playSound(EventBlock.sound(applied));
+        EventBlock.animatePayout(plugin, run.getPlayer(), applied);
     }
 
     private void end(@NotNull Arena arena, @NotNull JumpRun run, @NotNull Ending ending) {

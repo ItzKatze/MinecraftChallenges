@@ -8,7 +8,11 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.plugin.Plugin;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.List;
 import java.util.Random;
 
@@ -53,6 +57,47 @@ final class EventBlock {
             }
         }
         return picked.min() + random.nextInt(picked.max() - picked.min() + 1);
+    }
+
+    static void animatePayout(Plugin plugin, Player player, int applied) {
+        int changes = 5;
+
+        new BukkitRunnable() {
+            private int step = 0;
+
+            @Override
+            public void run() {
+                if (!player.isOnline()) {
+                    cancel();
+                    return;
+                }
+
+                if (step < changes) {
+                    int preview = payout(ThreadLocalRandom.current());
+                    player.sendTitle(
+                            "",
+                            "§6Event Block! §a" + PointsText.signed(preview),
+                            0, 10, 0
+                    );
+                    step++;
+                    return;
+                }
+
+                player.sendTitle(
+                        "",
+                        "§6Event Block! §a" + PointsText.signed(applied),
+                        0, 20, 0
+                );
+                player.playSound(EventBlock.sound(applied));
+                cancel();
+
+                plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                    if (player.isOnline()) {
+                        player.sendMessage(message(applied));
+                    }
+                }, 20L);
+            }
+        }.runTaskTimer(plugin, 0L, 6L);
     }
 
     static @NotNull Component message(int applied) {

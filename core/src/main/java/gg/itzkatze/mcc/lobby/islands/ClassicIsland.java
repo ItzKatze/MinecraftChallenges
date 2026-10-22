@@ -1,5 +1,6 @@
 package gg.itzkatze.mcc.lobby.islands;
 
+import gg.itzkatze.mcc.MinecraftChallenges;
 import gg.itzkatze.mcc.lobby.LobbyFeature;
 import gg.itzkatze.mcc.lobby.LobbyIsland;
 import gg.itzkatze.mcc.lobby.cosmetics.Leaderboard;
@@ -39,7 +40,7 @@ public class ClassicIsland extends LobbyIsland {
     @Override
     public @NotNull List<LobbyFeature> createFeatures() {
         return List.of(
-                new JumpAndRun(new Vector(33, 22, 27)),
+                new JumpAndRun(new Vector(33, 22, 27), MinecraftChallenges.get()),
                 new NpcSpot(new CosmeticShopNpc(), new Vector(21.5, 5, 42.5), 30f),
                 new CaseSpot(new Vector(19, 5, 43), 30f),
                 new Leaderboard(new Vector(32.5, 23, 31.5)));
