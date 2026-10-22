@@ -46,6 +46,20 @@ Access global plugin settings anytime in-game using `/settings`:
 | `/chat`           | Toggles chat mode (global / local)                             |
 | `/teamchat`       | Sends a message exclusively to your team                       |
 | `/spectate`       | Watch the next battle instead of playing in it (lobby only)    |
+| `/level [player]` | Shows a player's level and XP (ops: `/level add <player> <n>`) |
+
+---
+
+## ⭐ Levels
+
+Playing earns XP, and XP adds up to a level that everyone sees:
+
+- **Showing it**: your level shows as `[12] Name` in the tab list, above your head and in chat, and the lobby sidebar shows your progress. Every 10 minutes you read how much XP you gained.
+- **Playtime**: 2 XP per minute in a running game, 1 XP per 2 minutes in the lobby. After 5 minutes without moving you are AFK and earn no playtime XP until you move again.
+- **Games**: finishing a game pays 50 XP per 90 minutes you played in it.
+- **Challenges**: ForceBattle pays 10 XP per objective, 1 XP per 100 blocks walked and 150 XP to the winners; DeathSwap 10 XP per swap you survive and 150 XP to the last one alive; AllItems 2 to 10 XP per new discovery.
+- **Levelling up**: level 2 needs 140 XP and each level after it about 5% more, up to 6,133 XP for level 100, the highest level (216,169 XP in total).
+- **Storage**: levels and Jump & Run cosmetics live in `plugins/MinecraftChallenges/data/players.json` and survive `/reset` and new worlds.
 
 ---
 

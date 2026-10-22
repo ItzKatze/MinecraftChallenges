@@ -1,9 +1,12 @@
 package gg.itzkatze.mcc.deathswap;
 
 import gg.itzkatze.mcc.MinecraftChallenges;
+import gg.itzkatze.mcc.challenges.ChallengeType;
 import gg.itzkatze.mcc.game.ChallengeTimer;
 import gg.itzkatze.mcc.game.GameTimer;
 import gg.itzkatze.mcc.game.SessionPersistence;
+import gg.itzkatze.mcc.level.GameXp;
+import gg.itzkatze.mcc.level.LevelStore;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.spectator.SpectatorManager;
 import gg.itzkatze.mcc.spectator.SpectatorReason;
@@ -229,6 +232,12 @@ public class DeathSwapGameListener implements Listener {
             second.teleport(firstLocation);
         }
 
+        for (Player survivor : alivePlayers) {
+            MccPlayer participant = MccPlayer.adapt(survivor);
+            if (participant.isParticipating()) {
+                LevelStore.get().grant(participant, DeathSwapXp.SWAP_SURVIVED.xp());
+            }
+        }
         return true;
     }
 
@@ -254,6 +263,10 @@ public class DeathSwapGameListener implements Listener {
             return;
         }
         winnerId = winner.getUniqueId();
+        MccPlayer winnerWrapper = MccPlayer.adapt(winner);
+        if (GameXp.claimNaturalEnd(ChallengeType.DEATH_SWAP) && winnerWrapper.isParticipating()) {
+            LevelStore.get().grant(winnerWrapper, DeathSwapXp.WIN.xp());
+        }
         MinecraftChallenges.broadcast(
                 Component.text("Death Swap winner: ").color(NamedTextColor.GOLD)
                         .append(Component.text(winner.getName()).color(NamedTextColor.GREEN))

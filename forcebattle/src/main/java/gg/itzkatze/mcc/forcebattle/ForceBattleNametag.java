@@ -5,84 +5,18 @@ import gg.itzkatze.mcc.configuration.GlobalSetting;
 import gg.itzkatze.mcc.configuration.SettingsManager;
 import gg.itzkatze.mcc.data.MccAdvancement;
 import gg.itzkatze.mcc.team.MccTeam;
-import gg.itzkatze.mcc.player.MccPlayer;
-import gg.itzkatze.mcc.scoreboard.ScoreboardManager;
 import gg.itzkatze.mcc.util.StringUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+final class ForceBattleNametag {
 
-public class NametagManager {
-
-    private static final Map<UUID, Map<UUID, Component>> lastSuffixes = new ConcurrentHashMap<>();
-    private static BukkitTask runningTask;
-
-    public static void runTask() {
-        stopTask();
-        runningTask = Bukkit.getScheduler().runTaskTimer(MinecraftChallenges.get(), () ->
-                MccPlayer.PLAYERS.forEach(NametagManager::updateNametag), 0, 3);
+    private ForceBattleNametag() {
     }
 
-    public static void stopTask() {
-        if (runningTask != null) {
-            runningTask.cancel();
-            runningTask = null;
-        }
-        lastSuffixes.clear();
-        MccPlayer.PLAYERS.forEach(NametagManager::removeNametags);
-    }
-
-    private static void removeNametags(@NotNull MccPlayer viewer) {
-        Scoreboard scoreboard = ScoreboardManager.findScoreboard(viewer);
-        if (scoreboard != null) {
-            scoreboard.getTeams().forEach(Team::unregister);
-        }
-    }
-
-    private static void updateNametag(@NotNull MccPlayer mccPlayer) {
-        if (!(mccPlayer instanceof ForceBattlePlayer)) return;
-        Player player = mccPlayer.getPlayer();
-        if (player == null) return;
-
-        Scoreboard scoreboard = ScoreboardManager.getOrCreateScoreboard(mccPlayer);
-        Map<UUID, Component> cache = lastSuffixes.computeIfAbsent(mccPlayer.getUuid(), u -> new ConcurrentHashMap<>());
-
-        for (MccPlayer targetPlayer : MccPlayer.PLAYERS) {
-            Player target = targetPlayer.getPlayer();
-            if (target == null) continue;
-
-            Team team = scoreboard.getTeam(targetPlayer.getUuid().toString());
-            if (team == null) {
-                team = scoreboard.registerNewTeam(targetPlayer.getUuid().toString());
-            }
-            if (!team.hasEntry(targetPlayer.getName())) {
-                team.addEntry(targetPlayer.getName());
-            }
-
-            Component newSuffix = buildSuffix((ForceBattlePlayer) targetPlayer);
-            Component oldSuffix = team.suffix();
-
-            if (!Objects.equals(newSuffix, oldSuffix)) {
-                team.suffix(newSuffix);
-                cache.put(targetPlayer.getUuid(), newSuffix);
-            }
-        }
-
-        player.setScoreboard(scoreboard);
-    }
-
-    private static Component buildSuffix(@NotNull ForceBattlePlayer player) {
+    static @NotNull Component suffix(@NotNull ForceBattlePlayer player) {
         Component suffix = Component.text(" ");
 
         if (player.isSpectator()) {

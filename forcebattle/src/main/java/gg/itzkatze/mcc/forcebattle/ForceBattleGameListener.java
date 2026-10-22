@@ -43,9 +43,14 @@ public class ForceBattleGameListener implements Listener {
 
     public static boolean startPhase = true;
     private final Map<UUID, List<ItemStack>> pendingItemRestores = new HashMap<>();
+    private final ForceBattleWalking walking = new ForceBattleWalking();
 
     public void clearPendingRestores() {
         pendingItemRestores.clear();
+    }
+
+    public void resetWalking() {
+        walking.reset();
     }
 
     public ForceBattleGameListener() {
@@ -59,6 +64,7 @@ public class ForceBattleGameListener implements Listener {
         new HeightTask().runTick();
         new CoordsTask().runTick();
         new StructureTask().runTick();
+        walking.tick();
     }
 
     @EventHandler(ignoreCancelled = true)

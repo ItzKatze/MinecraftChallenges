@@ -224,7 +224,7 @@ public class JumpAndRun implements LobbyFeature, Listener {
                 run.getScore()
         );
 
-        store.recordLanding(run.getPlayer(), points);
+        store.recordLanding(run.getPlayer(), run.getScore(), points);
         if (onEvent) {
             payEvent(arena, run, store, random);
         } else {

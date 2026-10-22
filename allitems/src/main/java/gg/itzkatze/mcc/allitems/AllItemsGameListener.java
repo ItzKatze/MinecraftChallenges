@@ -6,6 +6,7 @@ import gg.itzkatze.mcc.data.BiomeSimplified;
 import gg.itzkatze.mcc.data.MccAdvancement;
 import gg.itzkatze.mcc.data.MccStructure;
 import gg.itzkatze.mcc.data.StructureSimplified;
+import gg.itzkatze.mcc.level.LevelStore;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.util.StringUtility;
 import net.kyori.adventure.text.Component;
@@ -89,7 +90,7 @@ public class AllItemsGameListener implements Listener {
         }
 
         if (data.recordItemFound(player, material)) {
-            announceDiscovery(player, "item", material.name());
+            discover(player, AllItemsXp.ITEM, "item", material.name());
         }
     }
 
@@ -144,7 +145,7 @@ public class AllItemsGameListener implements Listener {
         }
 
         if (data.recordItemFound(player, material)) {
-            announceDiscovery(player, "item", material.name());
+            discover(player, AllItemsXp.ITEM, "item", material.name());
         }
     }
 
@@ -172,7 +173,7 @@ public class AllItemsGameListener implements Listener {
             return;
         }
         if (data.recordBiomeFound(player, simplified)) {
-            announceDiscovery(player, "biome", simplified.getName());
+            discover(player, AllItemsXp.BIOME, "biome", simplified.getName());
         }
     }
 
@@ -199,7 +200,7 @@ public class AllItemsGameListener implements Listener {
         }
 
         if (data.recordMobFound(killer, type)) {
-            announceDiscovery(killer, "mob", type.name());
+            discover(killer, AllItemsXp.MOB, "mob", type.name());
         }
     }
 
@@ -222,7 +223,7 @@ public class AllItemsGameListener implements Listener {
         }
 
         if (data.recordAdvancementFound(player, advancement)) {
-            announceDiscovery(player, "advancement", advancement.getName());
+            discover(player, AllItemsXp.ADVANCEMENT, "advancement", advancement.getName());
         }
     }
 
@@ -264,7 +265,7 @@ public class AllItemsGameListener implements Listener {
                 Structure bukkitStruct = registry.get(structure.getKey());
                 if (bukkitStruct != null && checkPlayerLocationInStructure(player, structure.getKey(), bukkitStruct)) {
                     if (data.recordStructureFound(player, simplified)) {
-                        announceDiscovery(player, "structure", simplified.getName());
+                        discover(player, AllItemsXp.STRUCTURE, "structure", simplified.getName());
                     }
                     return;
                 }
@@ -323,6 +324,11 @@ public class AllItemsGameListener implements Listener {
         return x >= box.getMinX() && x <= box.getMaxX()
                 && y >= box.getMinY() && y <= box.getMaxY()
                 && z >= box.getMinZ() && z <= box.getMaxZ();
+    }
+
+    private void discover(Player player, AllItemsXp reward, String type, String name) {
+        LevelStore.get().grant(player, reward.xp());
+        announceDiscovery(player, type, name);
     }
 
     private void announceDiscovery(Player player, String type, String name) {

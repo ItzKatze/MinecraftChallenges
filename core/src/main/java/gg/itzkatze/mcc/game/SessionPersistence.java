@@ -8,6 +8,7 @@ import gg.itzkatze.mcc.challenges.ChallengeRegistry;
 import gg.itzkatze.mcc.challenges.ChallengeType;
 import gg.itzkatze.mcc.configuration.ChallengeSettingsManager;
 import gg.itzkatze.mcc.configuration.SettingsManager;
+import gg.itzkatze.mcc.level.GameXp;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.spectator.SpectatorManager;
 import gg.itzkatze.mcc.spectator.SpectatorReason;
@@ -57,6 +58,11 @@ public final class SessionPersistence {
         } catch (RuntimeException e) {
             logger.warn("Failed to restore the saved game session, starting fresh.", e);
         }
+        if (ChallengeManager.isGameStarted()) {
+            GameXp.restore();
+        } else {
+            GameXp.delete();
+        }
         restoreDone = true;
     }
 
@@ -78,6 +84,7 @@ public final class SessionPersistence {
         }
 
         WorldStorage.save(FILE_NAME, snapshot());
+        GameXp.save();
         for (Challenge challenge : ChallengeManager.getActiveChallenges()) {
             try {
                 challenge.saveData();

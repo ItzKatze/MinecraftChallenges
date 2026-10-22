@@ -7,6 +7,7 @@ import gg.itzkatze.mcc.event.ObjectiveUpdateEvent;
 import gg.itzkatze.mcc.event.PlayerTeamJoinEvent;
 import gg.itzkatze.mcc.event.PlayerTeamLeaveEvent;
 import gg.itzkatze.mcc.game.SessionPersistence;
+import gg.itzkatze.mcc.level.LevelStore;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.util.StringUtility;
 import gg.itzkatze.mcc.util.Toast;
@@ -93,6 +94,9 @@ public class ForceBattleTeam extends MccTeam {
             this.objective.setHasBeenSkipped(hasBeenSkipped);
 
             finisher.setPoints(finisher.getPoints() + 1);
+            if (!hasBeenSkipped && finisher.isParticipating()) {
+                LevelStore.get().grant(finisher, ForceBattleXp.OBJECTIVE.xp());
+            }
         }
 
         ForceBattleObjective newObjective = ForceBattleObjectiveManager.getInstance().getNewObjective(this);

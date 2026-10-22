@@ -14,9 +14,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-final class CosmeticProfile {
+public final class CosmeticProfile {
 
-    private @Nullable String name;
     private int points;
     private int earned;
     private int best;
@@ -24,22 +23,17 @@ final class CosmeticProfile {
     private List<String> owned = new ArrayList<>();
     private List<String> equipped = new ArrayList<>();
 
-    CosmeticProfile() {
+    public CosmeticProfile() {
     }
 
-    static @NotNull CosmeticProfile restored(@Nullable String name, int points, int earned, int best, @Nullable List<String> owned, @Nullable List<String> equipped) {
+    static @NotNull CosmeticProfile restored(int points, int earned, int best, @Nullable List<String> owned, @Nullable List<String> equipped) {
         CosmeticProfile profile = new CosmeticProfile();
-        profile.name = name;
         profile.points = points;
         profile.earned = earned;
         profile.best = best;
         profile.owned = owned == null ? null : new ArrayList<>(owned);
         profile.equipped = equipped == null ? null : new ArrayList<>(equipped);
         return profile;
-    }
-
-    @Nullable String name() {
-        return name;
     }
 
     int points() {
@@ -64,12 +58,6 @@ final class CosmeticProfile {
 
     @NotNull List<String> equipped() {
         return Collections.unmodifiableList(equipped);
-    }
-
-    void rename(@Nullable String name) {
-        if (name != null) {
-            this.name = name;
-        }
     }
 
     void recordLanding(int runScore) {

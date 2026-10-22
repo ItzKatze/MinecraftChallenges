@@ -2,6 +2,7 @@ package gg.itzkatze.mcc.game;
 
 import gg.itzkatze.mcc.MinecraftChallenges;
 import gg.itzkatze.mcc.challenges.ChallengeManager;
+import gg.itzkatze.mcc.level.GameXp;
 import gg.itzkatze.mcc.lobby.LobbyManager;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.spectator.SpectatorManager;
@@ -75,6 +76,7 @@ public class GameLifecycleManager implements Listener {
     }
 
     public static void startGame() {
+        GameXp.begin();
         MccPlayer.removeOfflinePlayers();
         LobbyManager.destroyLobby();
         prepareWorlds();
@@ -121,6 +123,7 @@ public class GameLifecycleManager implements Listener {
     public static void resetGame() {
         StartCountdown.cancel();
         MinecraftChallenges.getTimer().stop();
+        GameXp.onReset();
         ChallengeManager.resetGameState();
         SessionPersistence.delete();
         MccPlayer.removeOfflinePlayers();

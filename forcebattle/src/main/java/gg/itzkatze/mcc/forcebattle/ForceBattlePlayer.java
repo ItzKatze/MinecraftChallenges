@@ -8,6 +8,7 @@ import gg.itzkatze.mcc.event.ObjectiveUpdateEvent;
 import gg.itzkatze.mcc.event.PlayerResetEvent;
 import gg.itzkatze.mcc.forcebattle.gui.TeamBackpackGUI;
 import gg.itzkatze.mcc.game.SessionPersistence;
+import gg.itzkatze.mcc.level.LevelStore;
 import gg.itzkatze.mcc.team.MccTeam;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.util.Joker;
@@ -76,9 +77,7 @@ public class ForceBattlePlayer extends MccPlayer {
 
     public void updateObjective(boolean finishLast, boolean hasBeenSkipped) {
         if (finishLast && this.objective != null) {
-            this.objective.setFinished(this);
-            this.objective.setHasBeenSkipped(hasBeenSkipped);
-            this.points++;
+            finishObjective(hasBeenSkipped);
         }
 
         ForceBattleObjective newObjective = ForceBattleObjectiveManager.getInstance().getNewObjective(this);
@@ -105,9 +104,7 @@ public class ForceBattlePlayer extends MccPlayer {
 
     public void setCurrentObjective(ForceBattleObjective newObjective, boolean finishLast, boolean hasBeenSkipped) {
         if (finishLast && this.objective != null) {
-            this.objective.setFinished(this);
-            this.objective.setHasBeenSkipped(hasBeenSkipped);
-            this.points++;
+            finishObjective(hasBeenSkipped);
         }
 
         if (MinecraftChallenges.getTimer().isRunning() && newObjective != null) {
@@ -128,6 +125,15 @@ public class ForceBattlePlayer extends MccPlayer {
 
         this.objective = newObjective;
         SessionPersistence.requestSave();
+    }
+
+    private void finishObjective(boolean hasBeenSkipped) {
+        this.objective.setFinished(this);
+        this.objective.setHasBeenSkipped(hasBeenSkipped);
+        this.points++;
+        if (!hasBeenSkipped && isParticipating()) {
+            LevelStore.get().grant(this, ForceBattleXp.OBJECTIVE.xp());
+        }
     }
 
     public void increaseChainProgress() {

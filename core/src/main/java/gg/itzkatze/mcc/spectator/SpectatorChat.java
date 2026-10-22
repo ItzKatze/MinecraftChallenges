@@ -1,5 +1,7 @@
 package gg.itzkatze.mcc.spectator;
 
+import gg.itzkatze.mcc.level.LevelStore;
+import gg.itzkatze.mcc.level.LevelTag;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -23,7 +25,8 @@ public class SpectatorChat implements Listener {
         event.setCancelled(true);
         Component line = Component.textOfChildren(
                 Component.text("[Spectator] ", NamedTextColor.GRAY),
-                Component.text("<" + sender.getName() + "> ", NamedTextColor.WHITE),
+                LevelTag.of(LevelStore.get().level(sender.getUniqueId())),
+                Component.text(" <" + sender.getName() + "> ", NamedTextColor.WHITE),
                 event.message().colorIfAbsent(NamedTextColor.WHITE));
         // The viewers are the snapshot Paper built for this message, which keeps this async thread off the wrapper list. They include the console.
         for (Audience viewer : event.viewers()) {

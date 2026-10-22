@@ -11,6 +11,7 @@ import gg.itzkatze.mcc.challenges.ChallengeType;
 import gg.itzkatze.mcc.challenges.TimerSpec;
 import gg.itzkatze.mcc.game.GameTimer;
 import gg.itzkatze.mcc.game.SessionPersistence;
+import gg.itzkatze.mcc.level.GameXp;
 import gg.itzkatze.mcc.forcebattle.bossbar.ForceBattlePlayerObjectiveBossbar;
 import gg.itzkatze.mcc.forcebattle.bossbar.ForceBattleTeamObjectiveBossbar;
 import gg.itzkatze.mcc.forcebattle.bossbar.ForceBattleWaitingBossbar;
@@ -50,7 +51,6 @@ public class ForceBattle implements Challenge {
         MccPlayer.upgrade(ChallengeType.FORCE_BATTLE);
         MccTeam.registerFactory(ChallengeType.FORCE_BATTLE, ForceBattleTeam::new);
         MccTeam.upgrade(ChallengeType.FORCE_BATTLE);
-        NametagManager.runTask();
         loadData();
         if (!ChallengeManager.isGameStarted()) {
             Bukkit.getOnlinePlayers().forEach(ForceBattleGuideBook::give);
@@ -62,7 +62,7 @@ public class ForceBattle implements Challenge {
         saveData();
         ForceBattleGameListener.startPhase = true;
         gameListener.clearPendingRestores();
-        NametagManager.stopTask();
+        gameListener.resetWalking();
         StructureTask.clearCache();
         ForceBattleObjective.deleteAll();
         BossbarManager.hideBarsForChallenge(this);
@@ -95,6 +95,7 @@ public class ForceBattle implements Challenge {
         ForceBattlePersistence.deleteData();
         ForceBattleGameListener.startPhase = true;
         gameListener.clearPendingRestores();
+        gameListener.resetWalking();
         StructureTask.clearCache();
         ForceBattleObjective.deleteAll();
         ForceBattleObjectiveManager.getInstance().clearChains();
@@ -130,6 +131,10 @@ public class ForceBattle implements Challenge {
     @Override
     public void onTimerElapsed() {
         gameListener.handleBattleEnd();
+        // A /reset stops the timer too, with time left; only a countdown that ran out is the battle's end.
+        if (MinecraftChallenges.getTimer().getRemainingSeconds() == 0 && GameXp.claimNaturalEnd(ChallengeType.FORCE_BATTLE)) {
+            ForceBattleWinners.reward();
+        }
         SessionPersistence.requestSave();
     }
 
@@ -162,12 +167,17 @@ public class ForceBattle implements Challenge {
 
         List<Component> lines = new ArrayList<>();
         ForceBattleObjective objective = player.getObjective();
-        lines.add(PlayerViewGui.infoLine("Objective", objective == null ? Component.text("none") : NametagManager.objectiveText(objective)));
+        lines.add(PlayerViewGui.infoLine("Objective", objective == null ? Component.text("none") : ForceBattleNametag.objectiveText(objective)));
         if (SettingsManager.isEnabled(GlobalSetting.EXTRA_TEAM_OBJECTIVE) && player.getTeam() instanceof ForceBattleTeam team && team.getObjective() != null) {
-            lines.add(PlayerViewGui.infoLine("Team objective", NametagManager.objectiveText(team.getObjective())));
+            lines.add(PlayerViewGui.infoLine("Team objective", ForceBattleNametag.objectiveText(team.getObjective())));
         }
         lines.add(PlayerViewGui.infoLine("Points", Component.text(player.getPoints())));
         return lines;
+    }
+
+    @Override
+    public @Nullable Component getNametagSuffix(@NotNull MccPlayer target) {
+        return target instanceof ForceBattlePlayer player ? ForceBattleNametag.suffix(player) : null;
     }
 
     @Override

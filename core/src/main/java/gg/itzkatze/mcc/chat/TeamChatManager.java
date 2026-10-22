@@ -1,5 +1,7 @@
 package gg.itzkatze.mcc.chat;
 
+import gg.itzkatze.mcc.level.LevelStore;
+import gg.itzkatze.mcc.level.LevelTag;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.team.MccTeam;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -37,7 +39,8 @@ public class TeamChatManager implements Listener {
         }
 
         Component formattedMessage = Component.text("[Team] ", NamedTextColor.AQUA)
-                .append(Component.text("<" + sender.getName() + "> ", NamedTextColor.WHITE))
+                .append(LevelTag.of(LevelStore.get().level(sender.getUuid())))
+                .append(Component.text(" <" + sender.getName() + "> ", NamedTextColor.WHITE))
                 .append(message);
         team.getPlayers().forEach(member -> member.sendMessage(formattedMessage));
     }

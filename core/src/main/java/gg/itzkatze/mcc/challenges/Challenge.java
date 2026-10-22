@@ -54,6 +54,10 @@ public interface Challenge extends ChallengeSettings {
         return Collections.emptyList();
     }
 
+    @Nullable default Component getNametagSuffix(@NotNull MccPlayer target) {
+        return null;
+    }
+
     @Nullable default ScoreboardContent getScoreboardContent() {
         return null; // Default implementation returns null
     }

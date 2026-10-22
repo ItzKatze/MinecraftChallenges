@@ -1,5 +1,8 @@
 package gg.itzkatze.mcc.lobby.cosmetics;
 
+import gg.itzkatze.mcc.level.LevelProgress;
+import gg.itzkatze.mcc.level.LevelStore;
+import gg.itzkatze.mcc.level.LevelTag;
 import gg.itzkatze.mcc.lobby.Lobby;
 import gg.itzkatze.mcc.lobby.LobbyManager;
 import gg.itzkatze.mcc.lobby.jumpandrun.JumpAndRun;
@@ -15,8 +18,9 @@ import java.util.UUID;
 
 public final class PointsSidebar implements ScoreboardContent {
 
-    public static void install(@NotNull CosmeticStore store) {
+    public static void install(@NotNull CosmeticStore store, @NotNull LevelStore levels) {
         store.addBalanceListener(PointsSidebar::refresh);
+        levels.addChangeListener(PointsSidebar::refresh);
     }
 
     public static void refresh(@NotNull UUID player) {
@@ -33,7 +37,11 @@ public final class PointsSidebar implements ScoreboardContent {
         CosmeticStore store = CosmeticStore.get();
         UUID id = player.getUuid();
         OptionalInt score = currentRun(id);
+        LevelProgress level = LevelStore.get().progress(id);
         return new Component[]{
+                Component.text(" "),
+                stat("Level: ", Component.text(level.level(), LevelTag.colorOf(level.level()))),
+                stat("XP: ", Component.text(level.cost() == 0 ? "max" : level.into() + "/" + level.cost(), NamedTextColor.WHITE)),
                 Component.text(" "),
                 stat("Current Run: ", score.isPresent() ? Component.text(score.getAsInt(), NamedTextColor.WHITE) : Component.text("-", NamedTextColor.DARK_GRAY)),
                 ranked("Best Run: ", Component.text(store.best(id), NamedTextColor.WHITE), store.rank(LeaderboardMetric.BEST_RUN, id)),
