@@ -7,7 +7,7 @@ public enum CosmeticCategory {
 
     BLOCK("Run Blocks", Material.GRASS_BLOCK),
     SOUND("Landing Sounds", Material.NOTE_BLOCK),
-    MUSIC("Music Discs", Material.JUKEBOX);
+    MUSIC("Music", Material.JUKEBOX);
 
     private final String title;
     private final Material icon;

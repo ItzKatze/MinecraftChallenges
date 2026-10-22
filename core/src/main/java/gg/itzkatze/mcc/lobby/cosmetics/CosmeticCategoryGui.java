@@ -158,11 +158,14 @@ public final class CosmeticCategoryGui extends MccGUI {
             lore.add(Component.text("Rarity: " + cosmetic.rarity().displayName(), cosmetic.rarity().color()));
         }
         if (!owned) {
-            lore.add(Component.text("Win it from the Cosmetic Case", NamedTextColor.GRAY));
+            lore.add(Component.text("Not owned", NamedTextColor.RED));
         } else if (equipped) {
             lore.add(Component.text("Equipped", NamedTextColor.GREEN));
         } else {
             lore.add(Component.text("Click to equip", NamedTextColor.YELLOW));
+        }
+        if (cosmetic instanceof MusicCosmetic music && music.packFile() != null && !MusicPack.get().isLoaded(id)) {
+            lore.add(Component.text("Needs the server resource pack", NamedTextColor.GRAY));
         }
         Season season = cosmetic == null ? null : cosmetic.season();
         if (season != null) {

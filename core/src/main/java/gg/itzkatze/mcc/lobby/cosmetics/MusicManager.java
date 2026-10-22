@@ -26,10 +26,12 @@ public final class MusicManager {
 
         UUID id = player.getUniqueId();
 
-        CosmeticStore.get().equippedMusic(id).ifPresent(music -> {
-            play(player, music);
-            scheduleNext(id, music);
-        });
+        CosmeticStore.get().equippedMusic(id)
+                .filter(music -> music.packFile() == null || MusicPack.get().isLoaded(id))
+                .ifPresent(music -> {
+                    play(player, music);
+                    scheduleNext(id, music);
+                });
     }
 
     private void scheduleNext(UUID id, MusicCosmetic music) {
@@ -56,7 +58,8 @@ public final class MusicManager {
     }
 
     private void play(Player player, MusicCosmetic music) {
-        player.playSound(music.sound(), net.kyori.adventure.sound.Sound.Emitter.self());
+        player.stopSound(SoundStop.source(Sound.Source.MUSIC));
+        player.playSound(music.sound());
     }
 
     public void stop(Player player) {

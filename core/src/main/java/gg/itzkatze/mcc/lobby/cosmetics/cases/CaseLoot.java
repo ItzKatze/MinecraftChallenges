@@ -23,11 +23,11 @@ public final class CaseLoot {
     }
 
     private static final List<Row> ROWS = List.of(
-            new Row(Rarity.COMMON, 25, 25), new Row(Rarity.COMMON, 18, 50), new Row(Rarity.COMMON, 15, 0),
-            new Row(Rarity.UNCOMMON, 10, 100), new Row(Rarity.UNCOMMON, 12, 0),
-            new Row(Rarity.RARE, 6, 200), new Row(Rarity.RARE, 8, 0),
-            new Row(Rarity.EPIC, 1.5, 500), new Row(Rarity.EPIC, 2.5, 0),
-            new Row(Rarity.LEGENDARY, 0.4, 1000), new Row(Rarity.LEGENDARY, 1.2, 0),
+            new Row(Rarity.COMMON, 25, 25), new Row(Rarity.COMMON, 18, 50), new Row(Rarity.COMMON, 20, 0),
+            new Row(Rarity.UNCOMMON, 10, 100), new Row(Rarity.UNCOMMON, 15, 0),
+            new Row(Rarity.RARE, 6, 200), new Row(Rarity.RARE, 10, 0),
+            new Row(Rarity.EPIC, 1.5, 500), new Row(Rarity.EPIC, 3.5, 0),
+            new Row(Rarity.LEGENDARY, 0.4, 1000), new Row(Rarity.LEGENDARY, 1.5, 0),
             new Row(Rarity.MYTHIC, 0.4, 0));
 
     private CaseLoot() {

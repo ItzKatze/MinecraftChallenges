@@ -19,6 +19,8 @@ import gg.itzkatze.mcc.level.XpDigest;
 import gg.itzkatze.mcc.player.AfkTracker;
 import gg.itzkatze.mcc.lobby.LobbyManager;
 import gg.itzkatze.mcc.lobby.cosmetics.CosmeticStore;
+import gg.itzkatze.mcc.lobby.cosmetics.MusicPack;
+import gg.itzkatze.mcc.lobby.cosmetics.MusicPackListener;
 import gg.itzkatze.mcc.lobby.cosmetics.cases.CaseFireworkGuard;
 import gg.itzkatze.mcc.lobby.cosmetics.cases.CaseRollGui;
 import gg.itzkatze.mcc.lobby.cosmetics.PointsSidebar;
@@ -78,6 +80,7 @@ public final class MinecraftChallenges extends JavaPlugin {
         installTimerEngine();
         PlayerDataStore.load();
         CosmeticStore.load();
+        MusicPack.load();
         LevelStore.load();
         PointsSidebar.install(CosmeticStore.get(), LevelStore.get());
         LevelUpNotice.install(LevelStore.get());
@@ -94,6 +97,7 @@ public final class MinecraftChallenges extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GameLifecycleManager(), this);
         getServer().getPluginManager().registerEvents(new LobbyManager(), this);
         getServer().getPluginManager().registerEvents(new CaseFireworkGuard(), this);
+        getServer().getPluginManager().registerEvents(new MusicPackListener(), this);
         LobbyManager.loadIslands();
         getServer().getPluginManager().registerEvents(new TeamChatManager(), this);
         getServer().getPluginManager().registerEvents(new LevelChat(), this);

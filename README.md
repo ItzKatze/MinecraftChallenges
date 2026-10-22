@@ -63,6 +63,18 @@ Playing earns XP, and XP adds up to a level that everyone sees:
 
 ---
 
+## 🎵 Music Pack
+
+The Cosmetic Case also holds C418's soundtrack songs (Aria Math, Sweden, Wet Hands and 29 more) as Jump & Run music. They need a small resource pack that the plugin builds itself:
+
+- **What's in it**: no audio at all, only a `sounds.json` that gives every song a name of its own and points at the music files each Minecraft client already has.
+- **Setup**: start the server once, upload `plugins/MinecraftChallenges/music-pack.zip` somewhere players can download it directly, put that link into `music-pack-url` in `config.yml` and restart. The console then names the link it sends. A `config.yml` from an older version has no `music-pack-url` line yet; add `music-pack-url: "<your link>"` at its end.
+- **Direct links**: the link has to download the zip itself, like a GitHub release asset (`https://github.com/<owner>/<repo>/releases/download/<tag>/music-pack.zip`) or a file on your own web space. Share pages such as Google Drive or a plain Dropbox link usually don't work.
+- **For players**: the pack is offered on join and is optional; it is added next to any pack from `server.properties`. Without it the soundtrack songs stay silent and their menu entries say so; the music discs always play. A player who declined can set Server Resource Packs to Enabled or Prompt under Edit in the server list and rejoin. While run music plays, the game's own background music is stopped.
+- **Updates**: when a plugin update changes the song list, the pack's SHA-1 in the console changes too; upload the new `music-pack.zip`. A player whose download fails is reported in the console with the link and the SHA-1 the pack should have.
+
+---
+
 ## 👀 Spectators
 
 Spectators watch a running battle without influencing it:

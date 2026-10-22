@@ -75,8 +75,8 @@ final class EventBlock {
                 if (step < changes) {
                     int preview = payout(ThreadLocalRandom.current());
                     player.sendTitle(
-                            "",
-                            "§6Event Block! §a" + PointsText.signed(preview),
+                            "§6Event Block!",
+                            "§a" + PointsText.signed(preview),
                             0, 10, 0
                     );
                     step++;
@@ -84,8 +84,8 @@ final class EventBlock {
                 }
 
                 player.sendTitle(
-                        "",
-                        "§6Event Block! §a" + PointsText.signed(applied),
+                        "§6Event Block!",
+                        "§a" + PointsText.signed(applied),
                         0, 20, 0
                 );
                 player.playSound(EventBlock.sound(applied));
