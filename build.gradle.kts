@@ -17,7 +17,7 @@ allprojects {
     version = findProperty("releaseVersion") ?: "0.0.1-SNAPSHOT"
 }
 
-subprojects {
+configure(subprojects.filter { it.name != "clientmod" }) {
     apply(plugin = "java")
     apply(plugin = "java-library")
     apply(plugin = "io.freefair.lombok")

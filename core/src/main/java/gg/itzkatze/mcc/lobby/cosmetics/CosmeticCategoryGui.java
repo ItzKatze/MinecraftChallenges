@@ -164,8 +164,8 @@ public final class CosmeticCategoryGui extends MccGUI {
         } else {
             lore.add(Component.text("Click to equip", NamedTextColor.YELLOW));
         }
-        if (cosmetic instanceof MusicCosmetic music && music.packFile() != null && !MusicPack.get().isLoaded(id)) {
-            lore.add(Component.text("Needs the server resource pack", NamedTextColor.GRAY));
+        if (cosmetic instanceof MusicCosmetic music && music.isSong() && !MusicChannel.isListening(viewer.getPlayer())) {
+            lore.add(Component.text("Needs the client mod", NamedTextColor.GRAY));
         }
         Season season = cosmetic == null ? null : cosmetic.season();
         if (season != null) {

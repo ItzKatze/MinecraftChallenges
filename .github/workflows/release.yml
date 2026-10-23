@@ -57,7 +57,7 @@ jobs:
               # an env var instead of -PreleaseVersion=..., which PowerShell can split at the first dot
               env:
                   ORG_GRADLE_PROJECT_releaseVersion: ${{ steps.version.outputs.version }}
-              run: .\gradlew.bat :loader:shadowJar
+              run: .\gradlew.bat :loader:shadowJar :clientmod:assemble
 
             - name: Publish release
               shell: bash
@@ -67,6 +67,7 @@ jobs:
                   PREVIOUS: ${{ steps.version.outputs.previous }}
               run: |
                   jar=$(ls loader/build/libs/MinecraftChallenges-*.jar)
+                  mod=$(ls clientmod/build/libs/MinecraftChallenges-Client-*.jar)
                   minecraft=${jar##*+}
                   minecraft=${minecraft%.jar}
                   notes="$RUNNER_TEMP/release-notes.md"
@@ -81,7 +82,11 @@ jobs:
                   else
                       echo "First numbered release." > "$notes"
                   fi
-                  gh release create "v$VERSION" "$jar" \
+                  {
+                      echo
+                      echo "The MinecraftChallenges-Client jar is the optional Fabric mod for players; it needs Fabric Loader and Fabric API."
+                  } >> "$notes"
+                  gh release create "v$VERSION" "$jar" "$mod" \
                       --title "MinecraftChallenges $VERSION (Minecraft $minecraft)" \
                       --notes-file "$notes" \
                       --target "$GITHUB_SHA"

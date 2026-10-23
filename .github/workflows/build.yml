@@ -22,11 +22,18 @@ jobs:
                   cache: gradle
 
             - name: Build
-              run: .\gradlew.bat :loader:shadowJar
+              run: .\gradlew.bat :loader:shadowJar :clientmod:assemble
 
             - name: Upload jar
               uses: actions/upload-artifact@v7
               with:
                   path: loader/build/libs/MinecraftChallenges-*.jar
+                  archive: false
+                  if-no-files-found: error
+
+            - name: Upload client mod
+              uses: actions/upload-artifact@v7
+              with:
+                  path: clientmod/build/libs/MinecraftChallenges-Client-*.jar
                   archive: false
                   if-no-files-found: error

@@ -98,6 +98,7 @@ public class JumpAndRun implements LobbyFeature, Listener {
         for (JumpRun run : List.copyOf(runs.values())) {
             end(arena, run, Ending.SILENT);
         }
+        musicManager.stopAll();
         arena.display().remove();
         arena.world().removePluginChunkTicket(arena.plate().x() >> 4, arena.plate().z() >> 4, MinecraftChallenges.get());
         reservations.clear();
@@ -139,9 +140,11 @@ public class JumpAndRun implements LobbyFeature, Listener {
         endSilently(event.getPlayer().getUniqueId());
     }
 
+    // A failed run's music may still be fading, and its silent flag has to go before the game saves the player.
     @EventHandler
     public void onQuit(@NotNull PlayerQuitEvent event) {
         endSilently(event.getPlayer().getUniqueId());
+        musicManager.stop(event.getPlayer());
     }
 
     private void endSilently(@NotNull UUID player) {
@@ -268,9 +271,12 @@ public class JumpAndRun implements LobbyFeature, Listener {
             removeBlock(arena, run.getNext(), run.isNextEvent() ? EventBlock.MATERIAL : run.getLook().block());
         }
         PointsSidebar.refresh(run.getId());
-        musicManager.stop(run.getPlayer());
-        if (ending == Ending.SILENT) return;
+        if (ending == Ending.SILENT) {
+            musicManager.stop(run.getPlayer());
+            return;
+        }
 
+        musicManager.fadeOut(run.getPlayer());
         String reason = ending == Ending.NO_ROOM ? "There is no room for another block. " : "";
         int score = run.getScore();
         Component message = Component.text("Jump & Run over! " + reason + "You reached ", NamedTextColor.RED)

@@ -17,6 +17,3 @@ exclude:
     deaths:
 
 forcebattle-duration-minutes: 60
-
-### --- Soundtrack music pack: upload plugins/MinecraftChallenges/music-pack.zip where players can download it directly, put the link here and restart --- ###
-music-pack-url: ""

@@ -1,5 +1,6 @@
 package gg.itzkatze.mcc.lobby.jumpandrun;
 
+import gg.itzkatze.mcc.lobby.cosmetics.MusicManager;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -41,7 +42,7 @@ final class WorldSpace implements HopPlanner.Space {
         if (!isLoaded(cell)) return false;
 
         Block block = world.getBlockAt(cell.x(), cell.y(), cell.z());
-        return AIR.contains(block.getType()) && world.getNearbyEntities(BoundingBox.of(block)).isEmpty();
+        return AIR.contains(block.getType()) && world.getNearbyEntities(BoundingBox.of(block), entity -> !MusicManager.isEmitter(entity)).isEmpty();
     }
 
     @Override
