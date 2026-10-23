@@ -30,36 +30,17 @@ public final class MusicManager {
                 .filter(music -> music.packFile() == null || MusicPack.get().isLoaded(id))
                 .ifPresent(music -> {
                     play(player, music);
-                    scheduleNext(id, music);
+                    tasks.put(id, Bukkit.getScheduler().runTaskTimer(plugin, new Loop(id, music), 1L, 1L));
                 });
     }
 
-    private void scheduleNext(UUID id, MusicCosmetic music) {
-        long delay = music.durationSeconds() * 20L;
-
-        BukkitTask task = Bukkit.getScheduler().runTaskLater(
-                plugin,
-                () -> {
-                    tasks.remove(id);
-
-                    Player online = Bukkit.getPlayer(id);
-                    if (online == null || !online.isOnline()) {
-                        stop(id);
-                        return;
-                    }
-
-                    play(online, music);
-                    scheduleNext(id, music);
-                },
-                delay
-        );
-
-        tasks.put(id, task);
+    private void play(Player player, MusicCosmetic music) {
+        stopBackgroundMusic(player);
+        player.playSound(music.sound(), Sound.Emitter.self());
     }
 
-    private void play(Player player, MusicCosmetic music) {
+    private static void stopBackgroundMusic(Player player) {
         player.stopSound(SoundStop.source(Sound.Source.MUSIC));
-        player.playSound(music.sound(), Sound.Emitter.self());
     }
 
     public void stop(Player player) {
@@ -71,6 +52,38 @@ public final class MusicManager {
         BukkitTask task = tasks.remove(id);
         if (task != null) {
             task.cancel();
+        }
+    }
+
+    private final class Loop implements Runnable {
+
+        private final UUID id;
+        private final MusicCosmetic music;
+        private final long length;
+        private long ticks;
+
+        private Loop(UUID id, MusicCosmetic music) {
+            this.id = id;
+            this.music = music;
+            this.length = music.durationSeconds() * 20L;
+        }
+
+        @Override
+        public void run() {
+            Player online = Bukkit.getPlayer(id);
+            if (online == null || !online.isOnline()) {
+                stop(id);
+                return;
+            }
+
+            if (++ticks >= length) {
+                ticks = 0;
+                play(online, music);
+                return;
+            }
+
+            // The client starts its next background track whenever its own countdown runs out, mid-song too, and the server can neither see nor reset it.
+            stopBackgroundMusic(online);
         }
     }
 }
