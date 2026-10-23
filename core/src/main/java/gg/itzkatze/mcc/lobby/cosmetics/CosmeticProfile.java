@@ -20,6 +20,7 @@ public final class CosmeticProfile {
     private int best;
     private int casesOpened;
     private int duplicateStreak;
+    private int caseCount = 1;
     private List<String> owned = new ArrayList<>();
     private List<String> equipped = new ArrayList<>();
 
@@ -56,6 +57,14 @@ public final class CosmeticProfile {
         return duplicateStreak;
     }
 
+    int caseCount() {
+        return caseCount;
+    }
+
+    void rememberCaseCount(int count) {
+        caseCount = count;
+    }
+
     @NotNull List<String> owned() {
         return Collections.unmodifiableList(owned);
     }
@@ -83,10 +92,10 @@ public final class CosmeticProfile {
         return true;
     }
 
-    boolean openCase(int price) {
-        if (!spend(price)) return false;
+    boolean openCases(int price, int count) {
+        if (count < 1 || !spend(price * count)) return false;
 
-        casesOpened = add(casesOpened, 1);
+        casesOpened = add(casesOpened, count);
         return true;
     }
 
@@ -142,6 +151,7 @@ public final class CosmeticProfile {
         best = Math.max(best, 0);
         casesOpened = Math.max(casesOpened, 0);
         duplicateStreak = Math.max(duplicateStreak, 0);
+        caseCount = Math.max(caseCount, 1);
         owned = owned == null ? new ArrayList<>() : new ArrayList<>(owned.stream().filter(Objects::nonNull).collect(Collectors.toCollection(LinkedHashSet::new)));
 
         List<String> known = equipped == null ? List.of() : equipped.stream().filter(id -> id != null && catalog.find(id).isPresent()).toList();

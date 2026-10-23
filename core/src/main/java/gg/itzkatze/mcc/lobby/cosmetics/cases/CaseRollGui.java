@@ -26,6 +26,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,15 +36,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class CaseRollGui extends MccGUI {
 
-    private static final int TOP_MARKER_SLOT = 4;
-    private static final int REEL_SLOT = 9;
-    private static final int BOTTOM_ROW_SLOT = 18;
-    private static final int AGAIN_SLOT = 19;
-    private static final int BOTTOM_MARKER_SLOT = 22;
-    private static final int CLOSE_SLOT = 25;
+    static final int MAX_CASES = 4;
     private static final int CENTER = CaseReel.WIDTH / 2;
-    private static final int PRIZE_SLOT = REEL_SLOT + CENTER;
-    private static final int REVEAL_DELAY = 40;
+    private static final int AGAIN_COLUMN = 1;
+    private static final int CLOSE_COLUMN = 7;
     private static final Sound TICK = Sound.sound(Key.key("block.wooden_button.click_on"), Sound.Source.PLAYER, 1f, 1f);
     private static final Sound SMALL_WIN = Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.PLAYER, 1f, 1f);
     private static final Sound GOOD_WIN = Sound.sound(Key.key("entity.player.levelup"), Sound.Source.PLAYER, 1f, 1f);
@@ -51,50 +47,45 @@ public final class CaseRollGui extends MccGUI {
     private static final Map<UUID, CaseRollGui> ROLLING = new HashMap<>();
 
     private final Player player;
-    private final CasePrize prize;
-    private final CaseReel reel;
-    private final boolean pity;
-    private int position;
-    private int wait = CaseReel.delay(0);
-    private boolean paid;
+    private final List<CaseSpin> spins;
     private boolean reopenPending;
     private @Nullable BukkitTask task;
-    private int revealWait;
-    private boolean stopped;
 
-    CaseRollGui(@NotNull Player player, @NotNull CasePrize prize, @NotNull CaseReel reel, boolean pity) {
-        super("Cosmetic Case", 27);
+    CaseRollGui(@NotNull Player player, @NotNull List<CaseSpin> spins) {
+        super("Cosmetic Case", CaseReel.WIDTH * (spins.size() + 2));
         this.player = player;
-        this.prize = prize;
-        this.reel = reel;
-        this.pity = pity;
+        this.spins = List.copyOf(spins);
     }
 
-    public static void begin(@NotNull MccPlayer clicker) {
-        begin(clicker, ThreadLocalRandom.current());
+    public static boolean begin(@NotNull MccPlayer clicker, int count) {
+        return begin(clicker, count, ThreadLocalRandom.current());
     }
 
-    static void begin(@NotNull MccPlayer clicker, @NotNull Random random) {
+    static boolean begin(@NotNull MccPlayer clicker, int count, @NotNull Random random) {
         Player player = clicker.getPlayer();
-        if (player == null || ROLLING.containsKey(player.getUniqueId())) return;
+        if (player == null || count < 1 || count > MAX_CASES || ROLLING.containsKey(player.getUniqueId())) return false;
 
+        UUID id = player.getUniqueId();
         CosmeticStore store = CosmeticStore.get();
-        if (!store.openCase(player, CaseLoot.PRICE)) {
-            player.sendMessage(Component.text(PointsText.missing(CaseLoot.PRICE - store.points(player.getUniqueId())), NamedTextColor.RED));
+        if (!store.openCases(player, CaseLoot.PRICE, count)) {
+            player.sendMessage(Component.text(PointsText.missing(CaseLoot.PRICE * count - store.points(id)), NamedTextColor.RED));
             player.playSound(ShopSounds.DENY);
-            player.closeInventory();
-            return;
+            return false;
         }
         List<Cosmetic> available = CaseLoot.available(store.catalog(), store.today());
-        List<Cosmetic> missing = CaseLoot.missing(available, cosmetic -> store.owns(player.getUniqueId(), cosmetic));
-        boolean pity = CaseLoot.pityDue(store.duplicateStreak(player.getUniqueId()), missing);
-        CasePrize prize = pity ? CaseLoot.drawPity(available, missing, random) : CaseLoot.drawPrize(available, random);
-        new CaseRollGui(player, prize, CaseReel.build(prize, () -> CaseLoot.drawShown(available, random)), pity).start();
+        List<CaseLoot.Draw> draws = CaseLoot.drawCases(available, cosmetic -> store.owns(id, cosmetic), store.duplicateStreak(id), count, random);
+        List<CaseSpin> spins = new ArrayList<>(draws.size());
+        for (int row = 0; row < draws.size(); row++) {
+            CaseLoot.Draw draw = draws.get(row);
+            spins.add(new CaseSpin(CaseReel.build(draw.prize(), () -> CaseLoot.drawShown(available, random), row), draw.pity()));
+        }
+        new CaseRollGui(player, spins).start();
+        return true;
     }
 
     public static void finishAllSilently() {
         for (CaseRollGui roll : List.copyOf(ROLLING.values())) {
-            roll.pay(true);
+            roll.finishSilently();
         }
     }
 
@@ -110,39 +101,50 @@ public final class CaseRollGui extends MccGUI {
 
     @Override
     public void setItems(MccPlayer viewer) {
-        if (paid) {
-            setRevealed();
+        int bottom = size - CaseReel.WIDTH;
+        setEdgeRow(0, spins.getFirst(), "▼");
+        for (int row = 0; row < spins.size(); row++) {
+            setReelRow(CaseReel.WIDTH * (row + 1), spins.get(row));
+        }
+        setEdgeRow(bottom, spins.getLast(), "▲");
+        if (isFinished()) {
+            set(againButton(bottom + AGAIN_COLUMN));
+            set(GUIClickableItem.getCloseItem(bottom + CLOSE_COLUMN));
+        }
+    }
+
+    // The top row belongs to the first reel and the bottom row to the last one: their panes follow the reel, and its paid prize gets them as its frame.
+    private void setEdgeRow(int start, @NotNull CaseSpin spin, @NotNull String marker) {
+        if (spin.paid()) {
+            ItemStack frame = pane(spin.prize().rarity());
+            ItemStack filler = ItemStackCreator.fillerItem();
+            for (int column = 0; column < CaseReel.WIDTH; column++) {
+                set(fixed(start + column, Math.abs(column - CENTER) <= 1 ? frame : filler));
+            }
             return;
         }
-        List<CasePrize> window = reel.window(position);
+        List<CasePrize> window = spin.reel().window(spin.position());
         for (int column = 0; column < CaseReel.WIDTH; column++) {
-            CasePrize shown = window.get(column);
-            set(fixed(REEL_SLOT + column, render(shown, false)));
-            if (column != CENTER) {
-                ItemStack pane = pane(shown.rarity());
-                set(fixed(column, pane));
-                set(fixed(BOTTOM_ROW_SLOT + column, pane));
+            ItemStack stack = column == CENTER ? ItemStackCreator.createNamedItemStack(Material.HOPPER, Component.text(marker, NamedTextColor.GRAY))
+                    : pane(window.get(column).rarity());
+            set(fixed(start + column, stack));
+        }
+    }
+
+    private void setReelRow(int start, @NotNull CaseSpin spin) {
+        if (spin.paid()) {
+            ItemStack frame = pane(spin.prize().rarity());
+            ItemStack filler = ItemStackCreator.fillerItem();
+            for (int column = 0; column < CaseReel.WIDTH; column++) {
+                ItemStack stack = column == CENTER ? render(spin.prize(), true) : Math.abs(column - CENTER) == 1 ? frame : filler;
+                set(fixed(start + column, stack));
             }
+            return;
         }
-        set(fixed(TOP_MARKER_SLOT, ItemStackCreator.createNamedItemStack(Material.HOPPER, Component.text("▼", NamedTextColor.GRAY))));
-        set(fixed(BOTTOM_MARKER_SLOT, ItemStackCreator.createNamedItemStack(Material.HOPPER, Component.text("▲", NamedTextColor.GRAY))));
-    }
-
-    private void setRevealed() {
-        ItemStack frame = pane(prize.rarity());
-        ItemStack filler = ItemStackCreator.fillerItem();
-        for (int slot = 0; slot < size; slot++) {
-            set(fixed(slot, isAroundPrize(slot) ? frame : filler));
+        List<CasePrize> window = spin.reel().window(spin.position());
+        for (int column = 0; column < CaseReel.WIDTH; column++) {
+            set(fixed(start + column, render(window.get(column), false)));
         }
-        set(fixed(PRIZE_SLOT, render(prize, true)));
-        set(againButton());
-        set(GUIClickableItem.getCloseItem(CLOSE_SLOT));
-    }
-
-    private static boolean isAroundPrize(int slot) {
-        int rows = Math.abs(slot / CaseReel.WIDTH - PRIZE_SLOT / CaseReel.WIDTH);
-        int columns = Math.abs(slot % CaseReel.WIDTH - CENTER);
-        return slot != PRIZE_SLOT && rows <= 1 && columns <= 1;
     }
 
     @Override
@@ -150,12 +152,12 @@ public final class CaseRollGui extends MccGUI {
         return false;
     }
 
-    // The roll screen can't be closed while the reel spins: it comes back on the next tick, and a player who leaves gets the prize silently.
+    // The roll screen can't be closed before its last row has finished: it comes back on the next tick, and a player who leaves gets every prize not yet paid silently.
     @Override
     public void onClose(InventoryCloseEvent event, CloseReason reason) {
-        if (paid) return;
+        if (isFinished()) return;
         if (event.getReason() == InventoryCloseEvent.Reason.DISCONNECT) {
-            pay(true);
+            finishSilently();
             return;
         }
         if (reopenPending) return;
@@ -166,11 +168,11 @@ public final class CaseRollGui extends MccGUI {
 
     private void reopen() {
         reopenPending = false;
-        if (paid) return;
+        if (isFinished()) return;
 
         Player online = Bukkit.getPlayer(player.getUniqueId());
         if (online == null) {
-            pay(true);
+            finishSilently();
             return;
         }
         if (online.getOpenInventory().getTopInventory().getHolder() == this) return;
@@ -180,63 +182,79 @@ public final class CaseRollGui extends MccGUI {
     private void tick() {
         Player online = Bukkit.getPlayer(player.getUniqueId());
         if (online == null) {
-            pay(true);
+            finishSilently();
             return;
         }
 
-        if (stopped) {
-            if (--revealWait <= 0) {
-                pay(false);
+        boolean moved = false;
+        boolean changed = false;
+        for (CaseSpin spin : spins) {
+            switch (spin.tick()) {
+                case MOVED -> {
+                    moved = true;
+                    changed = true;
+                }
+                case DUE -> {
+                    pay(spin, false);
+                    changed = true;
+                }
+                case NONE -> {
+                }
             }
-            return;
         }
-
-        if (--wait > 0) return;
-
-        position++;
-        online.playSound(TICK);
-
-        if (position == CaseReel.STEPS) {
-            stopped = true;
-            revealWait = REVEAL_DELAY;
+        if (moved) {
+            online.playSound(TICK);
+        }
+        if (isFinished()) {
+            stop();
+        }
+        if (changed) {
             redraw();
-            return;
         }
-
-        wait = CaseReel.delay(position);
-        redraw();
     }
 
-    private void pay(boolean silent) {
-        if (paid) return;
+    private boolean isFinished() {
+        return spins.stream().allMatch(CaseSpin::paid);
+    }
 
-        paid = true;
+    private void finishSilently() {
+        for (CaseSpin spin : spins) {
+            pay(spin, true);
+        }
+        stop();
+    }
+
+    private void stop() {
         if (task != null) {
             task.cancel();
             task = null;
         }
         ROLLING.remove(player.getUniqueId(), this);
-        List<Component> messages = award(CosmeticStore.get());
+    }
+
+    private void pay(@NotNull CaseSpin spin, boolean silent) {
+        if (!spin.settle()) return;
+
+        List<Component> messages = award(CosmeticStore.get(), spin);
         if (silent) return;
 
         messages.forEach(player::sendMessage);
-        player.playSound(winSound(prize.rarity()));
-        CaseFireworks.play(player, prize.rarity());
-        redraw();
+        player.playSound(winSound(spin.prize().rarity()));
+        CaseFireworks.play(player, spin.prize().rarity());
     }
 
-    private @NotNull List<Component> award(@NotNull CosmeticStore store) {
-        if (prize instanceof CasePrize.Points(int amount, Rarity tier)) {
+    private @NotNull List<Component> award(@NotNull CosmeticStore store, @NotNull CaseSpin spin) {
+        if (spin.prize() instanceof CasePrize.Points(int amount, Rarity tier)) {
             store.addPoints(player, amount);
             return List.of(Component.text("You won ", NamedTextColor.GREEN)
                     .append(Component.text(PointsText.signed(amount), tier.color()))
                     .append(Component.text("!", NamedTextColor.GREEN)));
         }
-        Cosmetic cosmetic = ((CasePrize.Item) prize).cosmetic();
+        Cosmetic cosmetic = ((CasePrize.Item) spin.prize()).cosmetic();
         int refund = CaseLoot.refund(cosmetic.rarity());
         if (store.winCosmetic(player, cosmetic, refund)) {
             Component won = Component.text("You won ", NamedTextColor.GREEN).append(cosmetic.styledName()).append(Component.text("! Equip it in the Cosmetics menu.", NamedTextColor.GREEN));
-            return pity ? List.of(won, Component.text("Your duplicate streak guaranteed it.", NamedTextColor.LIGHT_PURPLE)) : List.of(won);
+            return spin.pity() ? List.of(won, Component.text("Your duplicate streak guaranteed it.", NamedTextColor.LIGHT_PURPLE)) : List.of(won);
         }
         return List.of(Component.text("You won ", NamedTextColor.YELLOW).append(cosmetic.styledName())
                 .append(Component.text(", but you already own it: " + PointsText.signed(refund) + " instead.", NamedTextColor.YELLOW)));
@@ -248,8 +266,8 @@ public final class CaseRollGui extends MccGUI {
         updateInventory(viewer);
     }
 
-    private @NotNull GUIClickableItem againButton() {
-        return new GUIClickableItem(AGAIN_SLOT) {
+    private @NotNull GUIClickableItem againButton(int slot) {
+        return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryClickEvent event, MccPlayer clicker) {
                 CaseConfirmGui.offer(clicker);

@@ -8,9 +8,11 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public final class CaseLoot {
@@ -23,8 +25,8 @@ public final class CaseLoot {
     }
 
     private static final List<Row> ROWS = List.of(
-            new Row(Rarity.COMMON, 25, 25), new Row(Rarity.COMMON, 18, 50), new Row(Rarity.COMMON, 20, 0),
-            new Row(Rarity.UNCOMMON, 10, 100), new Row(Rarity.UNCOMMON, 15, 0),
+            new Row(Rarity.COMMON, 10, 25), new Row(Rarity.COMMON, 8, 50), new Row(Rarity.COMMON, 20, 0),
+            new Row(Rarity.UNCOMMON, 8, 100), new Row(Rarity.UNCOMMON, 15, 0),
             new Row(Rarity.RARE, 6, 200), new Row(Rarity.RARE, 10, 0),
             new Row(Rarity.EPIC, 1.5, 500), new Row(Rarity.EPIC, 3.5, 0),
             new Row(Rarity.LEGENDARY, 0.4, 1000), new Row(Rarity.LEGENDARY, 1.5, 0),
@@ -73,6 +75,33 @@ public final class CaseLoot {
 
     private static double cosmeticChance(@NotNull Rarity rarity) {
         return ROWS.stream().filter(row -> row.points() == 0 && row.rarity() == rarity).mapToDouble(Row::chance).sum();
+    }
+
+    record Draw(@NotNull CasePrize prize, boolean pity) {
+    }
+
+    // Each row decides pity with the streak and ownership the rows above leave behind, exactly as if the cases were opened one at a time.
+    static @NotNull List<Draw> drawCases(@NotNull List<? extends Cosmetic> available, @NotNull Predicate<? super Cosmetic> owned, int duplicateStreak, int count,
+                                         @NotNull Random random) {
+        Set<Cosmetic> drawn = new HashSet<>();
+        Predicate<Cosmetic> ownedNow = cosmetic -> owned.test(cosmetic) || drawn.contains(cosmetic);
+        int streak = duplicateStreak;
+        List<Draw> draws = new ArrayList<>();
+        for (int row = 0; row < count; row++) {
+            List<Cosmetic> missing = missing(available, ownedNow);
+            boolean pity = pityDue(streak, missing);
+            CasePrize prize = pity ? drawPity(available, missing, random) : drawPrize(available, random);
+            if (prize instanceof CasePrize.Item(Cosmetic cosmetic)) {
+                if (ownedNow.test(cosmetic)) {
+                    streak = (int) Math.min(Integer.MAX_VALUE, streak + 1L);
+                } else {
+                    drawn.add(cosmetic);
+                    streak = 0;
+                }
+            }
+            draws.add(new Draw(prize, pity));
+        }
+        return draws;
     }
 
     // The reel shows rare prizes far more often than they drop, so most rolls pass a few of them.

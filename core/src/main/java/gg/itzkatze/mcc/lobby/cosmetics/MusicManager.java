@@ -59,7 +59,7 @@ public final class MusicManager {
 
     private void play(Player player, MusicCosmetic music) {
         player.stopSound(SoundStop.source(Sound.Source.MUSIC));
-        player.playSound(music.sound());
+        player.playSound(music.sound(), Sound.Emitter.self());
     }
 
     public void stop(Player player) {

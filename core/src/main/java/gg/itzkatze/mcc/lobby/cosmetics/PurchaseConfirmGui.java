@@ -1,7 +1,6 @@
 package gg.itzkatze.mcc.lobby.cosmetics;
 
 import gg.itzkatze.mcc.gui.GUIClickableItem;
-import gg.itzkatze.mcc.gui.GUIItem;
 import gg.itzkatze.mcc.gui.MccGUI;
 import gg.itzkatze.mcc.player.MccPlayer;
 import gg.itzkatze.mcc.util.ItemStackCreator;
@@ -9,6 +8,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -36,12 +36,20 @@ public abstract class PurchaseConfirmGui extends MccGUI {
 
     protected abstract void deny(@NotNull MccPlayer clicker);
 
+    protected void clickSummary(@NotNull MccPlayer clicker, @NotNull ClickType click) {
+    }
+
     @Override
     public final void setItems(MccPlayer player) {
         clear();
         fill(ItemStackCreator.fillerItem());
         set(button(ACCEPT_SLOT, Component.text("Accept", NamedTextColor.GREEN, TextDecoration.BOLD), Material.LIME_STAINED_GLASS_PANE, acceptHint(), this::accept));
-        set(new GUIItem(SUMMARY_SLOT) {
+        set(new GUIClickableItem(SUMMARY_SLOT) {
+            @Override
+            public void run(InventoryClickEvent event, MccPlayer clicker) {
+                clickSummary(clicker, event.getClick());
+            }
+
             @Override
             public ItemStack getItem(MccPlayer viewer) {
                 return summary(viewer);
