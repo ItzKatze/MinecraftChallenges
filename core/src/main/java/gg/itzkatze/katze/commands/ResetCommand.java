@@ -5,8 +5,8 @@ import gg.itzkatze.katze.commands.framework.CallerType;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.game.GameLifecycleManager;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,12 +28,12 @@ public class ResetCommand extends KatzeCommand {
     @Override
     public void executeCommand(@NotNull CommandCaller caller, String[] args) {
         if (ChallengeManager.getActiveChallenges().isEmpty()) {
-            caller.sendMessage(Component.text("No challenge is enabled, nothing to reset.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("No challenge is enabled, nothing to reset.").color(KatzeColor.RED));
             return;
         }
 
         GameLifecycleManager.resetGame();
-        caller.sendMessage(Component.text("The game has been reset.").color(NamedTextColor.GREEN));
+        caller.sendMessage(Component.text("The game has been reset.").color(KatzeColor.LIME));
     }
 
     @Override

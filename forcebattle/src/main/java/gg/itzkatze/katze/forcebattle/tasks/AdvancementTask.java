@@ -7,10 +7,10 @@ import gg.itzkatze.katze.configuration.SettingsManager;
 import gg.itzkatze.katze.configuration.states.PlayerTeamBothState;
 import gg.itzkatze.katze.forcebattle.ForceBattlePlayer;
 import gg.itzkatze.katze.forcebattle.ForceBattleSettings;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.data.KatzeAdvancement;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.forcebattle.ForceBattleType;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import gg.itzkatze.katze.util.Toast;
 import net.kyori.adventure.text.Component;
@@ -96,12 +96,12 @@ public class AdvancementTask implements ForceTask {
                     .filter(teammate -> !teammate.isOffline())
                     .forEach(teammate -> {
                         teammate.sendMessage(Component.text(player.getName() + " has finished " + formattedObjective + "."));
-                        Toast.display(teammate.getPlayer(), toastIcon, Component.text(formattedObjective).color(NamedTextColor.BLUE), Toast.Style.GOAL, plugin);
+                        Toast.display(teammate.getPlayer(), toastIcon, Component.text(formattedObjective).color(KatzeColor.BLUE), Toast.Style.GOAL, plugin);
                     });
         }
 
         player.sendMessage(Component.text("You finished " + formattedObjective + "."));
-        Toast.display(player.getPlayer(), toastIcon, Component.text(formattedObjective).color(NamedTextColor.BLUE), Toast.Style.GOAL, plugin);
+        Toast.display(player.getPlayer(), toastIcon, Component.text(formattedObjective).color(KatzeColor.BLUE), Toast.Style.GOAL, plugin);
     }
 
     private @NotNull Optional<Advancement> getAdvancement(NamespacedKey key) {

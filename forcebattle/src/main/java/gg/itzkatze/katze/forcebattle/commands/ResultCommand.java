@@ -2,8 +2,8 @@ package gg.itzkatze.katze.forcebattle.commands;
 
 import gg.itzkatze.katze.KatzeGames;
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.team.KatzeTeam;
@@ -34,7 +34,7 @@ public class ResultCommand extends KatzeCommand {
     @Override
     public void executeCommand(@NotNull CommandCaller caller, String[] args) {
         if (KatzeGames.getTimer().isRunning()) {
-            caller.sendMessage(Component.text("This command may only be used while timer is paused.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("This command may only be used while timer is paused.").color(KatzeColor.RED));
             return;
         }
         @NotNull Optional<KatzePlayer> whoOpensOpt = KatzePlayer.adapt(caller.getName());
@@ -55,7 +55,7 @@ public class ResultCommand extends KatzeCommand {
                 @NotNull Optional<KatzePlayer> targetOpt = KatzePlayer.adapt(args[1]);
                 targetOpt.ifPresentOrElse(
                         target -> new ResultGUI(target, false).open(whoOpens),
-                        () -> caller.sendMessage(Component.text("Player couldn't be found.").color(NamedTextColor.RED))
+                        () -> caller.sendMessage(Component.text("Player couldn't be found.").color(KatzeColor.RED))
                 );
             }
             case "team" -> {
@@ -63,13 +63,13 @@ public class ResultCommand extends KatzeCommand {
                 try {
                     teamId = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
-                    caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+                    caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
                     return;
                 }
                 Optional<KatzeTeam> targetTeamOpt = KatzeTeam.ofId(teamId);
                 targetTeamOpt.ifPresentOrElse(
                         team -> new ResultGUI(team, false).open(whoOpens),
-                        () -> caller.sendMessage(Component.text("Team couldn't be found.").color(NamedTextColor.RED))
+                        () -> caller.sendMessage(Component.text("Team couldn't be found.").color(KatzeColor.RED))
                 );
             }
             case "playeranimated" -> {
@@ -79,7 +79,7 @@ public class ResultCommand extends KatzeCommand {
                 try {
                     place = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
-                    caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+                    caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
                     return;
                 }
                 KatzePlayer katzePlayer = KatzePlayer.getPlaces().get(place);
@@ -94,7 +94,7 @@ public class ResultCommand extends KatzeCommand {
                 try {
                     place = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
-                    caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+                    caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
                     return;
                 }
                 KatzeTeam team = KatzeTeam.getPlaces().get(place);

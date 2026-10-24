@@ -1,5 +1,6 @@
 package gg.itzkatze.katze.lobby.cosmetics;
 
+import gg.itzkatze.katze.lobby.leaderbord.LeaderboardMetric;
 import gg.itzkatze.katze.player.data.PlayerDataStore;
 import gg.itzkatze.katze.player.data.PlayerProfile;
 import org.bukkit.entity.Player;

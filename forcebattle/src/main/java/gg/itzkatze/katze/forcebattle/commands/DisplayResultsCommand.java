@@ -6,9 +6,9 @@ import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.team.KatzeTeam;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +36,7 @@ public class DisplayResultsCommand extends KatzeCommand {
     @Override
     protected void executeCommand(CommandCaller caller, String[] args) {
         if (!KatzeGames.getTimer().hasHitZero()) {
-            caller.sendMessage(Component.text("The challenge is not yet over.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("The challenge is not yet over.").color(KatzeColor.RED));
             return;
         }
 
@@ -59,10 +59,10 @@ public class DisplayResultsCommand extends KatzeCommand {
                     int points = player.getPoints();
 
                     scheduler.schedule(() -> KatzeGames.broadcast(
-                            Component.text(place + ". ", NamedTextColor.GOLD)
-                                    .append(Component.text(player.getName(), NamedTextColor.BLUE))
-                                    .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                                    .append(Component.text(points, NamedTextColor.GOLD))
+                            Component.text(place + ". ", KatzeColor.GOLD)
+                                    .append(Component.text(player.getName(), KatzeColor.BLUE))
+                                    .append(Component.text(": ", KatzeColor.GRAY))
+                                    .append(Component.text(points, KatzeColor.GOLD))
                     ), counter[0] * delay, TimeUnit.MILLISECONDS);
                     counter[0]++;
                 }
@@ -82,13 +82,13 @@ public class DisplayResultsCommand extends KatzeCommand {
                             .collect(Collectors.joining(", "));
 
                     scheduler.schedule(() -> KatzeGames.broadcast(
-                            Component.text(place + ". ", NamedTextColor.GOLD)
-                                    .append(Component.text(String.valueOf(team.getId()), NamedTextColor.BLUE))
-                                    .append(Component.text(" (", NamedTextColor.BLUE))
-                                    .append(Component.text(players, NamedTextColor.GRAY))
-                                    .append(Component.text(")", NamedTextColor.BLUE))
-                                    .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                                    .append(Component.text(points, NamedTextColor.GOLD))
+                            Component.text(place + ". ", KatzeColor.GOLD)
+                                    .append(Component.text(String.valueOf(team.getId()), KatzeColor.BLUE))
+                                    .append(Component.text(" (", KatzeColor.BLUE))
+                                    .append(Component.text(players, KatzeColor.LIGHT_GRAY))
+                                    .append(Component.text(")", KatzeColor.BLUE))
+                                    .append(Component.text(": ", KatzeColor.GRAY))
+                                    .append(Component.text(points, KatzeColor.GOLD))
                     ), counter[0] * delay, TimeUnit.MILLISECONDS);
                     counter[0]++;
                 }

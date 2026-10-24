@@ -10,10 +10,10 @@ import gg.itzkatze.katze.level.LevelStore;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.spectator.SpectatorManager;
 import gg.itzkatze.katze.spectator.SpectatorReason;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import gg.itzkatze.katze.util.WorldStorage;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -195,21 +195,21 @@ public class DeathSwapGameListener implements Listener {
         }
 
         Component message = Component.text()
-                .append(Component.text("Elapsed: ").color(NamedTextColor.GRAY))
-                .append(Component.text(StringUtility.formatTime(elapsedSeconds).trim()).color(NamedTextColor.AQUA))
-                .append(Component.text(" | ").color(NamedTextColor.DARK_GRAY))
-                .append(Component.text("Swaps: ").color(NamedTextColor.GRAY))
-                .append(Component.text(swapCount).color(NamedTextColor.LIGHT_PURPLE))
+                .append(Component.text("Elapsed: ").color(KatzeColor.LIGHT_GRAY))
+                .append(Component.text(StringUtility.formatTime(elapsedSeconds).trim()).color(KatzeColor.LIGHT_BLUE))
+                .append(Component.text(" | ").color(KatzeColor.GRAY))
+                .append(Component.text("Swaps: ").color(KatzeColor.LIGHT_GRAY))
+                .append(Component.text(swapCount).color(KatzeColor.MAGENTA))
                 .build();
 
         int secondsUntilSwap = swapTimer != null ? swapTimer.getSecondsRemaining() : 0;
         if (secondsUntilSwap <= 10) {
-            message = message.append(Component.text(" | ").color(NamedTextColor.DARK_GRAY))
-                    .append(Component.text("Next swap: ").color(NamedTextColor.GRAY))
-                    .append(Component.text(secondsUntilSwap + "s").color(NamedTextColor.RED));
+            message = message.append(Component.text(" | ").color(KatzeColor.GRAY))
+                    .append(Component.text("Next swap: ").color(KatzeColor.LIGHT_GRAY))
+                    .append(Component.text(secondsUntilSwap + "s").color(KatzeColor.RED));
         } else if (KatzeGames.getTimer().getMode() != GameTimer.Mode.DISABLED && !timerRunning) {
-            message = message.append(Component.text(" | ").color(NamedTextColor.DARK_GRAY))
-                    .append(Component.text("Paused").color(NamedTextColor.BLUE));
+            message = message.append(Component.text(" | ").color(KatzeColor.GRAY))
+                    .append(Component.text("Paused").color(KatzeColor.BLUE));
         }
 
         return message;
@@ -268,13 +268,13 @@ public class DeathSwapGameListener implements Listener {
             LevelStore.get().grant(winnerWrapper, DeathSwapXp.WIN.xp());
         }
         KatzeGames.broadcast(
-                Component.text("Death Swap winner: ").color(NamedTextColor.GOLD)
-                        .append(Component.text(winner.getName()).color(NamedTextColor.GREEN))
+                Component.text("Death Swap winner: ").color(KatzeColor.GOLD)
+                        .append(Component.text(winner.getName()).color(KatzeColor.LIME))
         );
 
         Title title = Title.title(
-                Component.text("Death Swap").color(NamedTextColor.GOLD),
-                Component.text(winner.getName() + " won!").color(NamedTextColor.GREEN),
+                Component.text("Death Swap").color(KatzeColor.GOLD),
+                Component.text(winner.getName() + " won!").color(KatzeColor.LIME),
                 Title.Times.times(Duration.ofSeconds(1), Duration.ofSeconds(3), Duration.ofSeconds(1))
         );
 

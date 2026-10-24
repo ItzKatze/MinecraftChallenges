@@ -6,8 +6,8 @@ import gg.itzkatze.katze.level.GameXp;
 import gg.itzkatze.katze.lobby.LobbyManager;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.spectator.SpectatorManager;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
@@ -32,7 +32,7 @@ public class GameLifecycleManager implements Listener {
         if (ChallengeManager.isGameStarted()) {
             if (event.getPlayer().isOp() && SessionPersistence.isAwaitingResume()) {
                 event.getPlayer().sendMessage(Component.text("The game was restored after a server restart and is paused. Use /timer resume to continue.")
-                        .color(NamedTextColor.YELLOW));
+                        .color(KatzeColor.YELLOW));
             }
             return;
         }

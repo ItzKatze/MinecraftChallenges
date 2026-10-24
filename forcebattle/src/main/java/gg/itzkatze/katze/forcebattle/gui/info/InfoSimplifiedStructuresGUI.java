@@ -8,8 +8,8 @@ import gg.itzkatze.katze.gui.GUIMaterial;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -35,13 +35,13 @@ public class InfoSimplifiedStructuresGUI extends KatzeGUI {
                     ArrayList<Component> lore = new ArrayList<>();
 
                     for (KatzeStructure biome : simplified.getStructures()) {
-                        lore.add(Component.text(" • " + biome.getName()).color(NamedTextColor.WHITE));
+                        lore.add(Component.text(" • " + biome.getName()).color(KatzeColor.WHITE));
                     }
 
                     if (guiMaterial.hasSkull()) {
-                        return ItemStackCreator.getSkull(guiMaterial.skull(), Component.text(simplified.getName()).color(NamedTextColor.GOLD), 1, lore);
+                        return ItemStackCreator.getSkull(guiMaterial.skull(), Component.text(simplified.getName()).color(KatzeColor.GOLD), 1, lore);
                     } else {
-                        return ItemStackCreator.getStack(Component.text(simplified.getName()).color(NamedTextColor.GOLD), guiMaterial.material(), 1, lore);
+                        return ItemStackCreator.getStack(Component.text(simplified.getName()).color(KatzeColor.GOLD), guiMaterial.material(), 1, lore);
                     }
                 }
             });

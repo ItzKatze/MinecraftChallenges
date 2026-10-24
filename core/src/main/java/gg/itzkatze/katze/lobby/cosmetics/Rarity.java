@@ -1,27 +1,28 @@
 package gg.itzkatze.katze.lobby.cosmetics;
 
-import net.kyori.adventure.text.format.NamedTextColor;
+import gg.itzkatze.katze.util.KatzeColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
 public enum Rarity {
 
-    COMMON(NamedTextColor.WHITE, "Common"),
-    UNCOMMON(NamedTextColor.GREEN, "Uncommon"),
-    RARE(NamedTextColor.BLUE, "Rare"),
-    EPIC(NamedTextColor.DARK_PURPLE, "Epic"),
-    LEGENDARY(NamedTextColor.GOLD, "Legendary"),
-    MYTHIC(NamedTextColor.LIGHT_PURPLE, "Mythic"),
+    COMMON(KatzeColor.WHITE, "Common"),
+    UNCOMMON(KatzeColor.LIME, "Uncommon"),
+    RARE(KatzeColor.BLUE, "Rare"),
+    EPIC(KatzeColor.PURPLE, "Epic"),
+    LEGENDARY(KatzeColor.GOLD, "Legendary"),
+    MYTHIC(KatzeColor.MAGENTA, "Mythic"),
     ;
 
-    private final NamedTextColor color;
+    private final TextColor color;
     private final String displayName;
 
-    Rarity(NamedTextColor color, String displayName) {
+    Rarity(TextColor color, String displayName) {
         this.color = color;
         this.displayName = displayName;
     }
 
-    public @NotNull NamedTextColor color() {
+    public @NotNull TextColor color() {
         return color;
     }
 

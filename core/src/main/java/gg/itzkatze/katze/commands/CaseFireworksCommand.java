@@ -6,9 +6,9 @@ import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.lobby.cosmetics.Rarity;
 import gg.itzkatze.katze.lobby.cosmetics.cases.CaseFireworks;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +37,7 @@ public class CaseFireworksCommand extends KatzeCommand {
 
         Rarity tier = args.length == 0 ? Rarity.MYTHIC : rarity(args[0]);
         if (tier == null) {
-            caller.sendMessage(Component.text("Unknown rarity \"" + args[0] + "\". Rarities: " + String.join(", ", rarities()) + ".", NamedTextColor.RED));
+            caller.sendMessage(Component.text("Unknown rarity \"" + args[0] + "\". Rarities: " + String.join(", ", rarities()) + ".", KatzeColor.RED));
             return;
         }
         CaseFireworks.play(katzePlayer.getPlayer(), tier);

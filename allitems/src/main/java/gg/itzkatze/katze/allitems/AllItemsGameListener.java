@@ -8,9 +8,9 @@ import gg.itzkatze.katze.data.KatzeStructure;
 import gg.itzkatze.katze.data.StructureSimplified;
 import gg.itzkatze.katze.level.LevelStore;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -338,6 +338,6 @@ public class AllItemsGameListener implements Listener {
         } else {
             KatzeGames.broadcast(Component.text(player.getName() + " discovered " + formatted + " (" + type + ")!"));
         }
-        KatzePlayer.adapt(player).sendMessage(Component.text("You discovered " + formatted + "!").color(NamedTextColor.GREEN));
+        KatzePlayer.adapt(player).sendMessage(Component.text("You discovered " + formatted + "!").color(KatzeColor.LIME));
     }
 }

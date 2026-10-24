@@ -1,9 +1,9 @@
 package gg.itzkatze.katze.level;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,13 +30,13 @@ public final class LevelUpNotice {
 
         Component subtitle = Component.textOfChildren(
                 Component.text(oldLevel, LevelTag.colorOf(oldLevel)),
-                Component.text(" → ", NamedTextColor.GRAY),
+                Component.text(" → ", KatzeColor.LIGHT_GRAY),
                 Component.text(newLevel, LevelTag.colorOf(newLevel)));
-        player.showTitle(Title.title(Component.text("Level Up!", NamedTextColor.GOLD), subtitle, TIMES));
+        player.showTitle(Title.title(Component.text("Level Up!", KatzeColor.GOLD), subtitle, TIMES));
         player.playSound(LEVEL_UP);
         player.sendMessage(Component.textOfChildren(
-                Component.text("You reached level ", NamedTextColor.GOLD),
+                Component.text("You reached level ", KatzeColor.GOLD),
                 Component.text(newLevel, LevelTag.colorOf(newLevel)),
-                Component.text("!", NamedTextColor.GOLD)));
+                Component.text("!", KatzeColor.GOLD)));
     }
 }

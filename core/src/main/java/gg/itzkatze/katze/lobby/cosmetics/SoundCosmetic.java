@@ -27,22 +27,23 @@ public enum SoundCosmetic implements Cosmetic {
     LEVER_CLICK("lever_click", "block.lever.click", "Lever Click", Rarity.UNCOMMON, Material.LEVER),
     ARMOR_EQUIP("armor_equip", "item.armor.equip_iron", "Armor Equip", Rarity.UNCOMMON, Material.IRON_CHESTPLATE),
 
-    SNOW_BLOCK("snow_block", "block.snow.hit", "Schneeblock", Rarity.UNCOMMON, Material.SNOW_BLOCK),
     FOX("fox", "entity.fox.ambient", "Fuchs", Rarity.UNCOMMON, Material.SWEET_BERRIES),
-    SNOW_GOLEM("snow_golem", "entity.snow_golem.ambient", "Snowgolem", Rarity.UNCOMMON, Material.CARVED_PUMPKIN),
     FROG("frog", "entity.frog.ambient", "Frosch Quark", Rarity.UNCOMMON, Material.FROGSPAWN),
 
     LEVEL_UP("level_up", "entity.player.levelup", "Level Up", Rarity.UNCOMMON, Material.EXPERIENCE_BOTTLE),
-    FIREWORK_TWINKLE("firework_twinkle", "entity.firework_rocket.twinkle", "Firework Twinkle", Rarity.UNCOMMON, Material.FIREWORK_ROCKET),
     VILLAGER_YES("villager_yes", "entity.villager.yes", "Villager Yes", Rarity.UNCOMMON, Material.EMERALD),
     EXPERIENCE_BOTTLE("experience_bottle", "entity.experience_bottle.throw", "Experience Bottle", Rarity.UNCOMMON, Material.EXPERIENCE_BOTTLE),
-    CHICKEN_POP("chicken_pop", "entity.chicken.egg", "Chicken Pop", Rarity.UNCOMMON, Material.EGG),
     NOTE_BLOCK_BASS("note_block_bass", "block.note_block.bass", "Bass Note", Rarity.UNCOMMON, Material.NOTE_BLOCK),
     NOTE_BLOCK_GUITAR("note_block_guitar", "block.note_block.guitar", "Guitar Note", Rarity.UNCOMMON, Material.NOTE_BLOCK),
     NOTE_BLOCK_DIDGERIDOO("note_block_didgeridoo", "block.note_block.didgeridoo", "Didgeridoo", Rarity.UNCOMMON, Material.NOTE_BLOCK),
     NOTE_BLOCK_COW_BELL("note_block_cow_bell", "block.note_block.cow_bell", "Cowbell Note", Rarity.UNCOMMON, Material.NOTE_BLOCK),
 
-    WITCH_CACKLE("witch_cackle", "entity.witch.celebrate", "Witch Cackle", Rarity.RARE, Material.CAULDRON, Season.HALLOWEEN);
+    WITCH_CACKLE("witch_cackle", "entity.witch.celebrate", "Witch Cackle", Rarity.RARE, Material.CAULDRON, Season.HALLOWEEN),
+    SNOW_GOLEM("snow_golem", "entity.snow_golem.ambient", "Snowgolem", Rarity.UNCOMMON, Material.CARVED_PUMPKIN, Season.WINTER),
+    FIREWORK_TWINKLE("firework_twinkle", "entity.firework_rocket.twinkle", "Firework Twinkle", Rarity.UNCOMMON, Material.FIREWORK_ROCKET, Season.WINTER),
+    SNOW_BLOCK("snow_block", "block.snow.hit", "Schneeblock", Rarity.UNCOMMON, Material.SNOW_BLOCK, Season.WINTER),
+    CHICKEN_POP("chicken_pop", "entity.chicken.egg", "Chicken Pop", Rarity.UNCOMMON, Material.EGG, Season.EASTER),
+    ;
 
     public static final Sound DEFAULT = Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.PLAYER, 1f, 1.2f);
 

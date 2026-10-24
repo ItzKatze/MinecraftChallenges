@@ -4,12 +4,12 @@ import gg.itzkatze.katze.level.LevelStore;
 import gg.itzkatze.katze.level.LevelTag;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.team.KatzeTeam;
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,13 +34,13 @@ public class TeamChatManager implements Listener {
     public static void sendTeamMessage(@NotNull KatzePlayer sender, @NotNull Component message) {
         KatzeTeam team = sender.getTeam();
         if (team == null) {
-            sender.sendMessage(Component.text("You are not currently in a team.", NamedTextColor.RED));
+            sender.sendMessage(Component.text("You are not currently in a team.", KatzeColor.RED));
             return;
         }
 
-        Component formattedMessage = Component.text("[Team] ", NamedTextColor.AQUA)
+        Component formattedMessage = Component.text("[Team] ", KatzeColor.LIGHT_BLUE)
                 .append(LevelTag.of(LevelStore.get().level(sender.getUuid())))
-                .append(Component.text(" <" + sender.getName() + "> ", NamedTextColor.WHITE))
+                .append(Component.text(" <" + sender.getName() + "> ", KatzeColor.WHITE))
                 .append(message);
         team.getPlayers().forEach(member -> member.sendMessage(formattedMessage));
     }

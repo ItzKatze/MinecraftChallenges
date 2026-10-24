@@ -5,11 +5,11 @@ import gg.itzkatze.katze.commands.framework.CallerType;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import java.util.ArrayList;
 import java.util.List;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,15 +41,15 @@ public class ChatCommand extends KatzeCommand {
         switch (args[0].toLowerCase()) {
             case "team" -> {
                 if (!player.isInTeam()) {
-                    caller.sendMessage(Component.text("You are not currently in a team.", NamedTextColor.RED));
+                    caller.sendMessage(Component.text("You are not currently in a team.", KatzeColor.RED));
                     return;
                 }
                 TeamChatManager.setTeamChatEnabled(player, true);
-                caller.sendMessage(Component.text("You are now talking in team chat.", NamedTextColor.GREEN));
+                caller.sendMessage(Component.text("You are now talking in team chat.", KatzeColor.LIME));
             }
             case "all" -> {
                 TeamChatManager.setTeamChatEnabled(player, false);
-                caller.sendMessage(Component.text("You are now talking in normal chat.", NamedTextColor.GREEN));
+                caller.sendMessage(Component.text("You are now talking in normal chat.", KatzeColor.LIME));
             }
             default -> sendUsage(caller);
         }

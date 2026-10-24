@@ -9,12 +9,12 @@ import gg.itzkatze.katze.event.TimerSetTimeEvent;
 import gg.itzkatze.katze.event.TimerStartEvent;
 import gg.itzkatze.katze.event.TimerStartTimeChangeEvent;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -96,10 +96,10 @@ public class KatzeTimer implements GameTimer {
             String timeStr = mode == Mode.COUNT_DOWN
                     ? StringUtility.formatTime(remainingSeconds)
                     : StringUtility.formatTime(elapsedSeconds);
-            return Component.text(timeStr).color(NamedTextColor.BLUE).style(Style.style(TextDecoration.ITALIC));
+            return Component.text(timeStr).color(KatzeColor.BLUE).style(Style.style(TextDecoration.ITALIC));
         }
 
-        return Component.text("Timer paused.").color(NamedTextColor.BLUE).style(Style.style(TextDecoration.ITALIC));
+        return Component.text("Timer paused.").color(KatzeColor.BLUE).style(Style.style(TextDecoration.ITALIC));
     }
 
     @Override

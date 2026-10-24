@@ -5,9 +5,9 @@ import gg.itzkatze.katze.configuration.GlobalSetting;
 import gg.itzkatze.katze.configuration.SettingsManager;
 import gg.itzkatze.katze.data.KatzeAdvancement;
 import gg.itzkatze.katze.team.KatzeTeam;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,14 +20,14 @@ final class ForceBattleNametag {
         Component suffix = Component.text(" ");
 
         if (player.isSpectator()) {
-            return suffix.append(Component.text("Spectator", NamedTextColor.GRAY).decorate(TextDecoration.ITALIC))
+            return suffix.append(Component.text("Spectator", KatzeColor.LIGHT_GRAY).decorate(TextDecoration.ITALIC))
                     .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
         }
         if (player.isExcluded()) {
-            suffix = suffix.append(Component.text("Excluded", NamedTextColor.GRAY)
+            suffix = suffix.append(Component.text("Excluded", KatzeColor.LIGHT_GRAY)
                     .decorate(TextDecoration.ITALIC));
         } else if (!KatzeGames.getTimer().isRunning()) {
-            suffix = suffix.append(Component.text("Waiting", NamedTextColor.GRAY)
+            suffix = suffix.append(Component.text("Waiting", KatzeColor.LIGHT_GRAY)
                     .decorate(TextDecoration.ITALIC));
         }
 
@@ -45,23 +45,23 @@ final class ForceBattleNametag {
             }
 
             if (!hideObjectives && !hidePoints) {
-                suffix = suffix.append(Component.text(" |", NamedTextColor.DARK_GRAY));
+                suffix = suffix.append(Component.text(" |", KatzeColor.GRAY));
             }
 
             if (!hidePoints) {
                 suffix = suffix.append(Component.text(" "))
-                        .append(Component.text("Points", NamedTextColor.GRAY))
-                        .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
-                        .append(Component.text(player.getPoints(), NamedTextColor.BLUE));
+                        .append(Component.text("Points", KatzeColor.LIGHT_GRAY))
+                        .append(Component.text(" » ", KatzeColor.GRAY))
+                        .append(Component.text(player.getPoints(), KatzeColor.BLUE));
             }
         }
 
         KatzeTeam teamData = player.getTeam();
         if (teamData != null) {
-            suffix = suffix.append(Component.text(" | ", NamedTextColor.DARK_GRAY))
-                    .append(Component.text("Team", NamedTextColor.GRAY))
-                    .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
-                    .append(Component.text(teamData.getId(), NamedTextColor.BLUE));
+            suffix = suffix.append(Component.text(" | ", KatzeColor.GRAY))
+                    .append(Component.text("Team", KatzeColor.LIGHT_GRAY))
+                    .append(Component.text(" » ", KatzeColor.GRAY))
+                    .append(Component.text(teamData.getId(), KatzeColor.BLUE));
         }
 
         return suffix.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
@@ -70,8 +70,8 @@ final class ForceBattleNametag {
     static @NotNull Component objectiveText(@NotNull ForceBattleObjective objective) {
         KatzeAdvancement advancement = objective.getObjectiveValue(KatzeAdvancement.class);
         String objectiveString = advancement != null ? advancement.name : StringUtility.formatName(objective.getObjectiveString());
-        return Component.text(objective.getBattleType().getPrefix(), NamedTextColor.GRAY)
-                .append(Component.text(" » ", NamedTextColor.DARK_GRAY))
-                .append(Component.text(objectiveString, NamedTextColor.BLUE));
+        return Component.text(objective.getBattleType().getPrefix(), KatzeColor.LIGHT_GRAY)
+                .append(Component.text(" » ", KatzeColor.GRAY))
+                .append(Component.text(objectiveString, KatzeColor.BLUE));
     }
 }

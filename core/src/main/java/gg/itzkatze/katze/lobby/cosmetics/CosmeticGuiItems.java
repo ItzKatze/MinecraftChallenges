@@ -3,9 +3,9 @@ package gg.itzkatze.katze.lobby.cosmetics;
 import gg.itzkatze.katze.gui.GUIItem;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,9 +22,9 @@ final class CosmeticGuiItems {
         return new GUIItem(slot) {
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
-                return ItemStackCreator.getStack(Component.text("Points: " + CosmeticStore.get().points(viewer.getUuid()), NamedTextColor.GOLD), Material.GOLD_NUGGET,
-                        List.of(Component.text("Every block you land on in the Jump & Run earns one point.", NamedTextColor.GRAY),
-                                Component.text("Spend them on the Cosmetic Case.", NamedTextColor.GRAY)));
+                return ItemStackCreator.getStack(Component.text("Points: " + CosmeticStore.get().points(viewer.getUuid()), KatzeColor.GOLD), Material.GOLD_NUGGET,
+                        List.of(Component.text("Every block you land on in the Jump & Run earns one point.", KatzeColor.LIGHT_GRAY),
+                                Component.text("Spend them on the Cosmetic Case.", KatzeColor.LIGHT_GRAY)));
             }
         };
     }

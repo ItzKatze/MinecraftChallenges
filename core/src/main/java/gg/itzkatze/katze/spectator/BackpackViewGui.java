@@ -5,8 +5,8 @@ import gg.itzkatze.katze.gui.GUIItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -100,8 +100,8 @@ public class BackpackViewGui extends KatzeGUI implements SpectatorView {
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
                 if (!leadsSomewhere(step)) return ItemStackCreator.fillerItem();
-                return ItemStackCreator.getStack(Component.text(name, NamedTextColor.YELLOW), Material.ARROW,
-                        List.of(Component.text("Page " + (page + step + 1) + " / " + pages(), NamedTextColor.GRAY)));
+                return ItemStackCreator.getStack(Component.text(name, KatzeColor.YELLOW), Material.ARROW,
+                        List.of(Component.text("Page " + (page + step + 1) + " / " + pages(), KatzeColor.LIGHT_GRAY)));
             }
         };
     }
@@ -115,7 +115,7 @@ public class BackpackViewGui extends KatzeGUI implements SpectatorView {
 
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
-                return ItemStackCreator.createNamedItemStack(Material.OAK_DOOR, Component.text("Back", NamedTextColor.YELLOW));
+                return ItemStackCreator.createNamedItemStack(Material.OAK_DOOR, Component.text("Back", KatzeColor.YELLOW));
             }
         };
     }

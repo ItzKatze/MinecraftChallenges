@@ -6,11 +6,13 @@ import gg.itzkatze.katze.level.LevelTag;
 import gg.itzkatze.katze.lobby.Lobby;
 import gg.itzkatze.katze.lobby.LobbyManager;
 import gg.itzkatze.katze.lobby.jumpandrun.JumpAndRun;
+import gg.itzkatze.katze.lobby.leaderbord.Leaderboard;
+import gg.itzkatze.katze.lobby.leaderbord.LeaderboardMetric;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.scoreboard.ScoreboardContent;
 import gg.itzkatze.katze.scoreboard.ScoreboardManager;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.OptionalInt;
@@ -41,14 +43,14 @@ public final class PointsSidebar implements ScoreboardContent {
         return new Component[]{
                 Component.text(" "),
                 stat("Level: ", Component.text(level.level(), LevelTag.colorOf(level.level()))),
-                stat("XP: ", Component.text(level.cost() == 0 ? "max" : level.into() + "/" + level.cost(), NamedTextColor.WHITE)),
+                stat("XP: ", Component.text(level.cost() == 0 ? "max" : level.into() + "/" + level.cost(), KatzeColor.WHITE)),
                 Component.text(" "),
-                stat("Current Run: ", score.isPresent() ? Component.text(score.getAsInt(), NamedTextColor.WHITE) : Component.text("-", NamedTextColor.DARK_GRAY)),
-                ranked("Best Run: ", Component.text(store.best(id), NamedTextColor.WHITE), store.rank(LeaderboardMetric.BEST_RUN, id)),
+                stat("Current Run: ", score.isPresent() ? Component.text(score.getAsInt(), KatzeColor.WHITE) : Component.text("-", KatzeColor.GRAY)),
+                ranked("Best Run: ", Component.text(store.best(id), KatzeColor.WHITE), store.rank(LeaderboardMetric.BEST_RUN, id)),
                 Component.text(" "),
-                ranked("Points: ", Component.text(store.points(id), NamedTextColor.GOLD), store.rank(LeaderboardMetric.CURRENT_POINTS, id)),
-                ranked("Lifetime Points: ", Component.text(store.earned(id), NamedTextColor.GOLD), store.rank(LeaderboardMetric.LIFETIME_POINTS, id)),
-                ranked("Cases Opened: ", Component.text(store.casesOpened(id), NamedTextColor.WHITE), store.rank(LeaderboardMetric.CASES_OPENED, id))
+                ranked("Points: ", Component.text(store.points(id), KatzeColor.GOLD), store.rank(LeaderboardMetric.CURRENT_POINTS, id)),
+                ranked("Lifetime Points: ", Component.text(store.earned(id), KatzeColor.GOLD), store.rank(LeaderboardMetric.LIFETIME_POINTS, id)),
+                ranked("Cases Opened: ", Component.text(store.casesOpened(id), KatzeColor.WHITE), store.rank(LeaderboardMetric.CASES_OPENED, id))
         };
     }
 
@@ -64,7 +66,7 @@ public final class PointsSidebar implements ScoreboardContent {
     }
 
     private static @NotNull Component stat(@NotNull String label, @NotNull Component value) {
-        return Component.text(label, NamedTextColor.GRAY).append(value);
+        return Component.text(label, KatzeColor.LIGHT_GRAY).append(value);
     }
 
     private static @NotNull Component ranked(@NotNull String label, @NotNull Component value, @NotNull OptionalInt position) {

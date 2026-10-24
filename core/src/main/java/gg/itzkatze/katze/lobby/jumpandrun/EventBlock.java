@@ -1,10 +1,11 @@
 package gg.itzkatze.katze.lobby.jumpandrun;
 
 import gg.itzkatze.katze.lobby.cosmetics.PointsText;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
@@ -101,8 +102,8 @@ final class EventBlock {
     }
 
     static @NotNull Component message(int applied) {
-        NamedTextColor color = applied < 0 ? NamedTextColor.RED : applied >= GOLD_FROM ? NamedTextColor.GOLD : NamedTextColor.GREEN;
-        return Component.textOfChildren(Component.text("Event Block! ", NamedTextColor.GOLD, TextDecoration.BOLD), Component.text(PointsText.signed(applied), color));
+        TextColor color = applied < 0 ? KatzeColor.RED : applied >= GOLD_FROM ? KatzeColor.GOLD : KatzeColor.LIME;
+        return Component.textOfChildren(Component.text("Event Block! ", KatzeColor.GOLD, TextDecoration.BOLD), Component.text(PointsText.signed(applied), color));
     }
 
     static @NotNull Sound sound(int applied) {

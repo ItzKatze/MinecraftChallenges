@@ -13,11 +13,11 @@ import gg.itzkatze.katze.data.MobsSimplified;
 import gg.itzkatze.katze.data.StructureSimplified;
 import gg.itzkatze.katze.forcebattle.exclusion.ObjectiveFilter;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -115,7 +115,7 @@ public class ForceBattleObjectiveManager {
 
         if (allPossible.isEmpty()) {
             player.sendMessage(Component.text("No objective available for BattleType " + battleType.name() + ". Possible all completed already?")
-                    .color(NamedTextColor.RED));
+                    .color(KatzeColor.RED));
             if (team != null && SettingsManager.isEnabled(GlobalSetting.EXTRA_TEAM_OBJECTIVE)) {
                 return getNewObjective(team);
             } else {

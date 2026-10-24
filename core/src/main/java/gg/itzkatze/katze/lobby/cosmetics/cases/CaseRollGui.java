@@ -11,10 +11,10 @@ import gg.itzkatze.katze.lobby.cosmetics.Rarity;
 import gg.itzkatze.katze.lobby.cosmetics.ShopSounds;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -68,7 +68,7 @@ public final class CaseRollGui extends KatzeGUI {
         UUID id = player.getUniqueId();
         CosmeticStore store = CosmeticStore.get();
         if (!store.openCases(player, CaseLoot.PRICE, count)) {
-            player.sendMessage(Component.text(PointsText.missing(CaseLoot.PRICE * count - store.points(id)), NamedTextColor.RED));
+            player.sendMessage(Component.text(PointsText.missing(CaseLoot.PRICE * count - store.points(id)), KatzeColor.RED));
             player.playSound(ShopSounds.DENY);
             return false;
         }
@@ -125,7 +125,7 @@ public final class CaseRollGui extends KatzeGUI {
         }
         List<CasePrize> window = spin.reel().window(spin.position());
         for (int column = 0; column < CaseReel.WIDTH; column++) {
-            ItemStack stack = column == CENTER ? ItemStackCreator.createNamedItemStack(Material.HOPPER, Component.text(marker, NamedTextColor.GRAY))
+            ItemStack stack = column == CENTER ? ItemStackCreator.createNamedItemStack(Material.HOPPER, Component.text(marker, KatzeColor.LIGHT_GRAY))
                     : pane(window.get(column).rarity());
             set(fixed(start + column, stack));
         }
@@ -246,18 +246,18 @@ public final class CaseRollGui extends KatzeGUI {
     private @NotNull List<Component> award(@NotNull CosmeticStore store, @NotNull CaseSpin spin) {
         if (spin.prize() instanceof CasePrize.Points(int amount, Rarity tier)) {
             store.addPoints(player, amount);
-            return List.of(Component.text("You won ", NamedTextColor.GREEN)
+            return List.of(Component.text("You won ", KatzeColor.LIME)
                     .append(Component.text(PointsText.signed(amount), tier.color()))
-                    .append(Component.text("!", NamedTextColor.GREEN)));
+                    .append(Component.text("!", KatzeColor.LIME)));
         }
         Cosmetic cosmetic = ((CasePrize.Item) spin.prize()).cosmetic();
         int refund = CaseLoot.refund(cosmetic.rarity());
         if (store.winCosmetic(player, cosmetic, refund)) {
-            Component won = Component.text("You won ", NamedTextColor.GREEN).append(cosmetic.styledName()).append(Component.text("! Equip it in the Cosmetics menu.", NamedTextColor.GREEN));
-            return spin.pity() ? List.of(won, Component.text("Your duplicate streak guaranteed it.", NamedTextColor.LIGHT_PURPLE)) : List.of(won);
+            Component won = Component.text("You won ", KatzeColor.LIME).append(cosmetic.styledName()).append(Component.text("! Equip it in the Cosmetics menu.", KatzeColor.LIME));
+            return spin.pity() ? List.of(won, Component.text("Your duplicate streak guaranteed it.", KatzeColor.MAGENTA)) : List.of(won);
         }
-        return List.of(Component.text("You won ", NamedTextColor.YELLOW).append(cosmetic.styledName())
-                .append(Component.text(", but you already own it: " + PointsText.signed(refund) + " instead.", NamedTextColor.YELLOW)));
+        return List.of(Component.text("You won ", KatzeColor.YELLOW).append(cosmetic.styledName())
+                .append(Component.text(", but you already own it: " + PointsText.signed(refund) + " instead.", KatzeColor.YELLOW)));
     }
 
     private void redraw() {
@@ -276,8 +276,8 @@ public final class CaseRollGui extends KatzeGUI {
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
                 int balance = CosmeticStore.get().points(viewer.getUuid());
-                return ItemStackCreator.getStack(Component.text("Open another case", NamedTextColor.LIGHT_PURPLE), Material.ENDER_CHEST,
-                        List.of(Component.text("Price: " + PointsText.amount(CaseLoot.PRICE), NamedTextColor.GOLD), Component.text("You have " + PointsText.amount(balance), NamedTextColor.GRAY),
+                return ItemStackCreator.getStack(Component.text("Open another case", KatzeColor.MAGENTA), Material.ENDER_CHEST,
+                        List.of(Component.text("Price: " + PointsText.amount(CaseLoot.PRICE), KatzeColor.GOLD), Component.text("You have " + PointsText.amount(balance), KatzeColor.LIGHT_GRAY),
                                 CaseConfirmGui.pityLine(viewer.getUuid())));
             }
         };
@@ -298,7 +298,7 @@ public final class CaseRollGui extends KatzeGUI {
         ItemStack stack = switch (prize) {
             case CasePrize.Points points -> ItemStackCreator.getStack(Component.text(PointsText.signed(points.amount()), tier.color()), pointsIcon(points.amount()), List.of(rarity));
             case CasePrize.Item item -> ItemStackCreator.getStack(item.cosmetic().styledName(), item.cosmetic().icon(),
-                    List.of(rarity, Component.text(item.cosmetic().category().title(), NamedTextColor.GRAY)));
+                    List.of(rarity, Component.text(item.cosmetic().category().title(), KatzeColor.LIGHT_GRAY)));
         };
         if (glint) {
             ItemMeta meta = stack.getItemMeta();

@@ -2,10 +2,10 @@ package gg.itzkatze.katze.spectator;
 
 import gg.itzkatze.katze.level.LevelStore;
 import gg.itzkatze.katze.level.LevelTag;
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,10 +24,10 @@ public class SpectatorChat implements Listener {
 
         event.setCancelled(true);
         Component line = Component.textOfChildren(
-                Component.text("[Spectator] ", NamedTextColor.GRAY),
+                Component.text("[Spectator] ", KatzeColor.LIGHT_GRAY),
                 LevelTag.of(LevelStore.get().level(sender.getUniqueId())),
-                Component.text(" <" + sender.getName() + "> ", NamedTextColor.WHITE),
-                event.message().colorIfAbsent(NamedTextColor.WHITE));
+                Component.text(" <" + sender.getName() + "> ", KatzeColor.WHITE),
+                event.message().colorIfAbsent(KatzeColor.WHITE));
         // The viewers are the snapshot Paper built for this message, which keeps this async thread off the wrapper list. They include the console.
         for (Audience viewer : event.viewers()) {
             if (viewer instanceof Player player && SpectatorManager.isSpectator(player.getUniqueId())) {

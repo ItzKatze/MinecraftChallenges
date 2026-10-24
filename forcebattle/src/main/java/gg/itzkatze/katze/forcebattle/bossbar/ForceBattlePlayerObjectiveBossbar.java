@@ -7,10 +7,10 @@ import gg.itzkatze.katze.configuration.GlobalSetting;
 import gg.itzkatze.katze.configuration.SettingsManager;
 import gg.itzkatze.katze.forcebattle.ForceBattlePlayer;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,17 +45,17 @@ public class ForceBattlePlayerObjectiveBossbar implements BossbarContent {
         int points = isPlayerInTeam ? katzePlayer.getTeam().getPoints() : katzePlayer.getPoints();
 
         if (SettingsManager.isEnabled(GlobalSetting.HIDE_POINTS)) {
-            return Component.text(playerObjective.getBattleType().getPrefix(), NamedTextColor.GRAY)
-                    .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                    .append(Component.text(StringUtility.formatName(playerObjective.getObjectiveString()), NamedTextColor.BLUE));
+            return Component.text(playerObjective.getBattleType().getPrefix(), KatzeColor.LIGHT_GRAY)
+                    .append(Component.text(": ", KatzeColor.GRAY))
+                    .append(Component.text(StringUtility.formatName(playerObjective.getObjectiveString()), KatzeColor.BLUE));
         }
 
-        return Component.text(playerObjective.getBattleType().getPrefix(), NamedTextColor.GRAY)
-                .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                .append(Component.text(StringUtility.formatName(playerObjective.getObjectiveString()), NamedTextColor.BLUE))
-                .append(Component.text(" | ", NamedTextColor.DARK_GRAY))
-                .append(Component.text(isPlayerInTeam ? "Team-Points" : "Points", NamedTextColor.GRAY))
-                .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                .append(Component.text(points, NamedTextColor.BLUE));
+        return Component.text(playerObjective.getBattleType().getPrefix(), KatzeColor.LIGHT_GRAY)
+                .append(Component.text(": ", KatzeColor.GRAY))
+                .append(Component.text(StringUtility.formatName(playerObjective.getObjectiveString()), KatzeColor.BLUE))
+                .append(Component.text(" | ", KatzeColor.GRAY))
+                .append(Component.text(isPlayerInTeam ? "Team-Points" : "Points", KatzeColor.LIGHT_GRAY))
+                .append(Component.text(": ", KatzeColor.GRAY))
+                .append(Component.text(points, KatzeColor.BLUE));
     }
 }

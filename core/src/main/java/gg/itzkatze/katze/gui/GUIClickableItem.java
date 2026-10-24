@@ -2,9 +2,9 @@ package gg.itzkatze.katze.gui;
 
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.Skull;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +29,7 @@ public abstract class GUIClickableItem extends GUIItem {
             public ItemStack getItem(KatzePlayer player) {
                 return ItemStackCreator.createNamedItemStack(
                         Material.BARRIER,
-                        Component.text("Close").color(NamedTextColor.RED)
+                        Component.text("Close").color(KatzeColor.RED)
                 );
             }
         };
@@ -46,9 +46,9 @@ public abstract class GUIClickableItem extends GUIItem {
             public ItemStack getItem(KatzePlayer player) {
                 return ItemStackCreator.getSkull(
                         Skull.ARROW_LEFT,
-                        Component.text("Go Back").color(NamedTextColor.GREEN),
+                        Component.text("Go Back").color(KatzeColor.LIME),
                         1,
-                        Component.text("To " + gui.getTitle()).color(NamedTextColor.GRAY)
+                        Component.text("To " + gui.getTitle()).color(KatzeColor.LIGHT_GRAY)
                 );
             }
         };
@@ -65,9 +65,9 @@ public abstract class GUIClickableItem extends GUIItem {
             public ItemStack getItem(KatzePlayer player) {
                 return ItemStackCreator.getSkull(
                         Skull.ARROW_RIGHT,
-                        Component.text("Go Forth").color(NamedTextColor.GREEN),
+                        Component.text("Go Forth").color(KatzeColor.LIME),
                         1,
-                        Component.text("To " + gui.getTitle()).color(NamedTextColor.GRAY)
+                        Component.text("To " + gui.getTitle()).color(KatzeColor.LIGHT_GRAY)
                 );
             }
         };

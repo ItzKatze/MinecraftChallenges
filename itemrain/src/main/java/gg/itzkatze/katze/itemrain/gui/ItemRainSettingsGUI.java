@@ -13,8 +13,8 @@ import gg.itzkatze.katze.gui.sign.NumberSignInput;
 import gg.itzkatze.katze.itemrain.ItemRainSettings;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -44,7 +44,7 @@ public class ItemRainSettingsGUI extends KatzeGUI {
                         60,
                         ItemRainSettingsGUI.this::applySeconds,
                         (katzePlayer, message) -> {
-                            katzePlayer.sendMessage(Component.text(message).color(NamedTextColor.RED));
+                            katzePlayer.sendMessage(Component.text(message).color(KatzeColor.RED));
                             new ItemRainSettingsGUI().open(katzePlayer);
                         }
                 );
@@ -55,13 +55,13 @@ public class ItemRainSettingsGUI extends KatzeGUI {
                 ItemRainSettings.ItemIntervalState state = getIntervalState();
                 Component status = state == null ? Component.text("Unknown") : state.getDisplayName();
                 return ItemStackCreator.getStack(
-                        Component.text("Item Interval").color(NamedTextColor.AQUA),
+                        Component.text("Item Interval").color(KatzeColor.LIGHT_BLUE),
                         Material.CLOCK,
                         1,
                         List.of(
-                                Component.text("Current: ").color(NamedTextColor.GRAY).append(status),
+                                Component.text("Current: ").color(KatzeColor.LIGHT_GRAY).append(status),
                                 Component.empty(),
-                                Component.text("Click to set seconds").color(NamedTextColor.YELLOW)
+                                Component.text("Click to set seconds").color(KatzeColor.YELLOW)
                         )
                 );
             }
@@ -81,13 +81,13 @@ public class ItemRainSettingsGUI extends KatzeGUI {
                 SettingStateType state = getState(ItemRainSettings.ItemRainSetting.SKY_DROP_MODE);
                 Component status = state == null ? Component.text("Unknown") : state.getDisplayName();
                 return ItemStackCreator.getStack(
-                        Component.text("Sky Drop Mode").color(NamedTextColor.AQUA),
+                        Component.text("Sky Drop Mode").color(KatzeColor.LIGHT_BLUE),
                         Material.ELYTRA,
                         1,
                         List.of(
-                                Component.text("Current: ").color(NamedTextColor.GRAY).append(status),
+                                Component.text("Current: ").color(KatzeColor.LIGHT_GRAY).append(status),
                                 Component.empty(),
-                                Component.text("Click to toggle").color(NamedTextColor.YELLOW)
+                                Component.text("Click to toggle").color(KatzeColor.YELLOW)
                         )
                 );
             }
@@ -106,7 +106,7 @@ public class ItemRainSettingsGUI extends KatzeGUI {
                         32,
                         ItemRainSettingsGUI.this::applyRadius,
                         (katzePlayer, message) -> {
-                            katzePlayer.sendMessage(Component.text(message).color(NamedTextColor.RED));
+                            katzePlayer.sendMessage(Component.text(message).color(KatzeColor.RED));
                             new ItemRainSettingsGUI().open(katzePlayer);
                         }
                 );
@@ -117,13 +117,13 @@ public class ItemRainSettingsGUI extends KatzeGUI {
                 ItemRainSettings.DropRadiusState state = getRadiusState();
                 Component status = state == null ? Component.text("Unknown") : state.getDisplayName();
                 return ItemStackCreator.getStack(
-                        Component.text("Sky Drop Radius").color(NamedTextColor.AQUA),
+                        Component.text("Sky Drop Radius").color(KatzeColor.LIGHT_BLUE),
                         Material.WIND_CHARGE,
                         1,
                         List.of(
-                                Component.text("Current: ").color(NamedTextColor.GRAY).append(status),
+                                Component.text("Current: ").color(KatzeColor.LIGHT_GRAY).append(status),
                                 Component.empty(),
-                                Component.text("Click to set radius").color(NamedTextColor.YELLOW)
+                                Component.text("Click to set radius").color(KatzeColor.YELLOW)
                         )
                 );
             }
@@ -164,7 +164,7 @@ public class ItemRainSettingsGUI extends KatzeGUI {
     private void applySeconds(KatzePlayer player, int seconds) {
         ItemRainSettings.ItemIntervalState state = ItemRainSettings.ItemIntervalState.fromSeconds(seconds);
         if (state == null) {
-            player.sendMessage(Component.text("Unsupported value.").color(NamedTextColor.RED));
+            player.sendMessage(Component.text("Unsupported value.").color(KatzeColor.RED));
             new ItemRainSettingsGUI().open(player);
             return;
         }
@@ -175,7 +175,7 @@ public class ItemRainSettingsGUI extends KatzeGUI {
     private void applyRadius(KatzePlayer player, int radius) {
         ItemRainSettings.DropRadiusState state = ItemRainSettings.DropRadiusState.fromRadius(radius);
         if (state == null) {
-            player.sendMessage(Component.text("Unsupported value.").color(NamedTextColor.RED));
+            player.sendMessage(Component.text("Unsupported value.").color(KatzeColor.RED));
             new ItemRainSettingsGUI().open(player);
             return;
         }

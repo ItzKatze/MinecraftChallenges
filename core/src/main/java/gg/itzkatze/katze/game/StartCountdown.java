@@ -1,11 +1,11 @@
 package gg.itzkatze.katze.game;
 
 import gg.itzkatze.katze.KatzeGames;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -69,7 +69,7 @@ public final class StartCountdown {
             }
 
             Audience everyone = Audience.audience(Bukkit.getOnlinePlayers());
-            everyone.showTitle(Title.title(Component.text(remaining, NamedTextColor.GOLD, TextDecoration.BOLD), Component.empty(), ONE_SECOND));
+            everyone.showTitle(Title.title(Component.text(remaining, KatzeColor.GOLD, TextDecoration.BOLD), Component.empty(), ONE_SECOND));
             everyone.playSound(TICK);
             remaining--;
         }

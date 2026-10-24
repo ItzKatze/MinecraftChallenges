@@ -1,14 +1,14 @@
 package gg.itzkatze.katze.configuration.states;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
 public enum PlayerTeamBothState implements SettingStateType {
-    OFF(Component.text("Off").color(NamedTextColor.RED)),
-    PLAYER(Component.text("Player").color(NamedTextColor.GREEN)),
-    TEAM(Component.text("Team").color(NamedTextColor.AQUA)),
-    BOTH(Component.text("Both").color(NamedTextColor.GOLD));
+    OFF(Component.text("Off").color(KatzeColor.RED)),
+    PLAYER(Component.text("Player").color(KatzeColor.LIME)),
+    TEAM(Component.text("Team").color(KatzeColor.LIGHT_BLUE)),
+    BOTH(Component.text("Both").color(KatzeColor.GOLD));
 
     private final Component defaultName;
 

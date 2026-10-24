@@ -5,9 +5,9 @@ import gg.itzkatze.katze.configuration.SettingsManager;
 import gg.itzkatze.katze.team.KatzeTeam;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.scoreboard.ScoreboardContent;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -30,11 +30,11 @@ public class ForceBattleScoreboardContent implements ScoreboardContent {
         // Player's objective
         ForceBattleObjective selfObjective = player.getObjective();
         if (selfObjective != null) {
-            lines.add(Component.text("Your Objective:").color(NamedTextColor.YELLOW));
+            lines.add(Component.text("Your Objective:").color(KatzeColor.YELLOW));
             String objName = getObjectiveDisplay(selfObjective);
-            lines.add(Component.text(truncate(objName)).color(NamedTextColor.WHITE));
+            lines.add(Component.text(truncate(objName)).color(KatzeColor.WHITE));
         } else {
-            lines.add(Component.text("No current objective").color(NamedTextColor.GRAY));
+            lines.add(Component.text("No current objective").color(KatzeColor.LIGHT_GRAY));
         }
 
         lines.add(Component.text(" ")); // Spacer
@@ -46,29 +46,29 @@ public class ForceBattleScoreboardContent implements ScoreboardContent {
             // Team objective (if enabled)
             ForceBattleObjective teamObjective = (ForceBattleObjective) team.getObjective();
             if (teamObjective != null && SettingsManager.isEnabled(GlobalSetting.EXTRA_TEAM_OBJECTIVE)) {
-                lines.add(Component.text("Team Objective:").color(NamedTextColor.YELLOW));
+                lines.add(Component.text("Team Objective:").color(KatzeColor.YELLOW));
                 String objName = getObjectiveDisplay(teamObjective);
-                lines.add(Component.text(truncate(objName)).color(NamedTextColor.WHITE));
+                lines.add(Component.text(truncate(objName)).color(KatzeColor.WHITE));
                 lines.add(Component.text("  ")); // Spacer
             }
 
             // Teammates
             if (team.getPlayers().size() > 1) {
-                lines.add(Component.text("Teammates:").color(NamedTextColor.YELLOW));
+                lines.add(Component.text("Teammates:").color(KatzeColor.YELLOW));
 
                 for (KatzePlayer teammate : team.getPlayers()) {
                     if (teammate.equals(player)) continue;
                     ForceBattlePlayer teammatePlayer = (ForceBattlePlayer) teammate;
 
-                    lines.add(Component.text("* ").color(NamedTextColor.GRAY)
-                            .append(Component.text(teammate.getName()).color(NamedTextColor.AQUA)));
+                    lines.add(Component.text("* ").color(KatzeColor.LIGHT_GRAY)
+                            .append(Component.text(teammate.getName()).color(KatzeColor.LIGHT_BLUE)));
 
                     ForceBattleObjective teammateObjective = teammatePlayer.getObjective();
                     String objName = teammateObjective != null
                             ? getObjectiveDisplay(teammateObjective)
                             : "None";
 
-                    lines.add(Component.text("  " + truncate(objName)).color(NamedTextColor.WHITE));
+                    lines.add(Component.text("  " + truncate(objName)).color(KatzeColor.WHITE));
                 }
             }
         }

@@ -6,9 +6,9 @@ import gg.itzkatze.katze.commands.framework.CallerType;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.game.GameTimer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,16 +39,16 @@ public class TimerCommand extends KatzeCommand {
         switch (args[0].toLowerCase()) {
             case "pause" -> {
                 timer.pause();
-                caller.sendMessage(Component.text("The timer has been paused.").color(NamedTextColor.BLUE));
+                caller.sendMessage(Component.text("The timer has been paused.").color(KatzeColor.BLUE));
                 return;
             }
             case "resume" -> {
                 if (!ChallengeManager.isGameStarted()) {
-                    caller.sendMessage(Component.text("The game has not been started yet. Use /start first.").color(NamedTextColor.RED));
+                    caller.sendMessage(Component.text("The game has not been started yet. Use /start first.").color(KatzeColor.RED));
                     return;
                 }
                 timer.start();
-                caller.sendMessage(Component.text("The timer has been resumed.").color(NamedTextColor.GREEN));
+                caller.sendMessage(Component.text("The timer has been resumed.").color(KatzeColor.LIME));
                 return;
             }
             case "set" -> {
@@ -61,7 +61,7 @@ public class TimerCommand extends KatzeCommand {
                     return;
                 }
                 timer.setRemainingSeconds(newTime);
-                caller.sendMessage(Component.text("The timer has been set to " + StringUtility.formatTime(newTime) + ".").color(NamedTextColor.BLUE));
+                caller.sendMessage(Component.text("The timer has been set to " + StringUtility.formatTime(newTime) + ".").color(KatzeColor.BLUE));
                 return;
             }
         }
@@ -73,7 +73,7 @@ public class TimerCommand extends KatzeCommand {
         try {
             number = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
             return null;
         }
         return number;

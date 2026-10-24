@@ -1,8 +1,8 @@
 package gg.itzkatze.katze.forcebattle.commands;
 
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.player.KatzePlayer;
@@ -32,7 +32,7 @@ public class ExcludeCommand extends KatzeCommand {
     public void executeCommand(CommandCaller caller, String[] args) {
         if (args.length < 1) {
             if (!caller.callerType().equals(CallerType.PLAYER)) {
-                caller.sendMessage(Component.text("Only players may use this command.").color(NamedTextColor.RED));
+                caller.sendMessage(Component.text("Only players may use this command.").color(KatzeColor.RED));
                 return;
             }
             @NotNull Optional<KatzePlayer> battlePlayerOpt = KatzePlayer.adapt(caller.getName());

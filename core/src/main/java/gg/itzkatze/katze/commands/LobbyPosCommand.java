@@ -6,10 +6,10 @@ import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.lobby.Lobby;
 import gg.itzkatze.katze.lobby.LobbyManager;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
@@ -38,11 +38,11 @@ public class LobbyPosCommand extends KatzeCommand {
 
         Lobby lobby = LobbyManager.getActiveLobby();
         if (lobby == null) {
-            caller.sendMessage(Component.text("No lobby is active.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("No lobby is active.").color(KatzeColor.RED));
             return;
         }
         if (!player.getWorld().equals(lobby.getWorld())) {
-            caller.sendMessage(Component.text("You are not in the lobby.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("You are not in the lobby.").color(KatzeColor.RED));
             return;
         }
 
@@ -67,8 +67,8 @@ public class LobbyPosCommand extends KatzeCommand {
 
         String arguments = "new Vector(" + x + ", " + y + ", " + z + "), " + yaw;
 
-        return Component.text("Island " + islandId + ": " + x + " " + y + " " + z + ", yaw " + yaw + " ", NamedTextColor.YELLOW)
-                .append(Component.text("[Copy]", NamedTextColor.GREEN)
+        return Component.text("Island " + islandId + ": " + x + " " + y + " " + z + ", yaw " + yaw + " ", KatzeColor.YELLOW)
+                .append(Component.text("[Copy]", KatzeColor.LIME)
                         .clickEvent(ClickEvent.copyToClipboard(arguments))
                         .hoverEvent(HoverEvent.showText(Component.text("Click to copy"))));
     }

@@ -9,9 +9,9 @@ import gg.itzkatze.katze.game.GameTimer;
 import gg.itzkatze.katze.lobby.LobbyManager;
 import gg.itzkatze.katze.lobby.cosmetics.PointsSidebar;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -155,7 +155,7 @@ public class ScoreboardManager {
     }
 
     private static Component styleTitle(Component title) {
-        return title.colorIfAbsent(NamedTextColor.GOLD)
+        return title.colorIfAbsent(KatzeColor.GOLD)
                 .decorate(TextDecoration.BOLD);
     }
 

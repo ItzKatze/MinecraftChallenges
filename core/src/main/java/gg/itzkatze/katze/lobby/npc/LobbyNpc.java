@@ -2,9 +2,9 @@ package gg.itzkatze.katze.lobby.npc;
 
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +22,7 @@ public abstract class LobbyNpc {
     }
 
     public @Nullable Component getDescription() {
-        return Component.text("CLICK", NamedTextColor.YELLOW, TextDecoration.BOLD);
+        return Component.text("CLICK", KatzeColor.YELLOW, TextDecoration.BOLD);
     }
 
     public @NotNull List<Component> getDialogue(@NotNull KatzePlayer player) {

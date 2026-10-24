@@ -3,7 +3,7 @@ package gg.itzkatze.katze.lobby.islands;
 import gg.itzkatze.katze.KatzeGames;
 import gg.itzkatze.katze.lobby.LobbyFeature;
 import gg.itzkatze.katze.lobby.LobbyIsland;
-import gg.itzkatze.katze.lobby.cosmetics.Leaderboard;
+import gg.itzkatze.katze.lobby.leaderbord.Leaderboard;
 import gg.itzkatze.katze.lobby.cosmetics.cases.CaseSpot;
 import gg.itzkatze.katze.lobby.jumpandrun.JumpAndRun;
 import gg.itzkatze.katze.lobby.npc.NpcSpot;

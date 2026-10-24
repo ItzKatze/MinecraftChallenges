@@ -1,7 +1,7 @@
 package gg.itzkatze.katze.spectator;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,8 +11,8 @@ import java.util.function.Predicate;
 
 public final class WhisperFilter {
 
-    public static final Component ONLY_SPECTATORS = Component.text("During the battle you can only message other spectators.", NamedTextColor.RED);
-    public static final Component ONLY_SPECTATOR_CHAT = Component.text("During the battle spectators can only write in the spectator chat.", NamedTextColor.RED);
+    public static final Component ONLY_SPECTATORS = Component.text("During the battle you can only message other spectators.", KatzeColor.RED);
+    public static final Component ONLY_SPECTATOR_CHAT = Component.text("During the battle spectators can only write in the spectator chat.", KatzeColor.RED);
 
     private static final String NAMESPACE = "minecraft:";
     private static final Set<String> WHISPERS = Set.of("msg", "tell", "w");

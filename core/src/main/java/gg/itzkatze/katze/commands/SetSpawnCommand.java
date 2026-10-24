@@ -6,9 +6,9 @@ import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.lobby.Lobby;
 import gg.itzkatze.katze.lobby.LobbyIsland;
 import gg.itzkatze.katze.lobby.LobbyManager;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -57,7 +57,7 @@ public class SetSpawnCommand extends KatzeCommand {
             fail(caller, "Island " + target.getId() + " could not be loaded, the lobby was not changed.");
             return;
         }
-        caller.sendMessage(Component.text("Switched the lobby island to " + target.getId() + ".").color(NamedTextColor.GREEN));
+        caller.sendMessage(Component.text("Switched the lobby island to " + target.getId() + ".").color(KatzeColor.LIME));
     }
 
     @Override
@@ -80,6 +80,6 @@ public class SetSpawnCommand extends KatzeCommand {
     }
 
     private static void fail(@NotNull CommandCaller caller, @NotNull String message) {
-        caller.sendMessage(Component.text(message).color(NamedTextColor.RED));
+        caller.sendMessage(Component.text(message).color(KatzeColor.RED));
     }
 }

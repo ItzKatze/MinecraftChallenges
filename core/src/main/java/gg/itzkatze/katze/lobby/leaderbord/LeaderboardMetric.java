@@ -1,5 +1,6 @@
-package gg.itzkatze.katze.lobby.cosmetics;
+package gg.itzkatze.katze.lobby.leaderbord;
 
+import gg.itzkatze.katze.lobby.cosmetics.CosmeticProfile;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.ToIntFunction;
@@ -28,7 +29,7 @@ public enum LeaderboardMetric {
         return metrics[(ordinal() + 1) % metrics.length];
     }
 
-    int read(@NotNull CosmeticProfile profile) {
+    public int read(@NotNull CosmeticProfile profile) {
         return reader.applyAsInt(profile);
     }
 }

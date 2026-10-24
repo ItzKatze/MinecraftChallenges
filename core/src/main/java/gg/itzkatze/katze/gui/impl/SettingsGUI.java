@@ -14,9 +14,9 @@ import gg.itzkatze.katze.gui.GUIMaterial;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -81,12 +81,12 @@ public class SettingsGUI extends KatzeGUI {
                     } else {
                         if (ChallengeManager.isChallengeActive(challenge.getType())) {
                             ChallengeManager.unloadChallenge(challenge);
-                            player.sendMessage(Component.text("Disabled challenge: ").color(NamedTextColor.RED)
-                                    .append(Component.text(challenge.getType().getName()).color(NamedTextColor.RED)));
+                            player.sendMessage(Component.text("Disabled challenge: ").color(KatzeColor.RED)
+                                    .append(Component.text(challenge.getType().getName()).color(KatzeColor.RED)));
                         } else {
                             ChallengeManager.loadChallenge(challenge);
-                            player.sendMessage(Component.text("Enabled challenge: ").color(NamedTextColor.GREEN)
-                                    .append(Component.text(challenge.getType().getName()).color(NamedTextColor.GREEN)));
+                            player.sendMessage(Component.text("Enabled challenge: ").color(KatzeColor.LIME)
+                                    .append(Component.text(challenge.getType().getName()).color(KatzeColor.LIME)));
                         }
                         new SettingsGUI().open(player);
                     }
@@ -99,25 +99,25 @@ public class SettingsGUI extends KatzeGUI {
                     Component displayName = Component.text(challenge.getType().getName());
 
                     List<Component> lore = new ArrayList<>();
-                    lore.add(Component.text("Status: ").color(NamedTextColor.GRAY)
+                    lore.add(Component.text("Status: ").color(KatzeColor.LIGHT_GRAY)
                             .append(Component.text(active ? "Enabled" : "Disabled")
-                                    .color(active ? NamedTextColor.GREEN : NamedTextColor.RED)));
+                                    .color(active ? KatzeColor.LIME : KatzeColor.RED)));
 
                     if (challenge.hasSettings()) {
                         lore.add(Component.empty());
-                        lore.add(Component.text("Left-click: ").color(NamedTextColor.YELLOW)
-                                .append(Component.text("Enable/Disable").color(NamedTextColor.WHITE)));
-                        lore.add(Component.text("Right-click: ").color(NamedTextColor.YELLOW)
-                                .append(Component.text("Open Settings").color(NamedTextColor.WHITE)));
+                        lore.add(Component.text("Left-click: ").color(KatzeColor.YELLOW)
+                                .append(Component.text("Enable/Disable").color(KatzeColor.WHITE)));
+                        lore.add(Component.text("Right-click: ").color(KatzeColor.YELLOW)
+                                .append(Component.text("Open Settings").color(KatzeColor.WHITE)));
                     } else {
                         lore.add(Component.empty());
-                        lore.add(Component.text("Click: ").color(NamedTextColor.YELLOW)
-                                .append(Component.text("Enable/Disable").color(NamedTextColor.WHITE)));
+                        lore.add(Component.text("Click: ").color(KatzeColor.YELLOW)
+                                .append(Component.text("Enable/Disable").color(KatzeColor.WHITE)));
                     }
 
                     lore.add(Component.empty());
-                    lore.add(Component.text("Description: ").color(NamedTextColor.GRAY)
-                            .append(Component.text(challenge.getType().getDescription()).color(NamedTextColor.WHITE)));
+                    lore.add(Component.text("Description: ").color(KatzeColor.LIGHT_GRAY)
+                            .append(Component.text(challenge.getType().getDescription()).color(KatzeColor.WHITE)));
 
                     if (material.hasSkull()) {
                         return ItemStackCreator.getSkull(material.skull(), displayName, 1, lore);
@@ -142,10 +142,10 @@ public class SettingsGUI extends KatzeGUI {
                     SettingsManager.setState(setting, nextState);
 
                     KatzeGames.broadcast(
-                            Component.text(changedMsg + " ").color(NamedTextColor.BLUE)
-                                    .append(Component.text("has been set to ").color(NamedTextColor.GRAY))
+                            Component.text(changedMsg + " ").color(KatzeColor.BLUE)
+                                    .append(Component.text("has been set to ").color(KatzeColor.LIGHT_GRAY))
                                     .append(nextState.getDisplayName())
-                                    .append(Component.text("!").color(NamedTextColor.GRAY)));
+                                    .append(Component.text("!").color(KatzeColor.LIGHT_GRAY)));
 
                     new SettingsGUI().open(player);
                 }
@@ -154,15 +154,15 @@ public class SettingsGUI extends KatzeGUI {
                 public ItemStack getItem(KatzePlayer p) {
                     List<Component> loreLines = new ArrayList<>();
                     if (toggleLine != null && !toggleLine.isBlank()) {
-                        loreLines.add(Component.text(toggleLine).color(NamedTextColor.GRAY));
+                        loreLines.add(Component.text(toggleLine).color(KatzeColor.LIGHT_GRAY));
                     }
                     loreLines.add(Component.empty());
-                    loreLines.add(Component.text("Current Status").color(NamedTextColor.BLUE)
-                            .append(Component.text(": ").color(NamedTextColor.DARK_GRAY))
+                    loreLines.add(Component.text("Current Status").color(KatzeColor.BLUE)
+                            .append(Component.text(": ").color(KatzeColor.GRAY))
                             .append(SettingsManager.getState(setting).getDisplayName()));
 
                     return ItemStackCreator.getStack(
-                            Component.text(button.getNameText()).color(NamedTextColor.BLUE),
+                            Component.text(button.getNameText()).color(KatzeColor.BLUE),
                             button.getMaterial(),
                             1,
                             loreLines

@@ -10,9 +10,9 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -93,10 +93,10 @@ public class AllItemsMissingObjectivesListGUI extends KatzeGUI {
         List<ItemStack> items = new ArrayList<>();
         for (Material material : materials) {
             items.add(ItemStackCreator.getStack(
-                    Component.text(StringUtility.formatName(material.name())).color(NamedTextColor.AQUA),
+                    Component.text(StringUtility.formatName(material.name())).color(KatzeColor.LIGHT_BLUE),
                     material.isItem() ? material : fallback,
                     1,
-                    List.of(Component.text("Missing item").color(NamedTextColor.GRAY))
+                    List.of(Component.text("Missing item").color(KatzeColor.LIGHT_GRAY))
             ));
         }
         return items;
@@ -106,10 +106,10 @@ public class AllItemsMissingObjectivesListGUI extends KatzeGUI {
         List<ItemStack> items = new ArrayList<>();
         for (BiomeSimplified biome : biomes) {
             items.add(ItemStackCreator.getStack(
-                    Component.text(biome.getName()).color(NamedTextColor.AQUA),
+                    Component.text(biome.getName()).color(KatzeColor.LIGHT_BLUE),
                     Material.GRASS_BLOCK,
                     1,
-                    List.of(Component.text("Missing biome").color(NamedTextColor.GRAY))
+                    List.of(Component.text("Missing biome").color(KatzeColor.LIGHT_GRAY))
             ));
         }
         return items;
@@ -123,10 +123,10 @@ public class AllItemsMissingObjectivesListGUI extends KatzeGUI {
                 icon = Material.ZOMBIE_SPAWN_EGG;
             }
             items.add(ItemStackCreator.getStack(
-                    Component.text(StringUtility.formatName(type.name())).color(NamedTextColor.AQUA),
+                    Component.text(StringUtility.formatName(type.name())).color(KatzeColor.LIGHT_BLUE),
                     icon,
                     1,
-                    List.of(Component.text("Missing mob").color(NamedTextColor.GRAY))
+                    List.of(Component.text("Missing mob").color(KatzeColor.LIGHT_GRAY))
             ));
         }
         return items;
@@ -136,10 +136,10 @@ public class AllItemsMissingObjectivesListGUI extends KatzeGUI {
         List<ItemStack> items = new ArrayList<>();
         for (StructureSimplified structure : structures) {
             items.add(ItemStackCreator.getStack(
-                    Component.text(structure.getName()).color(NamedTextColor.AQUA),
+                    Component.text(structure.getName()).color(KatzeColor.LIGHT_BLUE),
                     Material.STRUCTURE_BLOCK,
                     1,
-                    List.of(Component.text("Missing structure").color(NamedTextColor.GRAY))
+                    List.of(Component.text("Missing structure").color(KatzeColor.LIGHT_GRAY))
             ));
         }
         return items;
@@ -149,10 +149,10 @@ public class AllItemsMissingObjectivesListGUI extends KatzeGUI {
         List<ItemStack> items = new ArrayList<>();
         for (KatzeAdvancement advancement : advancements) {
             items.add(ItemStackCreator.getStack(
-                    Component.text(advancement.getName()).color(NamedTextColor.AQUA),
+                    Component.text(advancement.getName()).color(KatzeColor.LIGHT_BLUE),
                     Material.BOOK,
                     1,
-                    List.of(Component.text(advancement.getDescription()).color(NamedTextColor.GRAY))
+                    List.of(Component.text(advancement.getDescription()).color(KatzeColor.LIGHT_GRAY))
             ));
         }
         return items;

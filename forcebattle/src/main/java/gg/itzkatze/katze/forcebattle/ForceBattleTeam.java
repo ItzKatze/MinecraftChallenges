@@ -9,10 +9,10 @@ import gg.itzkatze.katze.event.PlayerTeamLeaveEvent;
 import gg.itzkatze.katze.game.SessionPersistence;
 import gg.itzkatze.katze.level.LevelStore;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import gg.itzkatze.katze.util.Toast;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.forcebattle.gui.TeamBackpackGUI;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,11 +61,11 @@ public class ForceBattleTeam extends KatzeTeam {
             return;
         }
 
-        Component joinMessage = Component.text(katzePlayer.getName()).color(NamedTextColor.BLUE)
-                .append(Component.text(" has joined your team.").color(NamedTextColor.GRAY));
+        Component joinMessage = Component.text(katzePlayer.getName()).color(KatzeColor.BLUE)
+                .append(Component.text(" has joined your team.").color(KatzeColor.LIGHT_GRAY));
         players.forEach(teamPlayer -> teamPlayer.sendMessage(joinMessage));
         players.add(katzePlayer);
-        katzePlayer.sendMessage(Component.text("You have joined team " + this.getId() + ".").color(NamedTextColor.GREEN));
+        katzePlayer.sendMessage(Component.text("You have joined team " + this.getId() + ".").color(KatzeColor.LIME));
     }
 
     @Override
@@ -78,8 +78,8 @@ public class ForceBattleTeam extends KatzeTeam {
         }
 
         players.remove(katzePlayer);
-        Component leaveMessage = Component.text(katzePlayer.getName()).color(NamedTextColor.BLUE)
-                .append(Component.text(" has left your team.").color(NamedTextColor.GRAY));
+        Component leaveMessage = Component.text(katzePlayer.getName()).color(KatzeColor.BLUE)
+                .append(Component.text(" has left your team.").color(KatzeColor.LIGHT_GRAY));
         players.forEach(teamPlayer -> teamPlayer.sendMessage(leaveMessage));
         if (players.isEmpty()) {
             this.delete();
@@ -111,12 +111,12 @@ public class ForceBattleTeam extends KatzeTeam {
         this.objective = (ForceBattleObjective) updateEvent.getNewObjective();
         if (KatzeGames.getTimer().isRunning() && this.objective != null) {
             Material toastIcon = this.objective.getToastIcon();
-            Component toastMessage = Component.text("New Team Objective: ").color(NamedTextColor.GRAY)
-                    .append(Component.text(StringUtility.formatName(this.objective.getObjectiveString())).color(NamedTextColor.BLUE));
+            Component toastMessage = Component.text("New Team Objective: ").color(KatzeColor.LIGHT_GRAY)
+                    .append(Component.text(StringUtility.formatName(this.objective.getObjectiveString())).color(KatzeColor.BLUE));
             for (KatzePlayer member : players) {
-                member.sendMessage(Component.text("Next objective: ").color(NamedTextColor.GRAY)
-                        .append(Component.text(StringUtility.formatName(this.objective.getObjectiveString())).color(NamedTextColor.BLUE))
-                        .append(Component.text(" (" + this.objective.getBattleType().getPrefix() + ").").color(NamedTextColor.GRAY)));
+                member.sendMessage(Component.text("Next objective: ").color(KatzeColor.LIGHT_GRAY)
+                        .append(Component.text(StringUtility.formatName(this.objective.getObjectiveString())).color(KatzeColor.BLUE))
+                        .append(Component.text(" (" + this.objective.getBattleType().getPrefix() + ").").color(KatzeColor.LIGHT_GRAY)));
                 if (member.getPlayer() != null) {
                     Bukkit.getScheduler().runTaskLater(
                             KatzeGames.get(),
@@ -152,8 +152,8 @@ public class ForceBattleTeam extends KatzeTeam {
             return;
         }
         this.lastJoinRequest = new JoinRequest(katzePlayer, this);
-        Component requestMessage = Component.text(katzePlayer.getName()).color(NamedTextColor.BLUE)
-                .append(Component.text(" has requested to join your team. /team accept|reject.").color(NamedTextColor.GRAY));
+        Component requestMessage = Component.text(katzePlayer.getName()).color(KatzeColor.BLUE)
+                .append(Component.text(" has requested to join your team. /team accept|reject.").color(KatzeColor.LIGHT_GRAY));
         players.forEach(teamPlayer -> teamPlayer.sendMessage(requestMessage));
     }
 

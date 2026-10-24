@@ -1,8 +1,8 @@
 package gg.itzkatze.katze.forcebattle.commands;
 
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.team.KatzeTeam;
@@ -41,9 +41,9 @@ public class SkipCommand extends KatzeCommand {
                                     return;
                                 }
                                 battlePlayer.updateObjective(false, false);
-                                battlePlayer.sendMessage(Component.text("Your objective has been skipped by an admin.").color(NamedTextColor.GREEN));
-                                caller.sendMessage(Component.text("Successfully skipped the objective of " + battlePlayer.getName() + ".").color(NamedTextColor.GREEN));
-                            }, () -> caller.sendMessage(Component.text("Player couldn't be found.").color(NamedTextColor.RED))
+                                battlePlayer.sendMessage(Component.text("Your objective has been skipped by an admin.").color(KatzeColor.LIME));
+                                caller.sendMessage(Component.text("Successfully skipped the objective of " + battlePlayer.getName() + ".").color(KatzeColor.LIME));
+                            }, () -> caller.sendMessage(Component.text("Player couldn't be found.").color(KatzeColor.RED))
                     );
                 }
                 case "team" -> {
@@ -52,12 +52,12 @@ public class SkipCommand extends KatzeCommand {
                         teamOpt.ifPresentOrElse(
                                 team -> {
                                     team.updateObjective(null, false, false);
-                                    team.getPlayers().forEach(player -> player.sendMessage(Component.text("Your objective has been skipped by an admin.").color(NamedTextColor.GREEN)));
-                                    caller.sendMessage(Component.text("Successfully skipped the objective of " + team.getId() + ".").color(NamedTextColor.GREEN));
-                                }, () -> caller.sendMessage(Component.text("Team couldn't be found.").color(NamedTextColor.RED))
+                                    team.getPlayers().forEach(player -> player.sendMessage(Component.text("Your objective has been skipped by an admin.").color(KatzeColor.LIME)));
+                                    caller.sendMessage(Component.text("Successfully skipped the objective of " + team.getId() + ".").color(KatzeColor.LIME));
+                                }, () -> caller.sendMessage(Component.text("Team couldn't be found.").color(KatzeColor.RED))
                         );
                     } catch (NumberFormatException e) {
-                        caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+                        caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
                     }
                 }
             }

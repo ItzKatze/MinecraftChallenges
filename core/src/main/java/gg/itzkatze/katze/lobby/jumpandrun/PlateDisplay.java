@@ -1,7 +1,7 @@
 package gg.itzkatze.katze.lobby.jumpandrun;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -18,9 +18,9 @@ final class PlateDisplay {
     private static final NamespacedKey TAG = new NamespacedKey("katze", "lobby_jump_and_run");
     private static final double HEIGHT = 1.6;
     private static final Component TEXT = Component.textOfChildren(
-            Component.text("Jump & Run", NamedTextColor.GOLD, TextDecoration.BOLD),
+            Component.text("Jump & Run", KatzeColor.GOLD, TextDecoration.BOLD),
             Component.newline(),
-            Component.text("Step on the plate", NamedTextColor.GRAY));
+            Component.text("Step on the plate", KatzeColor.LIGHT_GRAY));
 
     private PlateDisplay() {
     }

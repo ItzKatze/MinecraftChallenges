@@ -1,8 +1,8 @@
 package gg.itzkatze.katze.lobby.npc;
 
 import gg.itzkatze.katze.KatzeGames;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -76,10 +76,10 @@ public final class NpcDialogue {
 
     static @NotNull Component format(@NotNull Component name, @NotNull Component line) {
         return Component.textOfChildren(
-                Component.text("[NPC] ", NamedTextColor.YELLOW),
+                Component.text("[NPC] ", KatzeColor.YELLOW),
                 name,
-                Component.text(": ", NamedTextColor.WHITE),
-                line.colorIfAbsent(NamedTextColor.WHITE));
+                Component.text(": ", KatzeColor.WHITE),
+                line.colorIfAbsent(KatzeColor.WHITE));
     }
 
     private void sendNextLine() {

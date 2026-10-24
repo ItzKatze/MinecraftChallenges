@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 public enum BlockCosmetic implements Cosmetic {
 
     BRICKS("bricks", Material.BRICKS, "Bricks", Rarity.COMMON),
-    CHERRY_PLANKS("cherry_planks", Material.CHERRY_PLANKS, "Cherry Planks", Rarity.COMMON),
     PALE_OAK_PLANKS("pale_oak_planks", Material.PALE_OAK_PLANKS, "Pale Oak Planks", Rarity.COMMON),
     BAMBOO_PLANKS("bamboo_planks", Material.BAMBOO_PLANKS, "Bamboo Planks", Rarity.COMMON),
     PURPUR_BLOCK("purpur_block", Material.PURPUR_BLOCK, "Purpur Block", Rarity.COMMON),
@@ -20,11 +19,6 @@ public enum BlockCosmetic implements Cosmetic {
     WAXED_CUT_COPPER("waxed_cut_copper", Material.WAXED_CUT_COPPER, "Waxed Cut Copper", Rarity.RARE),
     RED_MUSHROOM_BLOCK("red_mushroom_block", Material.RED_MUSHROOM_BLOCK, "Red Mushroom Block", Rarity.RARE),
     BROWN_MUSHROOM_BLOCK("brown_mushroom_block", Material.BROWN_MUSHROOM_BLOCK, "Brown Mushroom Block", Rarity.RARE),
-    TUBE_CORAL_BLOCK("tube_coral_block", Material.TUBE_CORAL_BLOCK, "Tube Coral Block", Rarity.RARE),
-    BRAIN_CORAL_BLOCK("brain_coral_block", Material.BRAIN_CORAL_BLOCK, "Brain Coral Block", Rarity.RARE),
-    BUBBLE_CORAL_BLOCK("bubble_coral_block", Material.BUBBLE_CORAL_BLOCK, "Bubble Coral Block", Rarity.RARE),
-    FIRE_CORAL_BLOCK("fire_coral_block", Material.FIRE_CORAL_BLOCK, "Fire Coral Block", Rarity.RARE),
-    HORN_CORAL_BLOCK("horn_coral_block", Material.HORN_CORAL_BLOCK, "Horn Coral Block", Rarity.RARE),
     AMETHYST_BLOCK("amethyst_block", Material.AMETHYST_BLOCK, "Amethyst Block", Rarity.RARE),
     EMERALD_ORE("emerald_ore", Material.EMERALD_ORE, "Emerald Ore", Rarity.RARE),
     REDSTONE_ORE("redstone_ore", Material.REDSTONE_ORE, "Redstone Ore", Rarity.RARE),
@@ -43,6 +37,12 @@ public enum BlockCosmetic implements Cosmetic {
     JACK_O_LANTERN("jack_o_lantern", Material.JACK_O_LANTERN, "Jack o'Lantern", Rarity.RARE, Season.HALLOWEEN),
     FRESH_SNOW("fresh_snow", Material.SNOW_BLOCK, "Fresh Snow", Rarity.RARE, Season.CHRISTMAS),
     MELON("melon", Material.MELON, "Melon", Rarity.RARE, Season.SUMMER),
+    CHERRY_PLANKS("cherry_planks", Material.CHERRY_PLANKS, "Cherry Planks", Rarity.COMMON, Season.SPRING),
+    TUBE_CORAL_BLOCK("tube_coral_block", Material.TUBE_CORAL_BLOCK, "Tube Coral Block", Rarity.RARE, Season.SUMMER),
+    BRAIN_CORAL_BLOCK("brain_coral_block", Material.BRAIN_CORAL_BLOCK, "Brain Coral Block", Rarity.RARE, Season.SUMMER),
+    BUBBLE_CORAL_BLOCK("bubble_coral_block", Material.BUBBLE_CORAL_BLOCK, "Bubble Coral Block", Rarity.RARE, Season.SUMMER),
+    FIRE_CORAL_BLOCK("fire_coral_block", Material.FIRE_CORAL_BLOCK, "Fire Coral Block", Rarity.RARE, Season.SUMMER),
+    HORN_CORAL_BLOCK("horn_coral_block", Material.HORN_CORAL_BLOCK, "Horn Coral Block", Rarity.RARE, Season.SUMMER),
     ;
 
     private final String id;

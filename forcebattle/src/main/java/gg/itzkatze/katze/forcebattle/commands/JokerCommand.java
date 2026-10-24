@@ -2,8 +2,8 @@ package gg.itzkatze.katze.forcebattle.commands;
 
 import gg.itzkatze.katze.forcebattle.ForceBattlePlayer;
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.util.StringUtility;
@@ -36,14 +36,14 @@ public class JokerCommand extends KatzeCommand {
 
         Optional<ForceBattlePlayer> targetOptional = ForceBattlePlayer.from(args[1]);
         if (targetOptional.isEmpty()) {
-            caller.sendMessage(Component.text("Player couldn't be found or is not in Force Battle.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Player couldn't be found or is not in Force Battle.").color(KatzeColor.RED));
             return;
         }
         ForceBattlePlayer target = targetOptional.get();
 
         JokerType jokerType = JokerType.of(args[2]);
         if (jokerType == null) {
-            caller.sendMessage(Component.text("Invalid joker type. Available types: 'skip', 'swap'.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Invalid joker type. Available types: 'skip', 'swap'.").color(KatzeColor.RED));
             return;
         }
 
@@ -52,7 +52,7 @@ public class JokerCommand extends KatzeCommand {
             try {
                 amount = Integer.parseInt(args[3]);
             } catch (NumberFormatException e) {
-                caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+                caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
                 return;
             }
         }

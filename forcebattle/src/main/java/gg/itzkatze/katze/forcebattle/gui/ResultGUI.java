@@ -9,6 +9,7 @@ import gg.itzkatze.katze.data.BiomeSimplified;
 import gg.itzkatze.katze.data.KatzeAdvancement;
 import gg.itzkatze.katze.data.StructureSimplified;
 import gg.itzkatze.katze.team.KatzeTeam;
+import gg.itzkatze.katze.util.KatzeColor;
 import lombok.Getter;
 import gg.itzkatze.katze.KatzeGames;
 import gg.itzkatze.katze.gui.KatzeGUI;
@@ -17,7 +18,6 @@ import gg.itzkatze.katze.gui.GUIItem;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.*;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -209,9 +209,9 @@ public class ResultGUI extends KatzeGUI {
                     viewer.sendMessage(ResultUtils.buildPlayerResultMessage(targetPlayer));
 
                     viewer.getPlayer().showTitle(Title.title(
-                            Component.text(targetPlayer.getName(), NamedTextColor.GOLD),
-                            Component.text("Score: ", NamedTextColor.YELLOW)
-                                    .append(Component.text(targetPlayer.getPoints(), NamedTextColor.AQUA)),
+                            Component.text(targetPlayer.getName(), KatzeColor.GOLD),
+                            Component.text("Score: ", KatzeColor.YELLOW)
+                                    .append(Component.text(targetPlayer.getPoints(), KatzeColor.LIGHT_BLUE)),
                             times
                     ));
                 }
@@ -221,17 +221,17 @@ public class ResultGUI extends KatzeGUI {
                     viewer.sendMessage(ResultUtils.buildTeamResultMessage(targetTeam));
 
                     viewer.getPlayer().showTitle(Title.title(
-                            Component.text("Team " + targetTeam.getId(), NamedTextColor.GOLD),
-                            Component.text("Score: ", NamedTextColor.YELLOW)
-                                    .append(Component.text(targetTeam.getPoints(), NamedTextColor.AQUA)),
+                            Component.text("Team " + targetTeam.getId(), KatzeColor.GOLD),
+                            Component.text("Score: ", KatzeColor.YELLOW)
+                                    .append(Component.text(targetTeam.getPoints(), KatzeColor.LIGHT_BLUE)),
                             times
                     ));
                 }
             }
             case ALL -> {
                 viewer.getPlayer().showTitle(Title.title(
-                        Component.text("All Results", NamedTextColor.AQUA),
-                        Component.text("Animation complete", NamedTextColor.GRAY),
+                        Component.text("All Results", KatzeColor.LIGHT_BLUE),
+                        Component.text("Animation complete", KatzeColor.LIGHT_GRAY),
                         times
                 ));
             }
@@ -300,24 +300,24 @@ public class ResultGUI extends KatzeGUI {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(Component.text("Time: ").color(NamedTextColor.GRAY)
+            lore.add(Component.text("Time: ").color(KatzeColor.LIGHT_GRAY)
                     .append(Component.text(StringUtility.formatTime(objective.getTime()))
-                            .color(NamedTextColor.BLUE)));
+                            .color(KatzeColor.BLUE)));
 
             if (displayNames) {
-                lore.add(Component.text("Player: ").color(NamedTextColor.GRAY)
+                lore.add(Component.text("Player: ").color(KatzeColor.LIGHT_GRAY)
                         .append(Component.text(objective.getWhoFinished().getName())
-                                .color(NamedTextColor.BLUE)));
+                                .color(KatzeColor.BLUE)));
             }
             if (objective.hasBeenSkipped()) {
                 lore.add(Component.empty());
-                lore.add(Component.text("SKIPPED").color(NamedTextColor.RED));
+                lore.add(Component.text("SKIPPED").color(KatzeColor.RED));
             }
 
             Component name = Component.text(objective.getBattleType().getPrefix() + ": ")
-                    .color(NamedTextColor.GRAY)
+                    .color(KatzeColor.LIGHT_GRAY)
                     .append(Component.text(StringUtility.formatName(objective.getObjectiveString()))
-                            .color(NamedTextColor.BLUE));
+                            .color(KatzeColor.BLUE));
 
             return ItemStackCreator.getStack(name, material, lore);
         }

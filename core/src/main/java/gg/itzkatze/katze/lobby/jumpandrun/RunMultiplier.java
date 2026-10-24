@@ -1,7 +1,7 @@
 package gg.itzkatze.katze.lobby.jumpandrun;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -31,12 +31,12 @@ public final class RunMultiplier {
             state.announcedLevel = level;
 
             player.sendMessage(
-                    Component.text("Multiplier increased to ", NamedTextColor.GREEN)
+                    Component.text("Multiplier increased to ", KatzeColor.LIME)
                             .append(Component.text(
                                     String.format(java.util.Locale.US, "%.1f", multiplier) + "x",
-                                    NamedTextColor.GOLD
+                                    KatzeColor.GOLD
                             ))
-                            .append(Component.text("!", NamedTextColor.GREEN))
+                            .append(Component.text("!", KatzeColor.LIME))
             );
         }
 

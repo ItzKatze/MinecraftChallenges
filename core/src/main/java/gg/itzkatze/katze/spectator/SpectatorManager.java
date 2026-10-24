@@ -2,8 +2,8 @@ package gg.itzkatze.katze.spectator;
 
 import gg.itzkatze.katze.KatzeGames;
 import gg.itzkatze.katze.challenges.ChallengeManager;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
@@ -25,8 +25,8 @@ public final class SpectatorManager {
     private static final NamespacedKey REACH_KEY = new NamespacedKey("katzegames", "spectator_reach");
     private static final double REACH_BONUS = 7;
     private static final Component ELIMINATED = Component.text(
-            "You are out, so you are spectating now. Right-click a player to see their inventory. Your chat only reaches other spectators.", NamedTextColor.YELLOW);
-    private static final Component STILL_SPECTATING = Component.text("You are still spectating. Type /spectate to play the next battle.", NamedTextColor.YELLOW);
+            "You are out, so you are spectating now. Right-click a player to see their inventory. Your chat only reaches other spectators.", KatzeColor.YELLOW);
+    private static final Component STILL_SPECTATING = Component.text("You are still spectating. Type /spectate to play the next battle.", KatzeColor.YELLOW);
 
     private SpectatorManager() {
     }

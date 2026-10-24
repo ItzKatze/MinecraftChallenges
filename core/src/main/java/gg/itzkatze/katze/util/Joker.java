@@ -2,7 +2,6 @@ package gg.itzkatze.katze.util;
 
 import gg.itzkatze.katze.KatzeGames;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -29,8 +28,8 @@ public class Joker {
     public static ItemStack getSwapItem(int amount) {
         return ItemStackCreator.createSpecialItem(
                 Material.STRUCTURE_VOID,
-                Component.text("Swap").color(NamedTextColor.BLUE),
-                List.of(Component.text("Click to swap your objective with another player.").color(NamedTextColor.GRAY)),
+                Component.text("Swap").color(KatzeColor.BLUE),
+                List.of(Component.text("Click to swap your objective with another player.").color(KatzeColor.LIGHT_GRAY)),
                 SWAP_KEY,
                 amount
         );
@@ -39,8 +38,8 @@ public class Joker {
     public static ItemStack getPlayerSkipItem(int amount) {
         return ItemStackCreator.createSpecialItem(
                 Material.BARRIER,
-                Component.text("Skip").color(NamedTextColor.RED),
-                List.of(Component.text("Click to skip your current objective.").color(NamedTextColor.GRAY)),
+                Component.text("Skip").color(KatzeColor.RED),
+                List.of(Component.text("Click to skip your current objective.").color(KatzeColor.LIGHT_GRAY)),
                 PLAYER_SKIP_KEY,
                 amount
         );
@@ -49,8 +48,8 @@ public class Joker {
     public static ItemStack getTeamSkipItem(int amount) {
         return ItemStackCreator.createSpecialItem(
                 Material.KNOWLEDGE_BOOK,
-                Component.text("Skip").color(NamedTextColor.RED),
-                List.of(Component.text("Click to skip your team's current objective.").color(NamedTextColor.GRAY)),
+                Component.text("Skip").color(KatzeColor.RED),
+                List.of(Component.text("Click to skip your team's current objective.").color(KatzeColor.LIGHT_GRAY)),
                 TEAM_SKIP_KEY,
                 amount
         );

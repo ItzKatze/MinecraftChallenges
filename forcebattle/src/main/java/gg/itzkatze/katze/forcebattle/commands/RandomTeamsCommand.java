@@ -2,8 +2,8 @@ package gg.itzkatze.katze.forcebattle.commands;
 
 import gg.itzkatze.katze.KatzeGames;
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.team.KatzeTeam;
@@ -31,7 +31,7 @@ public class RandomTeamsCommand extends KatzeCommand {
     @Override
     protected void executeCommand(final CommandCaller caller, final String[] args) {
         if (KatzeGames.getTimer().isRunning()) {
-            caller.sendMessage(Component.text("The game has already started.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("The game has already started.").color(KatzeColor.RED));
             return;
         }
 
@@ -44,7 +44,7 @@ public class RandomTeamsCommand extends KatzeCommand {
         try {
             size = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
             return;
         }
 
@@ -52,7 +52,7 @@ public class RandomTeamsCommand extends KatzeCommand {
         int playerAmount = players.size();
 
         if (playerAmount % size != 0) {
-            caller.sendMessage(Component.text("No equal teams can be created.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("No equal teams can be created.").color(KatzeColor.RED));
             return;
         }
 
@@ -107,7 +107,7 @@ public class RandomTeamsCommand extends KatzeCommand {
             }
         }
 
-        caller.sendMessage(Component.text("Successfully created " + amountOfTeams + " Teams.").color(NamedTextColor.GREEN));
+        caller.sendMessage(Component.text("Successfully created " + amountOfTeams + " Teams.").color(KatzeColor.LIME));
     }
 
     @Override

@@ -7,8 +7,8 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -54,7 +54,7 @@ public class AllItemsLeaderboardGUI extends KatzeGUI {
                 public ItemStack getItem(KatzePlayer p) {
                     return ItemStackCreator.getPlayerSkull(
                             target.getUuid(),
-                            Component.text(target.getName()).color(NamedTextColor.AQUA),
+                            Component.text(target.getName()).color(KatzeColor.LIGHT_BLUE),
                             1,
                             buildLore(data, target.getUuid())
                     );
@@ -86,8 +86,8 @@ public class AllItemsLeaderboardGUI extends KatzeGUI {
 
     private Component[] buildLore(AllItemsData data, UUID uuid) {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("Total: ").color(NamedTextColor.GRAY)
-                .append(Component.text(getTotalProgress(data, uuid)).color(NamedTextColor.WHITE)));
+        lore.add(Component.text("Total: ").color(KatzeColor.LIGHT_GRAY)
+                .append(Component.text(getTotalProgress(data, uuid)).color(KatzeColor.WHITE)));
         lore.add(Component.empty());
         for (AllItemsObjectiveType type : AllItemsObjectiveType.values()) {
             int found = data.getFoundCount(type, uuid);
@@ -98,8 +98,8 @@ public class AllItemsLeaderboardGUI extends KatzeGUI {
                 case STRUCTURE -> data.getTotalAvailableStructures();
                 case ADVANCEMENT -> data.getTotalAvailableAdvancements();
             };
-            lore.add(Component.text(type.getDisplayName() + ": ").color(NamedTextColor.GRAY)
-                    .append(Component.text(found + "/" + total).color(NamedTextColor.WHITE)));
+            lore.add(Component.text(type.getDisplayName() + ": ").color(KatzeColor.LIGHT_GRAY)
+                    .append(Component.text(found + "/" + total).color(KatzeColor.WHITE)));
         }
         return lore.toArray(new Component[0]);
     }

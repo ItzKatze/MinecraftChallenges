@@ -1,5 +1,6 @@
 package gg.itzkatze.katze.team;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import gg.itzkatze.katze.challenges.Challenge;
@@ -8,7 +9,6 @@ import gg.itzkatze.katze.challenges.ChallengeType;
 import gg.itzkatze.katze.event.PlayerTeamJoinEvent;
 import gg.itzkatze.katze.event.PlayerTeamLeaveEvent;
 import gg.itzkatze.katze.player.KatzePlayer;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,8 +156,8 @@ public class KatzeTeam {
         }
         this.lastJoinRequest = new JoinRequest(katzePlayer, this);
         players.forEach(teamPlayer ->
-                teamPlayer.sendMessage(Component.text(katzePlayer.getName(), NamedTextColor.BLUE)
-                        .append(Component.text(" has requested to join your team. /team accept|reject.", NamedTextColor.GRAY)))
+                teamPlayer.sendMessage(Component.text(katzePlayer.getName(), KatzeColor.BLUE)
+                        .append(Component.text(" has requested to join your team. /team accept|reject.", KatzeColor.LIGHT_GRAY)))
         );
     }
 
@@ -187,10 +187,10 @@ public class KatzeTeam {
         }
 
         players.forEach(teamPlayer ->
-                teamPlayer.sendMessage(Component.text(katzePlayer.getName(), NamedTextColor.BLUE)
-                        .append(Component.text(" has joined your team.", NamedTextColor.GRAY))));
+                teamPlayer.sendMessage(Component.text(katzePlayer.getName(), KatzeColor.BLUE)
+                        .append(Component.text(" has joined your team.", KatzeColor.LIGHT_GRAY))));
         players.add(katzePlayer);
-        katzePlayer.sendMessage(Component.text("You have joined team " + this.getId() + ".", NamedTextColor.GREEN));
+        katzePlayer.sendMessage(Component.text("You have joined team " + this.getId() + ".", KatzeColor.LIME));
     }
 
     public void removePlayer(KatzePlayer katzePlayer) {
@@ -203,8 +203,8 @@ public class KatzeTeam {
 
         players.remove(katzePlayer);
         players.forEach(teamPlayer ->
-                teamPlayer.sendMessage(Component.text(katzePlayer.getName(), NamedTextColor.BLUE)
-                        .append(Component.text(" has left your team.", NamedTextColor.GRAY))));
+                teamPlayer.sendMessage(Component.text(katzePlayer.getName(), KatzeColor.BLUE)
+                        .append(Component.text(" has left your team.", KatzeColor.LIGHT_GRAY))));
         if (players.isEmpty()) {
             this.delete();
         }
@@ -303,7 +303,7 @@ public class KatzeTeam {
             }
 
             public void reject() {
-                katzePlayer.sendMessage(Component.text("Your join request has been rejected.", NamedTextColor.GRAY));
+                katzePlayer.sendMessage(Component.text("Your join request has been rejected.", KatzeColor.LIGHT_GRAY));
             }
 
         }

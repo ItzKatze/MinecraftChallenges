@@ -3,8 +3,8 @@ package gg.itzkatze.katze.forcebattle.commands;
 import gg.itzkatze.katze.forcebattle.ForceBattlePlayer;
 import gg.itzkatze.katze.forcebattle.ForceBattleSettings;
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.configuration.SettingsManager;
@@ -32,11 +32,11 @@ public class BackpackCommand extends KatzeCommand {
     @Override
     public void executeCommand(CommandCaller caller, String[] args) {
         if (!SettingsManager.isEnabled(ForceBattleSettings.BACKPACK)) {
-            caller.sendMessage(Component.text("Backpacks are disabled.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Backpacks are disabled.").color(KatzeColor.RED));
             return;
         }
         if (ForceBattleGameListener.startPhase) {
-            caller.sendMessage(Component.text("The game hasn't started yet.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("The game hasn't started yet.").color(KatzeColor.RED));
             return;
         }
 

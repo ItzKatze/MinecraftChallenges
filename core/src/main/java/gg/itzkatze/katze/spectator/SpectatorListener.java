@@ -4,8 +4,8 @@ import gg.itzkatze.katze.KatzeGames;
 import gg.itzkatze.katze.challenges.ChallengeManager;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class SpectatorListener implements Listener {
 
     private static final long VIEW_REFRESH_TICKS = 10;
     private static final Component WELCOME = Component.text(
-            "A battle is running, so you are spectating. Right-click a player to see their inventory. Your chat only reaches other spectators.", NamedTextColor.YELLOW);
+            "A battle is running, so you are spectating. Right-click a player to see their inventory. Your chat only reaches other spectators.", KatzeColor.YELLOW);
 
     // Lowest, so it runs before every listener that creates a wrapper: a player without one was not part of the started game.
     @EventHandler(priority = EventPriority.LOWEST)
@@ -63,7 +63,7 @@ public class SpectatorListener implements Listener {
             KatzePlayer wrapper = KatzePlayer.adapt(viewer);
             if (Bukkit.getPlayer(view.targetId()) == null) {
                 gui.close(wrapper, KatzeGUI.CloseReason.SERVER_EXITED);
-                viewer.sendMessage(Component.text(view.targetName() + " left the game.", NamedTextColor.GRAY));
+                viewer.sendMessage(Component.text(view.targetName() + " left the game.", KatzeColor.LIGHT_GRAY));
             } else {
                 gui.updateInventory(wrapper);
             }

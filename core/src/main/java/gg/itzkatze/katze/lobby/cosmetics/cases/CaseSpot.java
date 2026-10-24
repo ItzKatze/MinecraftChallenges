@@ -5,9 +5,9 @@ import gg.itzkatze.katze.lobby.Lobby;
 import gg.itzkatze.katze.lobby.LobbyFeature;
 import gg.itzkatze.katze.lobby.cosmetics.PointsText;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.event.player.PrePlayerAttackEntityEvent;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,11 +36,11 @@ public final class CaseSpot implements LobbyFeature, Listener {
     private static final float HITBOX_SIZE = 1.0f;
     private static final BlockFace[] FACINGS = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST};
     private static final Component LABEL = Component.textOfChildren(
-            Component.text("Cosmetic Case", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
+            Component.text("Cosmetic Case", KatzeColor.MAGENTA, TextDecoration.BOLD),
             Component.newline(),
-            Component.text(PointsText.amount(CaseLoot.PRICE), NamedTextColor.GOLD),
+            Component.text(PointsText.amount(CaseLoot.PRICE), KatzeColor.GOLD),
             Component.newline(),
-            Component.text("CLICK", NamedTextColor.YELLOW, TextDecoration.BOLD));
+            Component.text("CLICK", KatzeColor.YELLOW, TextDecoration.BOLD));
 
     private record Placed(World world, Block chest, TextDisplay label, Interaction hitbox) {
     }

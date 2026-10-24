@@ -7,8 +7,8 @@ import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.spectator.SpectatorManager;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.permissions.PermissionDefault;
 
 import java.util.List;
@@ -31,18 +31,18 @@ public class SpectateCommand extends KatzeCommand {
         if (!(caller instanceof KatzePlayer player)) return;
 
         if (ChallengeManager.isGameStarted()) {
-            caller.sendMessage(Component.text("You can't switch during a battle. After /reset you can choose again.", NamedTextColor.RED));
+            caller.sendMessage(Component.text("You can't switch during a battle. After /reset you can choose again.", KatzeColor.RED));
             return;
         }
         if (player.isSpectator()) {
             SpectatorManager.remove(player.getUuid());
-            caller.sendMessage(Component.text("You will play in the next battle.", NamedTextColor.GREEN));
+            caller.sendMessage(Component.text("You will play in the next battle.", KatzeColor.LIME));
             return;
         }
         SpectatorManager.choose(player.getUuid());
         player.leaveTeam();
         TeamChatManager.setTeamChatEnabled(player, false);
-        caller.sendMessage(Component.text("You will spectate the next battle. Type /spectate again to play.", NamedTextColor.GREEN));
+        caller.sendMessage(Component.text("You will spectate the next battle. Type /spectate again to play.", KatzeColor.LIME));
     }
 
     @Override

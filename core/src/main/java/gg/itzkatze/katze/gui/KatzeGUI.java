@@ -1,9 +1,9 @@
 package gg.itzkatze.katze.gui;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import lombok.Getter;
 import gg.itzkatze.katze.player.KatzePlayer;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -147,7 +147,7 @@ public abstract class KatzeGUI implements Listener, InventoryHolder {
             updateInventory(player);
             hasFinishedLoading = true;
         } catch (Exception e) {
-            p.sendMessage(Component.text("An error occurred while opening the GUI.").color(NamedTextColor.RED));
+            p.sendMessage(Component.text("An error occurred while opening the GUI.").color(KatzeColor.RED));
             e.printStackTrace();
             return;
         }

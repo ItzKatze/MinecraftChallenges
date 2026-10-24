@@ -4,8 +4,8 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
@@ -43,7 +43,7 @@ public abstract class PurchaseConfirmGui extends KatzeGUI {
     public final void setItems(KatzePlayer player) {
         clear();
         fill(ItemStackCreator.fillerItem());
-        set(button(ACCEPT_SLOT, Component.text("Accept", NamedTextColor.GREEN, TextDecoration.BOLD), Material.LIME_STAINED_GLASS_PANE, acceptHint(), this::accept));
+        set(button(ACCEPT_SLOT, Component.text("Accept", KatzeColor.LIME, TextDecoration.BOLD), Material.LIME_STAINED_GLASS_PANE, acceptHint(), this::accept));
         set(new GUIClickableItem(SUMMARY_SLOT) {
             @Override
             public void run(InventoryClickEvent event, KatzePlayer clicker) {
@@ -55,7 +55,7 @@ public abstract class PurchaseConfirmGui extends KatzeGUI {
                 return summary(viewer);
             }
         });
-        set(button(DENY_SLOT, Component.text("Deny", NamedTextColor.RED, TextDecoration.BOLD), Material.RED_STAINED_GLASS_PANE, denyHint(), this::deny));
+        set(button(DENY_SLOT, Component.text("Deny", KatzeColor.RED, TextDecoration.BOLD), Material.RED_STAINED_GLASS_PANE, denyHint(), this::deny));
     }
 
     @Override
@@ -72,7 +72,7 @@ public abstract class PurchaseConfirmGui extends KatzeGUI {
 
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
-                return ItemStackCreator.getStack(name, icon, List.of(Component.text(hint, NamedTextColor.GRAY)));
+                return ItemStackCreator.getStack(name, icon, List.of(Component.text(hint, KatzeColor.LIGHT_GRAY)));
             }
         };
     }

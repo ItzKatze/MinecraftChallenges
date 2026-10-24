@@ -12,12 +12,12 @@ import gg.itzkatze.katze.level.LevelStore;
 import gg.itzkatze.katze.team.KatzeTeam;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.Joker;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import gg.itzkatze.katze.util.Toast;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -109,11 +109,11 @@ public class ForceBattlePlayer extends KatzePlayer {
 
         if (KatzeGames.getTimer().isRunning() && newObjective != null) {
             Material toastIcon = newObjective.getToastIcon();
-            Component toastMessage = Component.text("New Objective: ").color(NamedTextColor.GRAY)
-                    .append(Component.text(StringUtility.formatName(newObjective.getObjectiveString())).color(NamedTextColor.BLUE));
+            Component toastMessage = Component.text("New Objective: ").color(KatzeColor.LIGHT_GRAY)
+                    .append(Component.text(StringUtility.formatName(newObjective.getObjectiveString())).color(KatzeColor.BLUE));
             sendMessage(Component.text("Next objective: ")
-                    .append(Component.text(StringUtility.formatName(newObjective.getObjectiveString())).color(NamedTextColor.BLUE))
-                    .append(Component.text(" (" + newObjective.getBattleType().getPrefix() + ").")).color(NamedTextColor.GRAY));
+                    .append(Component.text(StringUtility.formatName(newObjective.getObjectiveString())).color(KatzeColor.BLUE))
+                    .append(Component.text(" (" + newObjective.getBattleType().getPrefix() + ").")).color(KatzeColor.LIGHT_GRAY));
             if (getPlayer() != null) {
                 Bukkit.getScheduler().runTaskLater(
                         KatzeGames.get(),

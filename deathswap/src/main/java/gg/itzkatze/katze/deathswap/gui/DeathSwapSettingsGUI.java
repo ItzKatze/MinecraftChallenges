@@ -12,8 +12,8 @@ import gg.itzkatze.katze.gui.sign.NumberSignInput;
 import gg.itzkatze.katze.gui.impl.SettingsGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +43,7 @@ public class DeathSwapSettingsGUI extends KatzeGUI {
                         60,
                         DeathSwapSettingsGUI.this::applyMinutes,
                         (katzePlayer, message) -> {
-                            katzePlayer.sendMessage(Component.text(message).color(NamedTextColor.RED));
+                            katzePlayer.sendMessage(Component.text(message).color(KatzeColor.RED));
                             new DeathSwapSettingsGUI().open(katzePlayer);
                         }
                 );
@@ -54,13 +54,13 @@ public class DeathSwapSettingsGUI extends KatzeGUI {
                 DeathSwapSettings.SwapIntervalState state = getIntervalState();
                 Component status = state == null ? Component.text("Unknown") : state.getDisplayName();
                 return ItemStackCreator.getStack(
-                        Component.text("Swap Interval").color(NamedTextColor.AQUA),
+                        Component.text("Swap Interval").color(KatzeColor.LIGHT_BLUE),
                         Material.CLOCK,
                         1,
                         List.of(
-                                Component.text("Current: ").color(NamedTextColor.GRAY).append(status),
+                                Component.text("Current: ").color(KatzeColor.LIGHT_GRAY).append(status),
                                 Component.empty(),
-                                Component.text("Click to set minutes").color(NamedTextColor.YELLOW)
+                                Component.text("Click to set minutes").color(KatzeColor.YELLOW)
                         )
                 );
             }
@@ -90,7 +90,7 @@ public class DeathSwapSettingsGUI extends KatzeGUI {
     private void applyMinutes(KatzePlayer player, int minutes) {
         DeathSwapSettings.SwapIntervalState state = DeathSwapSettings.SwapIntervalState.fromMinutes(minutes);
         if (state == null) {
-            player.sendMessage(Component.text("Unsupported value.").color(NamedTextColor.RED));
+            player.sendMessage(Component.text("Unsupported value.").color(KatzeColor.RED));
             new DeathSwapSettingsGUI().open(player);
             return;
         }

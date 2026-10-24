@@ -4,9 +4,9 @@ import gg.itzkatze.katze.configuration.Setting;
 import gg.itzkatze.katze.configuration.SettingsManager;
 import gg.itzkatze.katze.configuration.states.ConfigurableSettingState;
 import gg.itzkatze.katze.configuration.states.SettingStateType;
+import gg.itzkatze.katze.util.KatzeColor;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,7 +72,7 @@ public class DeathSwapSettings {
         @Override
         public @NotNull Component getDisplayName() {
             String label = minutes == 1 ? "1 Minute" : minutes + " Minutes";
-            return Component.text(label).color(NamedTextColor.AQUA);
+            return Component.text(label).color(KatzeColor.LIGHT_BLUE);
         }
 
         @Override

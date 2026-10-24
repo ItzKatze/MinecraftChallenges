@@ -1,13 +1,16 @@
-package gg.itzkatze.katze.lobby.cosmetics;
+package gg.itzkatze.katze.lobby.leaderbord;
 
 import gg.itzkatze.katze.KatzeGames;
 import gg.itzkatze.katze.lobby.Lobby;
 import gg.itzkatze.katze.lobby.LobbyFeature;
+import gg.itzkatze.katze.lobby.cosmetics.CosmeticStore;
+import gg.itzkatze.katze.lobby.cosmetics.ShopSounds;
+import gg.itzkatze.katze.lobby.cosmetics.Standing;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.event.player.PrePlayerAttackEntityEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -165,25 +168,25 @@ public class Leaderboard implements LobbyFeature, Listener {
 
     static @NotNull Component render(@NotNull LeaderboardMetric metric, @NotNull List<Standing> standings) {
         TextComponent.Builder text = Component.text()
-                .append(Component.text(metric.title(), NamedTextColor.AQUA, TextDecoration.BOLD, TextDecoration.UNDERLINED)).appendNewline()
+                .append(Component.text(metric.title(), KatzeColor.LIGHT_BLUE, TextDecoration.BOLD, TextDecoration.UNDERLINED)).appendNewline()
                 .appendNewline()
                 ;
         if (standings.isEmpty()) {
-            text.append(Component.text("No entries yet", NamedTextColor.GRAY)).appendNewline();
+            text.append(Component.text("No entries yet", KatzeColor.LIGHT_GRAY)).appendNewline();
         }
         for (int i = 0; i < standings.size(); i++) {
             Standing standing = standings.get(i);
             text.append(Component.text((i + 1) + ". " + standing.name() + "  " + standing.value(), rankColor(i))).appendNewline();
         }
-        return text.appendNewline().append(Component.text("Click to switch", NamedTextColor.GRAY)).build();
+        return text.appendNewline().append(Component.text("Click to switch", KatzeColor.LIGHT_GRAY)).build();
     }
 
-    static @NotNull TextColor rankColor(int index) {
+    public static @NotNull TextColor rankColor(int index) {
         return switch (index) {
-            case 0 -> NamedTextColor.GOLD;
+            case 0 -> KatzeColor.GOLD;
             case 1 -> SILVER;
             case 2 -> BRONZE;
-            default -> NamedTextColor.DARK_GRAY;
+            default -> KatzeColor.GRAY;
         };
     }
 

@@ -4,9 +4,9 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -51,7 +51,7 @@ public class InfoGUI extends KatzeGUI {
 
                 @Override
                 public ItemStack getItem(final KatzePlayer player) {
-                    return ItemStackCreator.getStack(Component.text(task.getName()).color(NamedTextColor.BLUE), task.getMaterial(), 1);
+                    return ItemStackCreator.getStack(Component.text(task.getName()).color(KatzeColor.BLUE), task.getMaterial(), 1);
                 }
             });
         }

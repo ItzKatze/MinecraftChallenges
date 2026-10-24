@@ -8,8 +8,8 @@ import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.team.KatzeTeam;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -49,7 +49,7 @@ public class PlayerViewGui extends KatzeGUI implements SpectatorView {
     }
 
     public static @NotNull Component infoLine(@NotNull String label, @NotNull Component value) {
-        return Component.text(label + ": ", NamedTextColor.GRAY).append(value.colorIfAbsent(NamedTextColor.WHITE));
+        return Component.text(label + ": ", KatzeColor.LIGHT_GRAY).append(value.colorIfAbsent(KatzeColor.WHITE));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class PlayerViewGui extends KatzeGUI implements SpectatorView {
             public ItemStack getItem(KatzePlayer viewer) {
                 Player target = target();
                 ItemStack worn = target == null ? null : copy(piece.apply(target.getInventory()));
-                return worn != null ? worn : ItemStackCreator.createNamedItemStack(Material.GRAY_STAINED_GLASS_PANE, Component.text(emptyName, NamedTextColor.GRAY));
+                return worn != null ? worn : ItemStackCreator.createNamedItemStack(Material.GRAY_STAINED_GLASS_PANE, Component.text(emptyName, KatzeColor.LIGHT_GRAY));
             }
         };
     }
@@ -125,9 +125,9 @@ public class PlayerViewGui extends KatzeGUI implements SpectatorView {
             public ItemStack getItem(KatzePlayer viewer) {
                 KatzePlayer target = KatzePlayer.adapt(targetId).orElse(null);
                 if (target == null || target.getBackpackContents() == null) {
-                    return ItemStackCreator.createNamedItemStack(Material.GRAY_DYE, Component.text("No backpack", NamedTextColor.GRAY));
+                    return ItemStackCreator.createNamedItemStack(Material.GRAY_DYE, Component.text("No backpack", KatzeColor.LIGHT_GRAY));
                 }
-                return ItemStackCreator.createNamedItemStack(Material.CHEST, Component.text("Backpack", NamedTextColor.YELLOW));
+                return ItemStackCreator.createNamedItemStack(Material.CHEST, Component.text("Backpack", KatzeColor.YELLOW));
             }
         };
     }
@@ -138,7 +138,7 @@ public class PlayerViewGui extends KatzeGUI implements SpectatorView {
             public ItemStack getItem(KatzePlayer viewer) {
                 Player target = target();
                 if (target == null) return ItemStackCreator.fillerItem();
-                return ItemStackCreator.getPlayerSkull(targetId, Component.text(targetName, NamedTextColor.YELLOW), 1, infoLines(target).toArray(Component[]::new));
+                return ItemStackCreator.getPlayerSkull(targetId, Component.text(targetName, KatzeColor.YELLOW), 1, infoLines(target).toArray(Component[]::new));
             }
         };
     }
@@ -176,8 +176,8 @@ public class PlayerViewGui extends KatzeGUI implements SpectatorView {
 
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
-                return ItemStackCreator.getStack(Component.text("View through their eyes", NamedTextColor.YELLOW), Material.ENDER_EYE,
-                        List.of(Component.text("Sneak to leave", NamedTextColor.GRAY)));
+                return ItemStackCreator.getStack(Component.text("View through their eyes", KatzeColor.YELLOW), Material.ENDER_EYE,
+                        List.of(Component.text("Sneak to leave", KatzeColor.LIGHT_GRAY)));
             }
         };
     }

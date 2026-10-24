@@ -4,9 +4,9 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -106,7 +106,7 @@ public final class CosmeticCategoryGui extends KatzeGUI {
 
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
-                return ItemStackCreator.getStack(Component.text("Back to Categories", NamedTextColor.YELLOW), Material.ARROW, List.of());
+                return ItemStackCreator.getStack(Component.text("Back to Categories", KatzeColor.YELLOW), Material.ARROW, List.of());
             }
         };
     }
@@ -122,7 +122,7 @@ public final class CosmeticCategoryGui extends KatzeGUI {
 
             @Override
             public ItemStack getItem(KatzePlayer viewer) {
-                return ItemStackCreator.getStack(Component.text(name, NamedTextColor.YELLOW), Material.ARROW, List.of(Component.text("Page " + (page + 1) + " of " + pages, NamedTextColor.GRAY)));
+                return ItemStackCreator.getStack(Component.text(name, KatzeColor.YELLOW), Material.ARROW, List.of(Component.text("Page " + (page + 1) + " of " + pages, KatzeColor.LIGHT_GRAY)));
             }
         };
     }
@@ -158,21 +158,21 @@ public final class CosmeticCategoryGui extends KatzeGUI {
             lore.add(Component.text("Rarity: " + cosmetic.rarity().displayName(), cosmetic.rarity().color()));
         }
         if (!owned) {
-            lore.add(Component.text("Not owned", NamedTextColor.RED));
+            lore.add(Component.text("Not owned", KatzeColor.RED));
         } else if (equipped) {
-            lore.add(Component.text("Equipped", NamedTextColor.GREEN));
+            lore.add(Component.text("Equipped", KatzeColor.LIME));
         } else {
-            lore.add(Component.text("Click to equip", NamedTextColor.YELLOW));
+            lore.add(Component.text("Click to equip", KatzeColor.YELLOW));
         }
         if (cosmetic instanceof MusicCosmetic music && music.isSong() && !MusicChannel.isListening(viewer.getPlayer())) {
-            lore.add(Component.text("Needs the client mod", NamedTextColor.GRAY));
+            lore.add(Component.text("Needs the client mod", KatzeColor.LIGHT_GRAY));
         }
         Season season = cosmetic == null ? null : cosmetic.season();
         if (season != null) {
             lore.add(season.availability(store.today()));
         }
         if (previewOf(entry) != null) {
-            lore.add(Component.text("Right-click to preview", NamedTextColor.GRAY));
+            lore.add(Component.text("Right-click to preview", KatzeColor.LIGHT_GRAY));
         }
 
         Component name = cosmetic != null
@@ -183,7 +183,7 @@ public final class CosmeticCategoryGui extends KatzeGUI {
                             case SOUND -> "Default: XP Orb";
                             case MUSIC -> "Default: No Music";
                         },
-                        NamedTextColor.WHITE
+                        KatzeColor.WHITE
                 );
 
         Material icon = cosmetic != null
@@ -221,7 +221,7 @@ public final class CosmeticCategoryGui extends KatzeGUI {
             Season season = cosmetic.season();
             player.sendMessage(season != null && !cosmetic.isAvailable(store.today())
                     ? season.returnsMessage(cosmetic)
-                    : Component.text("Win " + cosmetic.displayName() + " from the Cosmetic Case.", NamedTextColor.RED));
+                    : Component.text("Win " + cosmetic.displayName() + " from the Cosmetic Case.", KatzeColor.RED));
             CosmeticGuiItems.play(clicker, ShopSounds.DENY);
         }
     }

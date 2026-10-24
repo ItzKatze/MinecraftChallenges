@@ -9,10 +9,10 @@ import gg.itzkatze.katze.forcebattle.ForceBattleObjective;
 import gg.itzkatze.katze.forcebattle.ForceBattlePlayer;
 import gg.itzkatze.katze.forcebattle.ForceBattleType;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import gg.itzkatze.katze.util.StringUtility;
 import gg.itzkatze.katze.util.Toast;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
@@ -94,7 +94,7 @@ public class MobsTask {
                         teammate.sendMessage(Component.text(player.getName() + " has finished " + formattedObjective + "."));
                         Player teammatePlayer = teammate.getPlayer();
                         if (teammatePlayer != null) {
-                            Toast.display(teammatePlayer, toastIcon, Component.text(formattedObjective).color(NamedTextColor.BLUE), Toast.Style.GOAL, plugin);
+                            Toast.display(teammatePlayer, toastIcon, Component.text(formattedObjective).color(KatzeColor.BLUE), Toast.Style.GOAL, plugin);
                         }
                     });
         }
@@ -102,7 +102,7 @@ public class MobsTask {
         player.sendMessage(Component.text("You finished " + formattedObjective + "."));
         Player playerObj = player.getPlayer();
         if (playerObj != null) {
-            Toast.display(playerObj, toastIcon, Component.text(formattedObjective).color(NamedTextColor.BLUE), Toast.Style.GOAL, plugin);
+            Toast.display(playerObj, toastIcon, Component.text(formattedObjective).color(KatzeColor.BLUE), Toast.Style.GOAL, plugin);
         }
     }
 }

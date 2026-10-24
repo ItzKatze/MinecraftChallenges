@@ -11,8 +11,8 @@ import gg.itzkatze.katze.gui.impl.SettingsGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.randomizer.RandomizerSettings;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,15 +27,15 @@ public class RandomizerSettingsGUI extends KatzeGUI {
 
     private enum SettingButton {
         BLOCK_DROPS(10, Material.GRASS_BLOCK, "Block Drops", RandomizerSettings.RandomizerSetting.BLOCK_DROPS,
-                List.of(Component.text("Randomize mined block drops").color(NamedTextColor.GRAY))),
+                List.of(Component.text("Randomize mined block drops").color(KatzeColor.LIGHT_GRAY))),
         MOB_DROPS(12, Material.ROTTEN_FLESH, "Mob Drops", RandomizerSettings.RandomizerSetting.MOB_DROPS,
-                List.of(Component.text("Randomize mob drops").color(NamedTextColor.GRAY))),
+                List.of(Component.text("Randomize mob drops").color(KatzeColor.LIGHT_GRAY))),
         CHEST_LOOT(14, Material.CHEST, "Chest Loot", RandomizerSettings.RandomizerSetting.CHEST_LOOT,
-                List.of(Component.text("Randomize generated chest loot").color(NamedTextColor.GRAY))),
+                List.of(Component.text("Randomize generated chest loot").color(KatzeColor.LIGHT_GRAY))),
         SHARED_MAPPINGS(16, Material.PLAYER_HEAD, "Shared Mappings", RandomizerSettings.RandomizerSetting.SHARED_MAPPINGS,
                 List.of(
-                        Component.text("On: every player shares the same mapping").color(NamedTextColor.GRAY),
-                        Component.text("Off: each player gets their own mapping").color(NamedTextColor.GRAY)
+                        Component.text("On: every player shares the same mapping").color(KatzeColor.LIGHT_GRAY),
+                        Component.text("Off: each player gets their own mapping").color(KatzeColor.LIGHT_GRAY)
                 ));
 
         private final int slot;
@@ -75,11 +75,11 @@ public class RandomizerSettingsGUI extends KatzeGUI {
                     Component status = state == null ? Component.text("Unknown") : state.getDisplayName();
                     List<Component> lore = new java.util.ArrayList<>(button.description);
                     lore.add(Component.empty());
-                    lore.add(Component.text("Current: ").color(NamedTextColor.GRAY).append(status));
+                    lore.add(Component.text("Current: ").color(KatzeColor.LIGHT_GRAY).append(status));
                     lore.add(Component.empty());
-                    lore.add(Component.text("Click to toggle").color(NamedTextColor.YELLOW));
+                    lore.add(Component.text("Click to toggle").color(KatzeColor.YELLOW));
                     return ItemStackCreator.getStack(
-                            Component.text(button.label).color(NamedTextColor.AQUA),
+                            Component.text(button.label).color(KatzeColor.LIGHT_BLUE),
                             button.material,
                             1,
                             lore

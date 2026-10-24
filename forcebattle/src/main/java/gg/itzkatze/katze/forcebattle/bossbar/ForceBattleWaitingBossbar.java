@@ -3,9 +3,9 @@ package gg.itzkatze.katze.forcebattle.bossbar;
 import gg.itzkatze.katze.bossbar.BossbarContent;
 import gg.itzkatze.katze.bossbar.BossbarKind;
 import gg.itzkatze.katze.player.KatzePlayer;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +20,7 @@ public class ForceBattleWaitingBossbar implements BossbarContent {
     @Override
     @Nullable public BossBar getBossbar(@NotNull KatzePlayer player) {
         return BossBar.bossBar(
-                Component.text("Waiting").color(NamedTextColor.GRAY)
+                Component.text("Waiting").color(KatzeColor.LIGHT_GRAY)
                         .decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE),
                 1,
                 BossBar.Color.YELLOW,

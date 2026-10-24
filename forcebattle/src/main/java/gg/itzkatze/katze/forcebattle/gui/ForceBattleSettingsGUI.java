@@ -16,9 +16,9 @@ import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.gui.sign.NumberSignInput;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -86,13 +86,13 @@ public class ForceBattleSettingsGUI extends KatzeGUI {
                         ForceBattle.DEFAULT_BATTLE_DURATION_MINUTES
                 );
                 List<Component> loreLines = new ArrayList<>();
-                loreLines.add(Component.text(toggleLine).color(NamedTextColor.GRAY));
+                loreLines.add(Component.text(toggleLine).color(KatzeColor.LIGHT_GRAY));
                 loreLines.add(Component.empty());
-                loreLines.add(Component.text("Current").color(NamedTextColor.BLUE)
-                        .append(Component.text(": ").color(NamedTextColor.DARK_GRAY))
-                        .append(Component.text(minutes + " min").color(NamedTextColor.AQUA)));
+                loreLines.add(Component.text("Current").color(KatzeColor.BLUE)
+                        .append(Component.text(": ").color(KatzeColor.GRAY))
+                        .append(Component.text(minutes + " min").color(KatzeColor.LIGHT_BLUE)));
                 return ItemStackCreator.getStack(
-                        Component.text(nameText).color(NamedTextColor.BLUE),
+                        Component.text(nameText).color(KatzeColor.BLUE),
                         material,
                         1,
                         loreLines
@@ -102,21 +102,21 @@ public class ForceBattleSettingsGUI extends KatzeGUI {
             if (setting == null) {
                 return ItemStackCreator.createNamedItemStack(
                         material,
-                        Component.text(nameText).color(NamedTextColor.RED)
+                        Component.text(nameText).color(KatzeColor.RED)
                 );
             }
 
             List<Component> loreLines = new ArrayList<>();
             if (toggleLine != null && !toggleLine.isBlank()) {
-                loreLines.add(Component.text(toggleLine).color(NamedTextColor.GRAY));
+                loreLines.add(Component.text(toggleLine).color(KatzeColor.LIGHT_GRAY));
             }
             loreLines.add(Component.empty());
-            loreLines.add(Component.text("Current Status").color(NamedTextColor.BLUE)
-                    .append(Component.text(": ").color(NamedTextColor.DARK_GRAY))
+            loreLines.add(Component.text("Current Status").color(KatzeColor.BLUE)
+                    .append(Component.text(": ").color(KatzeColor.GRAY))
                     .append(getSettingState().getDisplayName()));
 
             return ItemStackCreator.getStack(
-                    Component.text(nameText).color(NamedTextColor.BLUE),
+                    Component.text(nameText).color(KatzeColor.BLUE),
                     material,
                     1,
                     loreLines
@@ -155,15 +155,15 @@ public class ForceBattleSettingsGUI extends KatzeGUI {
                             KatzeGames.get().getConfig().set(ForceBattle.BATTLE_DURATION_MINUTES_KEY, value);
                             KatzeGames.get().saveConfig();
                             KatzeGames.broadcast(
-                                    Component.text("Battle Duration ").color(NamedTextColor.BLUE)
-                                            .append(Component.text("has been set to ").color(NamedTextColor.GRAY))
-                                            .append(Component.text(value + " min").color(NamedTextColor.AQUA))
-                                            .append(Component.text("!").color(NamedTextColor.GRAY))
+                                    Component.text("Battle Duration ").color(KatzeColor.BLUE)
+                                            .append(Component.text("has been set to ").color(KatzeColor.LIGHT_GRAY))
+                                            .append(Component.text(value + " min").color(KatzeColor.LIGHT_BLUE))
+                                            .append(Component.text("!").color(KatzeColor.LIGHT_GRAY))
                             );
                             new ForceBattleSettingsGUI().open(katzePlayer);
                         },
                         (katzePlayer, error) -> {
-                            katzePlayer.sendMessage(Component.text(error).color(NamedTextColor.RED));
+                            katzePlayer.sendMessage(Component.text(error).color(KatzeColor.RED));
                             new ForceBattleSettingsGUI().open(katzePlayer);
                         }
                 );
@@ -185,10 +185,10 @@ public class ForceBattleSettingsGUI extends KatzeGUI {
             String settingName = changedMsg.replace("_", " ");
             settingName = settingName.substring(0, 1).toUpperCase() + settingName.substring(1);
             KatzeGames.broadcast(
-                    Component.text(settingName + " ").color(NamedTextColor.BLUE)
-                            .append(Component.text("has been set to ").color(NamedTextColor.GRAY))
+                    Component.text(settingName + " ").color(KatzeColor.BLUE)
+                            .append(Component.text("has been set to ").color(KatzeColor.LIGHT_GRAY))
                             .append(getSettingState().getDisplayName())
-                            .append(Component.text("!").color(NamedTextColor.GRAY)));
+                            .append(Component.text("!").color(KatzeColor.LIGHT_GRAY)));
 
             new ForceBattleSettingsGUI().open(player);
         }

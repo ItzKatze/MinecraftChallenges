@@ -9,8 +9,9 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -100,7 +101,7 @@ public class AllItemsSettingsGUI extends KatzeGUI {
         AllItemsSettings.setGameMode(newMode);
 
         String modeName = newMode == AllItemsSettings.GameMode.TEAM ? "Team Mode" : "Individual Mode";
-        player.sendMessage(Component.text("All Items game mode set to: " + modeName, NamedTextColor.GREEN));
+        player.sendMessage(Component.text("All Items game mode set to: " + modeName, KatzeColor.LIME));
 
         // Refresh the GUI
         gui.open(player);
@@ -133,48 +134,48 @@ public class AllItemsSettingsGUI extends KatzeGUI {
     private ItemStack buildModeItem(SettingButton button) {
         boolean isTeamMode = AllItemsSettings.isTeamMode();
         String modeName = isTeamMode ? "Team Mode" : "Individual Mode";
-        NamedTextColor color = isTeamMode ? NamedTextColor.GREEN : NamedTextColor.AQUA;
+        TextColor color = isTeamMode ? KatzeColor.LIME : KatzeColor.LIGHT_BLUE;
 
         return ItemStackCreator.getStack(
                 Component.text(modeName).color(color),
                 button.material,
                 1,
                 List.of(
-                        Component.text("Current: ").color(NamedTextColor.GRAY)
+                        Component.text("Current: ").color(KatzeColor.LIGHT_GRAY)
                                 .append(Component.text(modeName).color(color)),
                         Component.empty(),
-                        Component.text("Click to toggle").color(NamedTextColor.YELLOW),
+                        Component.text("Click to toggle").color(KatzeColor.YELLOW),
                         Component.empty(),
-                        Component.text("Team Mode: ").color(NamedTextColor.GRAY)
-                                .append(Component.text("All players collect together").color(NamedTextColor.WHITE)),
-                        Component.text("Individual Mode: ").color(NamedTextColor.GRAY)
-                                .append(Component.text("Each player collects separately").color(NamedTextColor.WHITE))
+                        Component.text("Team Mode: ").color(KatzeColor.LIGHT_GRAY)
+                                .append(Component.text("All players collect together").color(KatzeColor.WHITE)),
+                        Component.text("Individual Mode: ").color(KatzeColor.LIGHT_GRAY)
+                                .append(Component.text("Each player collects separately").color(KatzeColor.WHITE))
                 )
         );
     }
 
     private ItemStack buildMissingItem(SettingButton button) {
         return ItemStackCreator.getStack(
-                Component.text(button.label).color(NamedTextColor.AQUA),
+                Component.text(button.label).color(KatzeColor.LIGHT_BLUE),
                 button.material,
                 1,
                 List.of(
-                        Component.text("View remaining objectives.").color(NamedTextColor.GRAY),
+                        Component.text("View remaining objectives.").color(KatzeColor.LIGHT_GRAY),
                         Component.empty(),
-                        Component.text("Click to open").color(NamedTextColor.YELLOW)
+                        Component.text("Click to open").color(KatzeColor.YELLOW)
                 )
         );
     }
 
     private ItemStack buildLeaderboardItem(SettingButton button) {
         return ItemStackCreator.getStack(
-                Component.text(button.label).color(NamedTextColor.GOLD),
+                Component.text(button.label).color(KatzeColor.GOLD),
                 button.material,
                 1,
                 List.of(
-                        Component.text("View player progress.").color(NamedTextColor.GRAY),
+                        Component.text("View player progress.").color(KatzeColor.LIGHT_GRAY),
                         Component.empty(),
-                        Component.text("Click to open").color(NamedTextColor.YELLOW)
+                        Component.text("Click to open").color(KatzeColor.YELLOW)
                 )
         );
     }
@@ -183,13 +184,13 @@ public class AllItemsSettingsGUI extends KatzeGUI {
         SettingStateType state = SettingsManager.getSettingState(button.setting);
         Component status = state == null ? Component.text("Unknown") : state.getDisplayName();
         return ItemStackCreator.getStack(
-                Component.text(button.label).color(NamedTextColor.BLUE),
+                Component.text(button.label).color(KatzeColor.BLUE),
                 button.material,
                 1,
                 List.of(
-                        Component.text("Current: ").color(NamedTextColor.GRAY).append(status),
+                        Component.text("Current: ").color(KatzeColor.LIGHT_GRAY).append(status),
                         Component.empty(),
-                        Component.text("Click to toggle").color(NamedTextColor.YELLOW)
+                        Component.text("Click to toggle").color(KatzeColor.YELLOW)
                 )
         );
     }
@@ -197,7 +198,7 @@ public class AllItemsSettingsGUI extends KatzeGUI {
     private ItemStack buildFallbackItem(SettingButton button) {
         return ItemStackCreator.createNamedItemStack(
                 button.material,
-                Component.text(button.label).color(NamedTextColor.RED)
+                Component.text(button.label).color(KatzeColor.RED)
         );
     }
 

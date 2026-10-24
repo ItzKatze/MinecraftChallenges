@@ -6,8 +6,9 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -41,16 +42,16 @@ public class AllItemsMissingObjectivesMenu extends KatzeGUI {
 
             @Override
             public ItemStack getItem(KatzePlayer p) {
-                NamedTextColor color = enabled ? NamedTextColor.AQUA : NamedTextColor.RED;
+                TextColor color = enabled ? KatzeColor.LIGHT_BLUE : KatzeColor.RED;
                 return ItemStackCreator.getStack(
                         Component.text(type.getDisplayName()).color(color),
                         type.getIcon(),
                         1,
                         List.of(
-                                Component.text("Status: ").color(NamedTextColor.GRAY)
+                                Component.text("Status: ").color(KatzeColor.LIGHT_GRAY)
                                         .append(Component.text(enabled ? "Enabled" : "Disabled").color(color)),
                                 Component.empty(),
-                                Component.text("Click to view").color(NamedTextColor.YELLOW)
+                                Component.text("Click to view").color(KatzeColor.YELLOW)
                         )
                 );
             }

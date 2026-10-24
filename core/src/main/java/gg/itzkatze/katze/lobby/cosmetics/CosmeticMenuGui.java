@@ -4,8 +4,8 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -59,8 +59,8 @@ public final class CosmeticMenuGui extends KatzeGUI {
                 CosmeticStore store = CosmeticStore.get();
                 List<Cosmetic> cosmetics = store.catalog().in(category);
                 long collected = cosmetics.stream().filter(cosmetic -> store.owns(viewer.getUuid(), cosmetic)).count();
-                return ItemStackCreator.getStack(Component.text(category.title(), NamedTextColor.YELLOW, TextDecoration.BOLD), category.icon(),
-                        List.of(Component.text("Collected: " + collected + "/" + cosmetics.size(), NamedTextColor.GRAY), Component.text("Click to open", NamedTextColor.GRAY)));
+                return ItemStackCreator.getStack(Component.text(category.title(), KatzeColor.YELLOW, TextDecoration.BOLD), category.icon(),
+                        List.of(Component.text("Collected: " + collected + "/" + cosmetics.size(), KatzeColor.LIGHT_GRAY), Component.text("Click to open", KatzeColor.LIGHT_GRAY)));
             }
         };
     }

@@ -1,8 +1,8 @@
 package gg.itzkatze.katze.forcebattle.commands;
 
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.configuration.SettingsManager;
@@ -30,7 +30,7 @@ public class MobileCraftingCommand extends KatzeCommand {
     @Override
     public void executeCommand(@NotNull CommandCaller caller, String[] args) {
         if (!SettingsManager.isEnabled(GlobalSetting.MOBILE_CRAFTING)) {
-            caller.sendMessage(Component.text("Mobile Crafting is disabled.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Mobile Crafting is disabled.").color(KatzeColor.RED));
             return;
         }
         if (caller instanceof KatzePlayer katzePlayer) {

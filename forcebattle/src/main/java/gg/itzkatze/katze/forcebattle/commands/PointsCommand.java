@@ -1,8 +1,8 @@
 package gg.itzkatze.katze.forcebattle.commands;
 
 import gg.itzkatze.katze.commands.framework.CallerType;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import gg.itzkatze.katze.commands.framework.KatzeCommand;
 import gg.itzkatze.katze.commands.framework.CommandCaller;
 import gg.itzkatze.katze.player.KatzePlayer;
@@ -37,7 +37,7 @@ public class PointsCommand extends KatzeCommand {
         KatzePlayer target = KatzePlayer.adapt(args[1]).orElse(null);
 
         if (target == null) {
-            caller.sendMessage(Component.text("Player couldn't be found.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Player couldn't be found.").color(KatzeColor.RED));
             return;
         }
 
@@ -45,12 +45,12 @@ public class PointsCommand extends KatzeCommand {
         try {
             amount = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
-            caller.sendMessage(Component.text("Please specify a valid number.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Please specify a valid number.").color(KatzeColor.RED));
             return;
         }
 
         if (amount < 0) {
-            caller.sendMessage(Component.text("Number must be positive.").color(NamedTextColor.RED));
+            caller.sendMessage(Component.text("Number must be positive.").color(KatzeColor.RED));
             return;
         }
 

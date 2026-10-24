@@ -9,8 +9,8 @@ import gg.itzkatze.katze.gui.GUIClickableItem;
 import gg.itzkatze.katze.gui.KatzeGUI;
 import gg.itzkatze.katze.player.KatzePlayer;
 import gg.itzkatze.katze.util.ItemStackCreator;
+import gg.itzkatze.katze.util.KatzeColor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -43,24 +43,24 @@ public class ConfigSettingsGUI extends KatzeGUI {
         SettingsManager.setState(setting, nextState);
 
         KatzeGames.broadcast(
-                Component.text(setting.getDisplayName() + " ").color(NamedTextColor.BLUE)
-                        .append(Component.text("has been set to ").color(NamedTextColor.GRAY))
+                Component.text(setting.getDisplayName() + " ").color(KatzeColor.BLUE)
+                        .append(Component.text("has been set to ").color(KatzeColor.LIGHT_GRAY))
                         .append(nextState.getDisplayName())
-                        .append(Component.text("!").color(NamedTextColor.GRAY)));
+                        .append(Component.text("!").color(KatzeColor.LIGHT_GRAY)));
     }
 
     private static @NotNull ItemStack createItem(@NotNull ObjectiveExclusion exclusion) {
         ForceBattleSettings setting = Objects.requireNonNull(exclusion.getSetting());
         List<Component> loreLines = List.of(
-                Component.text("Click to toggle.").color(NamedTextColor.GRAY),
-                Component.text(exclusion.getDescription()).color(NamedTextColor.GRAY),
+                Component.text("Click to toggle.").color(KatzeColor.LIGHT_GRAY),
+                Component.text(exclusion.getDescription()).color(KatzeColor.LIGHT_GRAY),
                 Component.empty(),
-                Component.text("Current Status").color(NamedTextColor.BLUE)
-                        .append(Component.text(": ").color(NamedTextColor.DARK_GRAY))
+                Component.text("Current Status").color(KatzeColor.BLUE)
+                        .append(Component.text(": ").color(KatzeColor.GRAY))
                         .append(SettingsManager.getSettingState(setting).getDisplayName()));
 
         return ItemStackCreator.getStack(
-                Component.text(setting.getDisplayName()).color(NamedTextColor.BLUE),
+                Component.text(setting.getDisplayName()).color(KatzeColor.BLUE),
                 exclusion.getIcon(),
                 1,
                 loreLines

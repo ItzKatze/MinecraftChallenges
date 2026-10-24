@@ -1,8 +1,8 @@
 package gg.itzkatze.katze.player;
 
+import gg.itzkatze.katze.util.KatzeColor;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -51,10 +51,10 @@ public final class AfkTracker implements Listener {
             long idle = now - lastInput.computeIfAbsent(id, key -> now);
             if (idle >= IDLE_MILLIS) {
                 if (afk.add(id)) {
-                    player.sendMessage(Component.text("You are now AFK.", NamedTextColor.GRAY));
+                    player.sendMessage(Component.text("You are now AFK.", KatzeColor.LIGHT_GRAY));
                 }
             } else if (afk.remove(id)) {
-                player.sendMessage(Component.text("You are no longer AFK.", NamedTextColor.GRAY));
+                player.sendMessage(Component.text("You are no longer AFK.", KatzeColor.LIGHT_GRAY));
             }
         }
     }
