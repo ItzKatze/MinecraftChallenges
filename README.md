@@ -69,8 +69,7 @@ The Cosmetic Case also holds C418's soundtrack songs (Aria Math, Sweden, Wet Han
 
 - **What it adds**: players with the mod hear the soundtrack songs as Jump & Run music, hear the run music (songs and discs) fade out when a run fails, and get no background music from the game during a run.
 - **For players**: install Fabric Loader 0.20.1 or newer and Fabric API for Minecraft 26.3, then put `MinecraftChallenges-Client-<version>+26.3.jar` from the release into your `mods` folder. The mod only acts on this plugin's Jump & Run music, so it changes nothing on other servers.
-- **Without the mod**: the music discs still play and fade out; the soundtrack songs stay silent and their menu entries say `Needs the client mod`.
-- **For server owners**: there is nothing to set up. A `music-pack-url` line in `config.yml` or a `plugins/MinecraftChallenges/music-pack.zip` left from an older version is no longer used and can be deleted.
+- **Without the mod**: the music discs still play and fade out; the soundtrack songs stay silent and their menu entries say `Needs the client mod`. A few seconds after every join, a chat message links to the latest release.
 
 ---
 

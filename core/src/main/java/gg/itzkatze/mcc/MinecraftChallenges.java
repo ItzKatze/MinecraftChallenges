@@ -18,6 +18,7 @@ import gg.itzkatze.mcc.level.PlaytimeXp;
 import gg.itzkatze.mcc.level.XpDigest;
 import gg.itzkatze.mcc.player.AfkTracker;
 import gg.itzkatze.mcc.lobby.LobbyManager;
+import gg.itzkatze.mcc.lobby.cosmetics.ClientModHint;
 import gg.itzkatze.mcc.lobby.cosmetics.CosmeticStore;
 import gg.itzkatze.mcc.lobby.cosmetics.MusicChannel;
 import gg.itzkatze.mcc.lobby.cosmetics.MusicManager;
@@ -97,6 +98,7 @@ public final class MinecraftChallenges extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GameLifecycleManager(), this);
         getServer().getPluginManager().registerEvents(new LobbyManager(), this);
         getServer().getPluginManager().registerEvents(new CaseFireworkGuard(), this);
+        getServer().getPluginManager().registerEvents(new ClientModHint(), this);
         LobbyManager.loadIslands();
         getServer().getPluginManager().registerEvents(new TeamChatManager(), this);
         getServer().getPluginManager().registerEvents(new LevelChat(), this);
