@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public final class ClientModHint implements Listener {
 
     private static final long CHECK_DELAY_TICKS = 100;
-    private static final String DOWNLOAD_URL = "https://modrinth.com/mod/mcc-clientmod/versions";
+    private static final String DOWNLOAD_URL = "https://modrinth.com/mod/katzegamesmod/versions";
     private static final Component HINT = Component.text(
             "You're playing without the KatzeGames client mod. Install it from Modrinth for an overall better experience! ", NamedTextColor.YELLOW)
             .append(Component.text("[Download]", NamedTextColor.GREEN).clickEvent(ClickEvent.openUrl(DOWNLOAD_URL)));
