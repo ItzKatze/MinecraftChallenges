@@ -45,7 +45,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.shadowJar {
     mergeServiceFiles()
-    archiveBaseName.set("MinecraftChallenges")
+    archiveBaseName.set("KatzeGames")
     archiveClassifier.set("")
     archiveVersion.set("${project.version}+$minecraftVersion")
 }

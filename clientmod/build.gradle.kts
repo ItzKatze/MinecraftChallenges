@@ -9,7 +9,7 @@ val minecraftVersion = paperVersion.substringBefore(".build")
 version = "${project.version}+$minecraftVersion"
 
 base {
-    archivesName.set("MinecraftChallenges-Client")
+    archivesName.set("KatzeGames-Client")
 }
 
 dependencies {

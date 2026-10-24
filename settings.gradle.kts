@@ -10,7 +10,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "MinecraftChallenges"
+rootProject.name = "KatzeGames"
 
 include(":loader")
 include(":core")

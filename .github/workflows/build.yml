@@ -27,13 +27,13 @@ jobs:
             - name: Upload jar
               uses: actions/upload-artifact@v7
               with:
-                  path: loader/build/libs/MinecraftChallenges-*.jar
+                  path: loader/build/libs/KatzeGames-*.jar
                   archive: false
                   if-no-files-found: error
 
             - name: Upload client mod
               uses: actions/upload-artifact@v7
               with:
-                  path: clientmod/build/libs/MinecraftChallenges-Client-*.jar
+                  path: clientmod/build/libs/KatzeGames-Client-*.jar
                   archive: false
                   if-no-files-found: error

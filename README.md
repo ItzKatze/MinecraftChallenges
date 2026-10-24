@@ -1,4 +1,4 @@
-# MinecraftChallenges
+# KatzeGames
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -9,7 +9,7 @@ Supported Minecraft version: 26.3
 
 ## 🎮 Gamemodes & Modules
 
-MinecraftChallenges is a modular plugin providing multiple unique gamemodes and challenge mechanics.
+KatzeGames is a modular plugin providing multiple unique gamemodes and challenge mechanics.
 
 | Gamemode        | Description                                                                                                             | Documentation                       |
 |:----------------|:------------------------------------------------------------------------------------------------------------------------|:------------------------------------|
@@ -59,7 +59,7 @@ Playing earns XP, and XP adds up to a level that everyone sees:
 - **Games**: finishing a game pays 50 XP per 90 minutes you played in it.
 - **Challenges**: ForceBattle pays 10 XP per objective, 1 XP per 100 blocks walked and 150 XP to the winners; DeathSwap 10 XP per swap you survive and 150 XP to the last one alive; AllItems 2 to 10 XP per new discovery.
 - **Levelling up**: level 2 needs 140 XP and each level after it about 5% more, up to 6,133 XP for level 100, the highest level (216,169 XP in total).
-- **Storage**: levels and Jump & Run cosmetics live in `plugins/MinecraftChallenges/data/players.json` and survive `/reset` and new worlds.
+- **Storage**: levels and Jump & Run cosmetics live in `plugins/KatzeGames/data/players.json` and survive `/reset` and new worlds.
 
 ---
 
@@ -68,7 +68,7 @@ Playing earns XP, and XP adds up to a level that everyone sees:
 The Cosmetic Case also holds C418's soundtrack songs (Aria Math, Sweden, Wet Hands and 29 more) as Jump & Run music. They play through an optional Fabric mod for players:
 
 - **What it adds**: players with the mod hear the soundtrack songs as Jump & Run music, hear the run music (songs and discs) fade out when a run fails, and get no background music from the game during a run.
-- **For players**: install Fabric Loader 0.20.1 or newer and Fabric API for Minecraft 26.3, then put `MinecraftChallenges-Client-<version>+26.3.jar` from the release into your `mods` folder. The mod only acts on this plugin's Jump & Run music, so it changes nothing on other servers.
+- **For players**: install Fabric Loader 0.20.1 or newer and Fabric API for Minecraft 26.3, then put `KatzeGames-Client-<version>+26.3.jar` from the release into your `mods` folder. The mod only acts on this plugin's Jump & Run music, so it changes nothing on other servers.
 - **Without the mod**: the music discs still play and fade out; the soundtrack songs stay silent and their menu entries say `Needs the client mod`. A few seconds after every join, a chat message links to the latest release.
 
 ---
@@ -87,7 +87,7 @@ Spectators watch a running battle without influencing it:
 
 ## 🛠️ Building from Source
 
-To build MinecraftChallenges yourself, make sure you have **Gradle** installed.  
+To build KatzeGames yourself, make sure you have **Gradle** installed.  
 Clone this repository and run:
 
 ```bash
@@ -140,6 +140,6 @@ See the [LICENSE](https://www.gnu.org/licenses/gpl-3.0) file for details.
 
 ## ⚠️ Disclaimer
 
-MinecraftChallenges is an independent open-source project and is **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**  
+KatzeGames is an independent open-source project and is **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**  
 Minecraft is a registered trademark of Mojang Synergies AB / Microsoft Corporation.
 

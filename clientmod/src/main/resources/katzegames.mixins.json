@@ -1,0 +1,10 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "gg.itzkatze.katze.client.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "client": ["MusicFrequencyInvoker", "MusicManagerMixin"],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

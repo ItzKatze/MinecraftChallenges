@@ -1,6 +1,6 @@
-name: MinecraftChallenges
+name: KatzeGames
 version: '${version}'
-main: gg.itzkatze.mcc.MinecraftChallenges
+main: gg.itzkatze.katze.KatzeGames
 api-version: '26.3'
 
 commands:
